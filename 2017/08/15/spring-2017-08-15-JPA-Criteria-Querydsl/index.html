@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JPA,Criteria,Querydsl,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JPA criteria 查询: 类型安全与面向对象">
+<meta name="keywords" content="JPA,Criteria,Querydsl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JPA-Criteria-Querydsl">
+<meta property="og:url" content="https://wuchao.github.io/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="JPA criteria 查询: 类型安全与面向对象">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JPA-Criteria-Querydsl">
+<meta name="twitter:description" content="JPA criteria 查询: 类型安全与面向对象">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/">
+
+
+
+
+
+  <title>JPA-Criteria-Querydsl | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">08月</div>
+			<div class="post-day">15</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Spring/" itemprop="url" rel="index">
+          <span itemprop="name">Spring</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JPA-Criteria-Querydsl</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-15T00:00:00+08:00">
+                2017-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="http://blog.csdn.net/dracotianlong/article/details/28445725" target="_blank" rel="noopener">JPA criteria 查询: 类型安全与面向对象</a> </p>
+</blockquote>
+<a id="more"></a>  
+
+<h2 id="Criteria-Query"><a href="#Criteria-Query" class="headerlink" title="Criteria Query"></a>Criteria Query</h2><p>实体定义： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class Advisor extends AbstractAuditingEntity implements Serializable &#123; </span><br><span class="line">   </span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = &quot;sequenceGenerator&quot;)</span><br><span class="line">    @SequenceGenerator(name = &quot;sequenceGenerator&quot;)</span><br><span class="line">    private Long id;</span><br><span class="line">         </span><br><span class="line">	@NotNull</span><br><span class="line">    @Column(name = &quot;name&quot;, nullable = false)</span><br><span class="line">    private String name;</span><br><span class="line">    </span><br><span class="line">    @NotNull</span><br><span class="line">    @Column(name = &quot;activated&quot;, nullable = false)</span><br><span class="line">    private Boolean activated;</span><br><span class="line">    </span><br><span class="line">  	@OneToMany(mappedBy = &quot;advisor&quot;, fetch = FetchType.LAZY)</span><br><span class="line">    private Set&lt;Product&gt; products = new HashSet&lt;&gt;();</span><br><span class="line">    </span><br><span class="line">    @OneToMany(mappedBy = &quot;advisor&quot;, fetch = FetchType.LAZY)</span><br><span class="line">    @OrderBy(&quot;lastModifiedDate desc&quot;)</span><br><span class="line">    private Set&lt;Manager&gt; managers = new HashSet&lt;&gt;();</span><br><span class="line">      </span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class Product extends AbstractAuditingEntity implements Serializable &#123;</span><br><span class="line">  	   </span><br><span class="line">  	private static final long serialVersionUID = 1L;</span><br><span class="line">    </span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = &quot;sequenceGenerator&quot;)</span><br><span class="line">    @SequenceGenerator(name = &quot;sequenceGenerator&quot;)</span><br><span class="line">    private Long id;</span><br><span class="line">      </span><br><span class="line">    @NotNull</span><br><span class="line">    @Column(name = &quot;name&quot;, nullable = false)</span><br><span class="line">    private String name;</span><br><span class="line">      </span><br><span class="line">    @NotNull</span><br><span class="line">    @Column(name = &quot;rate&quot;, nullable = false)</span><br><span class="line">    private Double rate;</span><br><span class="line">      </span><br><span class="line">    @ManyToOne(fetch = FetchType.LAZY)</span><br><span class="line">    private Advisor advisor;</span><br><span class="line">      </span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class Manager extends AbstractAuditingEntity implements Serializable &#123;</span><br><span class="line">  	  </span><br><span class="line">  	private static final long serialVersionUID = 1L;</span><br><span class="line">      </span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = &quot;sequenceGenerator&quot;)</span><br><span class="line">    @SequenceGenerator(name = &quot;sequenceGenerator&quot;)</span><br><span class="line">    private Long id;</span><br><span class="line">      </span><br><span class="line">    @NotNull</span><br><span class="line">    @Column(name = &quot;name&quot;, nullable = false)</span><br><span class="line">    private String name;</span><br><span class="line">      </span><br><span class="line">    @ManyToOne(fetch = FetchType.LAZY)</span><br><span class="line">    private Advisor advisor;</span><br><span class="line">      </span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="元模型（Metamodel）"><a href="#元模型（Metamodel）" class="headerlink" title="元模型（Metamodel）"></a>元模型（Metamodel）</h3><blockquote>
+<p><a href="http://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/" target="_blank" rel="noopener">Hibernate JPA 2 Metamodel Generator</a> </p>
+</blockquote>
+<h3 id="Criteria-Query-完成-multi-select-查询"><a href="#Criteria-Query-完成-multi-select-查询" class="headerlink" title="Criteria Query 完成 multi select 查询"></a>Criteria Query 完成 multi select 查询</h3><p>现在要查询所有 Advisor 对象,并且查出 Advisor 对象中 managers 集合的个数和 products 集合中 rate 属性的最大值: </p>
+<p>定义一个 DTO 对象,保存查询结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class AdvisorDto implements Serializable &#123;</span><br><span class="line">  private Long id;</span><br><span class="line">  private String name;</span><br><span class="line">  private Long managerNum;</span><br><span class="line">  private Double maxRate;</span><br><span class="line">  </span><br><span class="line">  //multiselect查询语句返回值需要参数个数和类型都匹配的一个构造方法</span><br><span class="line">  public AdvisorDto(Long id, String name, Long managerNum, Double maxRate) &#123;</span><br><span class="line">    this.id = id;</span><br><span class="line">    this.name = name;</span><br><span class="line">    this.managerNum = managerNum;</span><br><span class="line">    this.maxRate = maxRate;</span><br><span class="line">  &#125;</span><br><span class="line">  //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义查询接口和实现类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface AdvisorDtoRepository &#123;</span><br><span class="line">  Page&lt;AdvisorDto&gt; findAll(Boolean activated, String name, Pageable pageable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br></pre></td><td class="code"><pre><span class="line">public class AdvisorDtoRepositoryImpl implements AdvisorDtoRepository &#123;</span><br><span class="line"></span><br><span class="line">	@PersistenceContext</span><br><span class="line">    private EntityManager em;</span><br><span class="line">    </span><br><span class="line">  	public Page&lt;AdvisorDto&gt; findAll(Boolean activated, String name, Pageable pageable) &#123;</span><br><span class="line">    	CriteriaBuilder cb = em.getCriteriaBuilder();</span><br><span class="line">        CriteriaQuery&lt;AdvisorDto&gt; multiselectQuery = cb.createQuery(AdvisorDto.class);</span><br><span class="line">        //定义查询根的实体类型</span><br><span class="line">        Root&lt;Advisor&gt; root = multiselectQuery.from(Advisor.class);</span><br><span class="line">        </span><br><span class="line">        /*创建 select 部分要查询的属性,并分别定义别名*/</span><br><span class="line">        Selection idSelection = root.get(&quot;id&quot;).alias(&quot;id&quot;);</span><br><span class="line">        Selection nameSelection = root.get(&quot;name&quot;).alias(&quot;name&quot;);</span><br><span class="line">        Selection managerNumSelection = cb.count(root.join(&quot;managers&quot;, JoinType.LEFT)).alias(&quot;managerNum&quot;);</span><br><span class="line">        Selection maxRateSelection = cb.max(root.join(&quot;products&quot;, JoinType.LEFT).get(&quot;rate&quot;)).alias(&quot;maxRate&quot;);</span><br><span class="line"></span><br><span class="line">        multiselectQuery.multiselect(idSelection, nameSelection, managerNumSelection, maxRateSelection);</span><br><span class="line"></span><br><span class="line">		/*创建 where 字句的查询条件*/</span><br><span class="line">        List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        if (activated != null) &#123;</span><br><span class="line">            predicates.add(cb.equal(root.get(Advisor_.activated), activated));</span><br><span class="line">        &#125;</span><br><span class="line">        if (!StringUtils.isEmpty(name)) &#123;</span><br><span class="line">            predicates.add(cb.like(root.get(Advisor_.name), &quot;%&quot; + name + &quot;%&quot;));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Predicate wherePredicate = cb.and(predicates.toArray(new Predicate[0]));</span><br><span class="line"></span><br><span class="line">        //(Column &quot;Advisor_.ID&quot; must be in the GROUP BY list)   	multiselectQuery.where(wherePredicate).groupBy(root.get(Advisor_.id)).orderBy(cb.desc(root.get(Advisor_.lastModifiedDate)));</span><br><span class="line">        </span><br><span class="line">        /*获取查询结果*/</span><br><span class="line">        List&lt;AdvisorDto&gt; results = em.createQuery(multiselectQuery)</span><br><span class="line">            .setFirstResult(pageable.getOffset())</span><br><span class="line">            .setMaxResults(pageable.getPageSize())</span><br><span class="line">            .getResultList();</span><br><span class="line"></span><br><span class="line">		/*查询总元素的个数*/</span><br><span class="line">        CriteriaQuery&lt;Long&gt; countQuery = cb.createQuery(Long.class);</span><br><span class="line">        countQuery.select(cb.count(countQuery.from(Advisor.class)));</span><br><span class="line">        countQuery.where(wherePredicate);</span><br><span class="line">        Long totalElements = em.createQuery(countQuery).getSingleResult();</span><br><span class="line"></span><br><span class="line">		//创建 Page 对象</span><br><span class="line">        Page&lt;AdvisorDto&gt; advisors = new PageImpl&lt;AdvisorDto&gt;((totalElements &gt; pageable.getOffset() ? results : Collections.&lt;AdvisorDto&gt;emptyList()), pageable, totalElements);</span><br><span class="line"></span><br><span class="line">        return advisors;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">## Spring Data Jpa  </span><br><span class="line"></span><br><span class="line">&gt; [Spring Data JPA with QueryDSL: Repositories made easy](http://dontpanic.42.nl/2011/06/spring-data-jpa-with-querydsl.html)</span><br><span class="line"></span><br><span class="line">Spring Data JPA can be used to dramatically minimize, and often even eliminate, a repository implementation. Imagine having the following domain class:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line"></span><br><span class="line"> @Id</span><br><span class="line"> @GeneratedValue(strategy = GenerationType.AUTO)</span><br><span class="line"> private Long id;</span><br><span class="line"></span><br><span class="line"> private String username;</span><br><span class="line"> private String firstname;</span><br><span class="line"> private String lastname;</span><br><span class="line"></span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">With plain Spring and JPA we would build the following repository implementation:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Repository</span><br><span class="line">public class JpaUserRepository implements UserRepository &#123;</span><br><span class="line"></span><br><span class="line"> @PersistenceContext</span><br><span class="line"> private EntityManager em;</span><br><span class="line"> </span><br><span class="line"> public Iterable&lt;User&gt; findAll() &#123;</span><br><span class="line">  return em.createQuery(</span><br><span class="line">    &quot;from User&quot;, User.class</span><br><span class="line">   ).getResultList();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public User findByUsername(String username) &#123;</span><br><span class="line">  return em.createQuery(</span><br><span class="line">    &quot;from User where username = :username&quot;, User.class</span><br><span class="line">   ).setParameter(&quot;username&quot;, username).getSingleResult();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public User save(User user) &#123;</span><br><span class="line">  if(user.getId() == null) &#123;</span><br><span class="line">   em.persist(user);</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">   user = em.merge(user);</span><br><span class="line">  &#125;</span><br><span class="line">  return user;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Much of the above repository implementation is boilerplate and can be generalized. This is where Spring Data JPA kicks in.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">When using Spring Data JPA, we only need to define a repository interface, and the implementation will be provided automatically. So we define the repository interface:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface UserRepository</span><br><span class="line"> extends CrudRepository&lt;User, Long&gt; &#123;</span><br><span class="line"> User findByUsername(String username);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">And activate the automatic repository implementations in our application context:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;jpa:repositories base-package=&quot;com.myproject.repository&quot; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Now whenever we wire the UserRepository, we will recieve a fully functional repository implementation automatically. The repository will have full CRUD functionality, due to extending the CrudRepository interface, but also custom find behaviour.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Inside the repository interface we defined a findByUsername method, which basically finds a single user with the provided username. These type of findX methods are called “dynamic finder methods”, and will be resolved automatically whenever the naming convention is applied. Spring Data JPA offers quite extensive finder method support, which is more than enough for most repositories. For more information about dynamic finder methods, look at the reference documentation.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">So we basically just created a full blown repository bean, having defined only three lines of code. Which is great! But what happens if queries get more complex and the dynamic finder behaviour won’t suffice?</span><br><span class="line"></span><br><span class="line">### Named queries </span><br><span class="line">One of the easiest techniques is using JPA named queries. We simply define a @NamedQuery on our entity:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">@NamedQuery(</span><br><span class="line"> name = &quot;User.findByTheUsersName&quot;,</span><br><span class="line"> query = &quot;from User u where u.username = ?&quot;</span><br><span class="line">)</span><br><span class="line">public class User &#123; &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">And create a corresponding finder method in our repository interface:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface UserRepository &#123;</span><br><span class="line"> User findByTheUsersName(String username);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">So whenever the finder method is invoked, Spring Data JPA will automatically perform our named query and return its results.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### @Query </span><br><span class="line">使用注解直接定义一个查询语句在 repository 接口上： </span><br><span class="line">``` </span><br><span class="line">public interface UserRepository &#123;</span><br><span class="line">    @Query(&quot;select u from User u where u.firstname = ?&quot;)</span><br><span class="line">    List&lt;User&gt; findByFirstname(String firstname);</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">### Custom implementation </span><br><span class="line">We could even create a custom implementation for some repository method(s). To provide a custom implementation we first define a UserRepositoryCustom interface, with all custom repository methods, and an implementation UserRepositoryImpl. Then we let our UserRepository extend from the custom interface, and Spring Data JPA will automatically wire our custom implementation into the repository bean.</span><br><span class="line"></span><br><span class="line">A custom implementation is defined as follows:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface UserRepository extends</span><br><span class="line"> UserRepositoryCustom, CrudRepository&lt;User, Long&gt; &#123;</span><br><span class="line"> // Generated finder method</span><br><span class="line"> User findByUsername(String username);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface UserRepositoryCustom &#123;</span><br><span class="line"> // Custom method</span><br><span class="line"> List&lt;User&gt; findInactiveUsers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class UserRepositoryImpl</span><br><span class="line"> implements UserRepositoryCustom &#123;</span><br><span class="line"></span><br><span class="line"> @PersistenceContext</span><br><span class="line"> private EntityManager em;</span><br><span class="line"></span><br><span class="line"> @Override</span><br><span class="line"> public List&lt;User&gt; findInactiveUsers() &#123;</span><br><span class="line">  return em.createQuery(</span><br><span class="line">   &quot;from User where active = false&quot;, User.class</span><br><span class="line">  ).getResultList();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">So we can use Spring Data JPA to create our boilerplate implementations, and yet it is still possible to create custom methods as desired.</span><br><span class="line"></span><br><span class="line">## Spring Data Jpa 的 Specification 查询 </span><br><span class="line"></span><br><span class="line">&gt; [SpringDataJpa 的 Specification 查询](http://blog.csdn.net/baijunzhijiang_01/article/details/51557125)  </span><br><span class="line"></span><br><span class="line">Spring Data JPA 支持 JPA2.0 的 Criteria Query，相应的接口是 JpaSpecificationExecutor。Criteria 查询：是一种类型安全和更面向对象的查询 。</span><br><span class="line"></span><br><span class="line">这个接口基本是围绕着 Specification 接口来定义的， Specification 接口中只定义了如下一个方法：</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">Predicate toPredicate(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query, CriteriaBuilder cb);</span><br></pre></td></tr></table></figure>
+
+<p>Specification 查询: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class AdvisorSpecs &#123;</span><br><span class="line">  public static Specification&lt;Advisor&gt; findAdvisors( final Boolean activated, final String name, final Long managerNum) &#123;</span><br><span class="line">    return (root, query, cb) -&gt; &#123;</span><br><span class="line">    	List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;(); </span><br><span class="line">    </span><br><span class="line">    	if (managerNum != null) &#123;   		query.groupBy(root.get(Advisor_.id)).orderBy(cb.desc(root.get(Advisor_.lastModifiedDate))).having(cb.greaterThan((cb.countDistinct(root.join(Advisor_.managers, JoinType.LEFT))), managerNum));</span><br><span class="line">        &#125;</span><br><span class="line">        if (activated != null) &#123;</span><br><span class="line">        	predicates.add(cb.equal(root.get(Advisor_.activated), activated));</span><br><span class="line">        &#125;</span><br><span class="line">    	if (!StringUtils.isEmpty(name)&#123;</span><br><span class="line">    		predicates.add(cb.like(root.get(Advisor_.name), &quot;%&quot; + name + &quot;%&quot;));</span><br><span class="line">    	&#125;</span><br><span class="line">  </span><br><span class="line">  		return cb.and(predicates.toArray(new Predicate[0]));</span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring Data Jpa 查询: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;/advisors&quot;)</span><br><span class="line">public String index(@RequestParam(value = &quot;activated&quot;, required = false, defaultValue = &quot;&quot;) Boolean activated,</span><br><span class="line">@RequestParam(value = &quot;name&quot;, required = false, defaultValue = &quot;&quot;) String name,</span><br><span class="line">@RequestParam(value = &quot;managerNum&quot;, required = false, defaultValue = &quot;&quot;) Long managerNum,</span><br><span class="line">@PageableDefault(sort = &quot;lastModifiedDate&quot;, direction = Sort.Direction.DESC) Pageable pageable, Model model) &#123;</span><br><span class="line">	Specification&lt;Advisor&gt; specification = 	Specifications.where(AdvisorSpecs.findAdvisors(activated, name, managerNum));</span><br><span class="line"></span><br><span class="line">	Page&lt;Advisor&gt; advisors = advisorRepository.findAll(specification, pageable);</span><br><span class="line"></span><br><span class="line">	model.addAttribute(&quot;activated&quot;, activated);</span><br><span class="line">	model.addAttribute(&quot;name&quot;, name);</span><br><span class="line">	model.addAttribute(&quot;managerNum&quot;, managerNum);</span><br><span class="line"></span><br><span class="line">	return &quot;advisors/list&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Querydsl"><a href="#Querydsl" class="headerlink" title="Querydsl"></a>Querydsl</h2><p>Querydsl 是一个类型安全的 Java 查询框架，支持 JPA, JDO, JDBC, Lucene, Hibernate Search 等标准。类型安全（Type safety）和一致性（Consistency）是它设计的两大准则。在 Spring Boot 中可以很好的弥补 JPA 的不灵活，实现更强大的逻辑。<br>Criteria Query 也是类型安全的，但它要求 <code>CriteriaQuery</code>, <code>CriteriaBuilder</code> 和 <code>Root</code> 对象，而 Querydsl 只需要一个生成的元数据模型（以大写字母 Q 开头加上 java 实体类型名称的类）。<br>而且 <code>BooleanExpression</code> 不和查询实例耦合，当和 JPA 联合使用时，我们可以在不同的表达式中使用它。 </p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><blockquote>
+<p><a href="http://blog.csdn.net/plm609337931/article/details/66968444?locationNum=4&fps=1" target="_blank" rel="noopener">QueryDSL+gradle+idea</a> </p>
+</blockquote>
+<p>build.gradle </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    ... </span><br><span class="line">    compile &quot;com.querydsl:querydsl-jpa:4.1.4&quot;</span><br><span class="line">    compile &quot;com.querydsl:querydsl-apt:4.1.4:jpa&quot;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">启动项目后，会将项目中所有添加了 `@Entity` 注解的实体类会在 `src/main/generated/` 目录下生成对应的查询类型。每个查询类型都以大写字母Q开头。</span><br><span class="line"></span><br><span class="line">修改默认生成路径，在 build.gradle 中添加： </span><br><span class="line">``` </span><br><span class="line">apply plugin: &apos;idea&apos;</span><br><span class="line">idea &#123;</span><br><span class="line">    module &#123;</span><br><span class="line">        sourceDirs += file(&apos;generated/&apos;)</span><br><span class="line">        generatedSourceDirs += file(&apos;generated/&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">然后在 idea 中设置：</span><br><span class="line">![](/images/2017-12-06-store-generated-sources-relative-to.png)   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### QueryDslPredicateExecutor 接口  </span><br><span class="line">继承了 QueryDslPredicateExecutor 接口和继承了 JpaRepository 接口一样，可以直接使用其自带的方法： </span><br><span class="line">``` </span><br><span class="line">public interface QueryDslPredicateExecutor&lt;T&gt; &#123;  </span><br><span class="line">  </span><br><span class="line">    T findOne(Predicate predicate);  </span><br><span class="line">  </span><br><span class="line">    Iterable&lt;T&gt; findAll(Predicate predicate);  </span><br><span class="line">  </span><br><span class="line">    Iterable&lt;T&gt; findAll(Predicate predicate, Sort sort);  </span><br><span class="line">  </span><br><span class="line">    Iterable&lt;T&gt; findAll(Predicate predicate, OrderSpecifier&lt;?&gt;... orders);  </span><br><span class="line">  </span><br><span class="line">    Iterable&lt;T&gt; findAll(OrderSpecifier&lt;?&gt;... orders);  </span><br><span class="line">  </span><br><span class="line">    Page&lt;T&gt; findAll(Predicate predicate, Pageable pageable);  </span><br><span class="line">  </span><br><span class="line">    long count(Predicate predicate);  </span><br><span class="line">  </span><br><span class="line">    boolean exists(Predicate predicate);  </span><br><span class="line">&#125;  </span><br><span class="line">```  </span><br><span class="line">示例： </span><br><span class="line">``` </span><br><span class="line">@GetMapping(value = &#123;&quot;&quot;, &quot;/&quot;, &quot;home&quot;, &quot;/index&quot;, &quot;/index.html&quot;&#125;)</span><br><span class="line">public String index(@PageableDefault Pageable pageable, Model model) &#123;</span><br><span class="line">    QBlog qBlog = QBlog.blog;</span><br><span class="line">    Predicate predicate = qBlog.id.gt(2);</span><br><span class="line">    // likeIgnoreCase() 方法实参前后要加上 % </span><br><span class="line">    predicate = qBlog.title.containsIgnoreCase(&quot;spring&quot;).and(predicate);</span><br><span class="line">    // 搜索id大于2并且标题忽略大小写匹配“spring”字符串</span><br><span class="line">    Page&lt;Blog&gt; blogs = blogRepository.findAll(predicate, pageable);</span><br><span class="line">    model.addAttribute(&quot;articles&quot;, blogs);</span><br><span class="line">    return &quot;blogs/index&quot;;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">然后请求： </span><br><span class="line">``` </span><br><span class="line">http://localhost:8008/blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="QueryDslPredicateExecutor-接口"><a href="#QueryDslPredicateExecutor-接口" class="headerlink" title="QueryDslPredicateExecutor 接口"></a>QueryDslPredicateExecutor 接口</h3><p>Spring 参数支持解析 com.querydsl.core.types.Predicate，根据用户请求的参数自动生成 Predicate，这样搜索方法不用自己写啦，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(value = &#123;&quot;&quot;, &quot;/&quot;, &quot;home&quot;, &quot;/index&quot;, &quot;/index.html&quot;&#125;)</span><br><span class="line">public String index(@QuerydslPredicate(root = Blog.class) Predicate predicate, </span><br><span class="line">                    @PageableDefault Pageable pageable, Model model) &#123;</span><br><span class="line">    Page&lt;Blog&gt; blogs = blogRepository.findAll(predicate, pageable);</span><br><span class="line">    model.addAttribute(&quot;articles&quot;, blogs);</span><br><span class="line">    return &quot;blogs/index&quot;;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">然后请求：</span><br><span class="line">``` </span><br><span class="line">http://localhost:8080/blog?id=1 //列表页面仅显示id为1的博客</span><br><span class="line">```  </span><br><span class="line">&gt; 字符串会自动忽略大小写，但是不能模糊匹配，必须要全文匹配。</span><br><span class="line"></span><br><span class="line">还可以自定义 Predicate，继承 QueryDslPredicateExecutor 接口： </span><br><span class="line">``` </span><br><span class="line">@GetMapping(value = &#123;&quot;&quot;, &quot;/&quot;, &quot;home&quot;, &quot;/index&quot;, &quot;/index.html&quot;&#125;)</span><br><span class="line">public String index(@QuerydslPredicate(root = Blog.class) Predicate predicate,</span><br><span class="line">                    @PageableDefault Pageable pageable, Model model) &#123;</span><br><span class="line">    Page&lt;Blog&gt; blogs = blogRepository.findAll(predicate, pageable);</span><br><span class="line">    model.addAttribute(&quot;articles&quot;, blogs);</span><br><span class="line">    return &quot;blogs/index&quot;;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">public interface BlogRepository extends JpaRepository&lt;Blog, Long&gt;, QueryDslPredicateExecutor&lt;Blog&gt;, QuerydslBinderCustomizer&lt;QBlog&gt; &#123;</span><br><span class="line"></span><br><span class="line">    default void customize(QuerydslBindings bindings, QBlog root) &#123;</span><br><span class="line">        bindings.bind(root.id).first((path, value) -&gt; path.gt(value));</span><br><span class="line">        bindings.bind(root.title).first((StringPath path, String value) -&gt; path.containsIgnoreCase(value));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后请求： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8008/blog?id=2&amp;title=xx // 列表页面仅显示id大于2且标题忽略大小写匹配xx字符串的博客</span><br></pre></td></tr></table></figure>
+
+<h3 id="类-SQL-查询"><a href="#类-SQL-查询" class="headerlink" title="类 SQL 查询"></a>类 SQL 查询</h3><blockquote>
+<p><a href="http://blog.csdn.net/liuchuanhong1/article/details/70244261?utm_source=gold_browser_extension" target="_blank" rel="noopener">spring boot-jpa整合QueryDSL来简化复杂操作</a> </p>
+<p><a href="https://lufficc.com/blog/spring-boot-jpa-querydsl" target="_blank" rel="noopener">Spring Boot JPA - Querydsl</a> </p>
+<p><a href="http://blog.csdn.net/xichenguan/article/details/75039816" target="_blank" rel="noopener">QueryDSL JPA 查询示例</a>  </p>
+</blockquote>
+<p>配置 JPAQueryFactory： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">import com.querydsl.jpa.HQLTemplates;</span><br><span class="line">import com.querydsl.jpa.impl.JPAQueryFactory;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">import javax.persistence.EntityManager;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class JpaConfiguration &#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) &#123;</span><br><span class="line">        return new JPAQueryFactory(new HQLTemplates(), entityManager);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">查询： </span><br><span class="line">``` </span><br><span class="line">@Autowired</span><br><span class="line">private JPAQueryFactory queryFactory;</span><br><span class="line"></span><br><span class="line">@GetMapping(value = &#123;&quot;&quot;, &quot;/&quot;, &quot;home&quot;, &quot;/index&quot;, &quot;/index.html&quot;&#125;)</span><br><span class="line">public String index(@PageableDefault Pageable pageable, Model model) &#123;</span><br><span class="line">    QBlog qBlog = QBlog.blog;</span><br><span class="line"></span><br><span class="line">//        String title = queryFactory.select(qBlog.title).from(qBlog).where(qBlog.id.eq(Long.valueOf(1))).fetchFirst();</span><br><span class="line">//        System.out.println(&quot;title: &quot; + title);</span><br><span class="line"></span><br><span class="line">    List&lt;Blog&gt; blogList = queryFactory.selectFrom(qBlog)</span><br><span class="line">            .where(qBlog.title.containsIgnoreCase(&quot;spring&quot;))</span><br><span class="line">            .offset(pageable.getOffset())</span><br><span class="line">            .limit(pageable.getPageSize())</span><br><span class="line">            .orderBy(qBlog.createdDate.desc())</span><br><span class="line">            .fetch();</span><br><span class="line">    Long totalElements = queryFactory.selectFrom(qBlog).where(qBlog.title.containsIgnoreCase(&quot;spring&quot;)).fetchCount();</span><br><span class="line">    Page&lt;Blog&gt; blogs = new PageImpl&lt;Blog&gt;(blogList, pageable, totalElements);</span><br><span class="line"></span><br><span class="line">    model.addAttribute(&quot;articles&quot;, blogs);</span><br><span class="line"></span><br><span class="line">    return &quot;blogs/index&quot;;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">结合 @QuerydslPredicate 查询： </span><br><span class="line">``` </span><br><span class="line">@Autowired</span><br><span class="line">private JPAQueryFactory queryFactory; </span><br><span class="line"></span><br><span class="line">@GetMapping(value = &#123;&quot;&quot;, &quot;/&quot;, &quot;home&quot;, &quot;/index&quot;, &quot;/index.html&quot;&#125;)</span><br><span class="line">public String index(@QuerydslPredicate(root = Blog.class) Predicate predicate,</span><br><span class="line">                    @PageableDefault Pageable pageable, Model model) &#123;</span><br><span class="line">    QBlog qBlog = QBlog.blog;</span><br><span class="line"></span><br><span class="line">    List&lt;Blog&gt; blogList = queryFactory.selectFrom(qBlog)</span><br><span class="line">            .where(predicate)</span><br><span class="line">            .offset(pageable.getOffset())</span><br><span class="line">            .limit(pageable.getPageSize())</span><br><span class="line">            .orderBy(qBlog.createdDate.desc())</span><br><span class="line">            .fetch();</span><br><span class="line"></span><br><span class="line">    Long totalElements = queryFactory.selectFrom(qBlog).where(predicate).fetchCount();</span><br><span class="line">    Page&lt;Blog&gt; blogs = new PageImpl&lt;Blog&gt;(blogList, pageable, totalElements);</span><br><span class="line"></span><br><span class="line">    model.addAttribute(&quot;articles&quot;, blogs);</span><br><span class="line"></span><br><span class="line">    return &quot;blogs/index&quot;;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">然后请求： </span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">http://localhost:8008/blog?title=spring // 列表页显示忽略大小写模糊匹配”spring“字符串的博客</span><br></pre></td></tr></table></figure>
+
+<h3 id="JPAExpressions"><a href="#JPAExpressions" class="headerlink" title="JPAExpressions"></a>JPAExpressions</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JPA/" rel="tag"># JPA</a>
+          
+            <a href="/tags/Criteria/" rel="tag"># Criteria</a>
+          
+            <a href="/tags/Querydsl/" rel="tag"># Querydsl</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/11/notes-2017-05-11-Docker的学习和使用/" rel="next" title="Docker 的学习和使用">
+                <i class="fa fa-chevron-left"></i> Docker 的学习和使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/16/java-2017-08-16-Java日期对象转换/" rel="prev" title="Java 日期时间转换">
+                Java 日期时间转换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/';
+            this.page.identifier = '2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/';
+            this.page.title = 'JPA-Criteria-Querydsl';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/';
+                this.page.identifier = '2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/';
+                this.page.title = 'JPA-Criteria-Querydsl';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/';
+            this.page.identifier = '2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/';
+            this.page.title = 'JPA-Criteria-Querydsl';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Criteria-Query"><span class="nav-number">1.</span> <span class="nav-text">Criteria Query</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#元模型（Metamodel）"><span class="nav-number">1.1.</span> <span class="nav-text">元模型（Metamodel）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Criteria-Query-完成-multi-select-查询"><span class="nav-number">1.2.</span> <span class="nav-text">Criteria Query 完成 multi select 查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Querydsl"><span class="nav-number">2.</span> <span class="nav-text">Querydsl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">2.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QueryDslPredicateExecutor-接口"><span class="nav-number">2.2.</span> <span class="nav-text">QueryDslPredicateExecutor 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类-SQL-查询"><span class="nav-number">2.3.</span> <span class="nav-text">类 SQL 查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JPAExpressions"><span class="nav-number">2.4.</span> <span class="nav-text">JPAExpressions</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

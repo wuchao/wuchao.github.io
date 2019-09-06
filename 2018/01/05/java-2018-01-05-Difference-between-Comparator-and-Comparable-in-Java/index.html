@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Comparator,Comparable,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Difference between Comparator and Comparable in Java   One of the common interview question is ‘What are differences between Comparator and Comparable’. or ‘How will you sort collection of employee o">
+<meta name="keywords" content="Comparator,Comparable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Difference between Comparator and Comparable in Java">
+<meta property="og:url" content="https://wuchao.github.io/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="Difference between Comparator and Comparable in Java   One of the common interview question is ‘What are differences between Comparator and Comparable’. or ‘How will you sort collection of employee o">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wuchao.github.io/images/2018-01-05-difference-between-comparator-ando-comparable-in-java.png">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Difference between Comparator and Comparable in Java">
+<meta name="twitter:description" content="Difference between Comparator and Comparable in Java   One of the common interview question is ‘What are differences between Comparator and Comparable’. or ‘How will you sort collection of employee o">
+<meta name="twitter:image" content="https://wuchao.github.io/images/2018-01-05-difference-between-comparator-ando-comparable-in-java.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/">
+
+
+
+
+
+  <title>Difference between Comparator and Comparable in Java | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">01月</div>
+			<div class="post-day">05</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Difference between Comparator and Comparable in Java</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-05T00:00:00+08:00">
+                2018-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="https://www.javacodegeeks.com/2013/03/difference-between-comparator-and-comparable-in-java.html" target="_blank" rel="noopener">Difference between Comparator and Comparable in Java</a> </p>
+</blockquote>
+<p>One of the common interview question is ‘What are differences between Comparator and Comparable’. or ‘How will you sort collection of employee objects by its id or name’.For that we can use two interfaces.i.e. Comparator and Comparable.Before we actually see differences,let me give you brief introduction of both. </p>
+<p>Comparable interface: Class whose objects to be sorted must implement this interface.In this,we have to implement compareTo(Object) method. </p>
+<p>For example: </p>
+<pre><code>public class Country implements Comparable {
+    @Override
+    public int compareTo(Object arg0) {
+        Country country=(Country) arg0;
+        return (this.countryId &lt; country.countryId ) ? -1: (this.countryId &gt; country.countryId ) ? 1:0 ;
+}} </code></pre><p>If any class implements comparable inteface then collection of that object can be sorted automatically using Collection.sort() or Arrays.sort().Object will be sort on the basis of compareTo method in that class.</p>
+<p>Objects which implement Comparable in java can be used as keys in a SortedMap like TreeMap or SortedSet like TreeSet without implementing any other interface.</p>
+<p>Comparator interface: Class whose objects to be sorted do not need to implement this interface.Some third class can implement this interface to sort.e.g.CountrySortByIdComparator class can implement Comparator interface to sort collection of country object by id. For example: </p>
+<pre><code>public class CountrySortByIdComparator implements Comparator&lt;Country&gt; {
+    @Override
+    public int compare(Country country1, Country country2) {
+        return (country1.getCountryId() &lt; country2.getCountryId() ) ? -1: (country1.getCountryId() &gt; country2.getCountryId() ) ? 1:0 ;
+    }
+}</code></pre><p>Using Comparator interface,we can write different sorting based on different attributes of objects to be sorted.You can use anonymous comparator to compare at particular line of code. For example: </p>
+<a id="more"></a> 
+
+<pre><code>Country indiaCountry=new Country(1, &apos;India&apos;);
+Country chinaCountry=new Country(4, &apos;China&apos;);
+Country nepalCountry=new Country(3, &apos;Nepal&apos;);
+Country bhutanCountry=new Country(2, &apos;Bhutan&apos;);
+List&lt;Country&gt; listOfCountries = new ArrayList&lt;Country&gt;();
+listOfCountries.add(indiaCountry);
+listOfCountries.add(chinaCountry);
+listOfCountries.add(nepalCountry);
+listOfCountries.add(bhutanCountry);
+
+//Sort by countryName
+   Collections.sort(listOfCountries,new Comparator&lt;Country&gt;() {
+       @Override
+       public int compare(Country o1, Country o2) {
+           return o1.getCountryName().compareTo(o2.getCountryName());
+       }
+   });
+</code></pre><p>Comparator vs Comparable   </p>
+<p><img src="/images/2018-01-05-difference-between-comparator-ando-comparable-in-java.png" alt>  </p>
+<p>Java code:<br>For Comparable: We will create class country having attribute id and name.This class will implement Comparable interface and implement CompareTo method to sort collection of country object by id. </p>
+<p>Country.java </p>
+<pre><code>//If this.cuntryId &lt; country.countryId:then compare method will return -1
+//If this.countryId &gt; country.countryId:then compare method will return 1
+//If this.countryId==country.countryId:then compare method will return 0
+public class Country implements Comparable{
+    int countryId;
+    String countryName;
+
+    public Country(int countryId, String countryName) {
+        super();
+        this.countryId = countryId;
+        this.countryName = countryName;
+    }
+
+    @Override
+    public int compareTo(Object arg0) {
+        Country country=(Country) arg0;
+        return (this.countryId &lt; country.countryId ) ? -1: (this.countryId &gt; country.countryId ) ? 1:0 ;
+    }
+
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+}</code></pre><p>ComparatorMain.java </p>
+<pre><code>import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class ComparatorMain {
+
+    /**
+     * @author Arpit Mandliya
+     */
+    public static void main(String[] args) {
+         Country indiaCountry=new Country(1, &apos;India&apos;);
+         Country chinaCountry=new Country(4, &apos;China&apos;);
+         Country nepalCountry=new Country(3, &apos;Nepal&apos;);
+         Country bhutanCountry=new Country(2, &apos;Bhutan&apos;);
+
+            List&lt;Country&gt; listOfCountries = new ArrayList&lt;Country&gt;();
+            listOfCountries.add(indiaCountry);
+            listOfCountries.add(chinaCountry);
+            listOfCountries.add(nepalCountry);
+            listOfCountries.add(bhutanCountry);
+
+            System.out.println(&apos;Before Sort  : &apos;);
+            for (int i = 0; i &lt; listOfCountries.size(); i++) {
+                Country country=(Country) listOfCountries.get(i);
+                System.out.println(&apos;Country Id: &apos;+country.getCountryId()+&apos;||&apos;+&apos;Country name: &apos;+country.getCountryName());
+            }
+            Collections.sort(listOfCountries);
+
+            System.out.println(&apos;After Sort  : &apos;);
+            for (int i = 0; i &lt; listOfCountries.size(); i++) {
+                Country country=(Country) listOfCountries.get(i);
+                System.out.println(&apos;Country Id: &apos;+country.getCountryId()+&apos;|| &apos;+&apos;Country name: &apos;+country.getCountryName());
+            }
+    }
+
+}</code></pre><p>Output: </p>
+<pre><code>Before Sort  :
+Country Id: 1||Country name: India
+Country Id: 4||Country name: China
+Country Id: 3||Country name: Nepal
+Country Id: 2||Country name: Bhutan
+After Sort  :
+Country Id: 1|| Country name: India
+Country Id: 2|| Country name: Bhutan
+Country Id: 3|| Country name: Nepal
+Country Id: 4|| Country name: China</code></pre><p>For Comparator: We will create class country having attribute id and name and will create another class CountrySortByIdComparator which will implement Comparator interface and implement compare method to sort collection of country object by id and we will also see how to use anonymous comparator. </p>
+<p>Country.java </p>
+<pre><code>public class Country{
+    int countryId;
+    String countryName;
+
+    public Country(int countryId, String countryName) {
+        super();
+        this.countryId = countryId;
+        this.countryName = countryName;
+    }
+
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+}</code></pre><p>CountrySortbyIdComparator.java </p>
+<pre><code>import java.util.Comparator;
+//If country1.getCountryId()&lt;country2.getCountryId():then compare method will return -1
+//If country1.getCountryId()&gt;country2.getCountryId():then compare method will return 1
+//If country1.getCountryId()==country2.getCountryId():then compare method will return 0
+public class CountrySortByIdComparator implements Comparator&lt;Country&gt;{
+
+    @Override
+    public int compare(Country country1, Country country2) {
+        return (country1.getCountryId() &lt; country2.getCountryId() ) ? -1: (country1.getCountryId() &gt; country2.getCountryId() ) ? 1:0 ;
+    }
+
+}</code></pre><p>ComparatorMain.java </p>
+<pre><code>import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class ComparatorMain {
+
+    /**
+     * @author Arpit Mandliya
+     */
+    public static void main(String[] args) {
+         Country indiaCountry=new Country(1, &apos;India&apos;);
+         Country chinaCountry=new Country(4, &apos;China&apos;);
+         Country nepalCountry=new Country(3, &apos;Nepal&apos;);
+         Country bhutanCountry=new Country(2, &apos;Bhutan&apos;);
+
+            List&lt;Country&gt; listOfCountries = new ArrayList&lt;Country&gt;();
+            listOfCountries.add(indiaCountry);
+            listOfCountries.add(chinaCountry);
+            listOfCountries.add(nepalCountry);
+            listOfCountries.add(bhutanCountry);
+
+            System.out.println(&apos;Before Sort by id : &apos;);
+            for (int i = 0; i &lt; listOfCountries.size(); i++) {
+                Country country=(Country) listOfCountries.get(i);
+                System.out.println(&apos;Country Id: &apos;+country.getCountryId()+&apos;||&apos;+&apos;Country name: &apos;+country.getCountryName());
+            }
+            Collections.sort(listOfCountries,new CountrySortByIdComparator());
+
+            System.out.println(&apos;After Sort by id: &apos;);
+            for (int i = 0; i &lt; listOfCountries.size(); i++) {
+                Country country=(Country) listOfCountries.get(i);
+                System.out.println(&apos;Country Id: &apos;+country.getCountryId()+&apos;|| &apos;+&apos;Country name: &apos;+country.getCountryName());
+            }
+
+            //Sort by countryName
+            Collections.sort(listOfCountries,new Comparator&lt;Country&gt;() {
+
+                @Override
+                public int compare(Country o1, Country o2) {
+                    return o1.getCountryName().compareTo(o2.getCountryName());
+                }
+            });
+
+            System.out.println(&apos;After Sort by name: &apos;);
+            for (int i = 0; i &lt; listOfCountries.size(); i++) {
+                Country country=(Country) listOfCountries.get(i);
+                System.out.println(&apos;Country Id: &apos;+country.getCountryId()+&apos;|| &apos;+&apos;Country name: &apos;+country.getCountryName());
+            }
+    }
+
+}</code></pre><p>Output: </p>
+<pre><code>Before Sort by id :
+Country Id: 1||Country name: India
+Country Id: 4||Country name: China
+Country Id: 3||Country name: Nepal
+Country Id: 2||Country name: Bhutan
+After Sort by id:
+Country Id: 1|| Country name: India
+Country Id: 2|| Country name: Bhutan
+Country Id: 3|| Country name: Nepal
+Country Id: 4|| Country name: China
+After Sort by name:
+Country Id: 2|| Country name: Bhutan
+Country Id: 4|| Country name: China
+Country Id: 1|| Country name: India
+Country Id: 3|| Country name: Nepal</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Comparator/" rel="tag"># Comparator</a>
+          
+            <a href="/tags/Comparable/" rel="tag"># Comparable</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/java-2017-12-20-Java8-Date-Time-API/" rel="next" title="Java 8 日期/时间（Date Time）API指南">
+                <i class="fa fa-chevron-left"></i> Java 8 日期/时间（Date Time）API指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/08/mybatis-2018-01-08-Mybatis-使用注解配置SQL映射器/" rel="prev" title="Mybatis - 使用注解配置 SQL 映射器">
+                Mybatis - 使用注解配置 SQL 映射器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/';
+            this.page.identifier = '2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/';
+            this.page.title = 'Difference between Comparator and Comparable in Java';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/';
+                this.page.identifier = '2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/';
+                this.page.title = 'Difference between Comparator and Comparable in Java';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/';
+            this.page.identifier = '2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/';
+            this.page.title = 'Difference between Comparator and Comparable in Java';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring Security,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Spring Security 的学习和使用  Elim 的博客 Spring Security Reference mkyong.com - Spring Security Tutorial spring security 只要熟悉每个 filter 的作用和顺序   Spring 是一个非常流行和成功的 Java 应用开发框架。Spring Security 基于 Spring 框架，提供了一">
+<meta name="keywords" content="Spring Security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Security 的学习和使用">
+<meta property="og:url" content="https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="Spring Security 的学习和使用  Elim 的博客 Spring Security Reference mkyong.com - Spring Security Tutorial spring security 只要熟悉每个 filter 的作用和顺序   Spring 是一个非常流行和成功的 Java 应用开发框架。Spring Security 基于 Spring 框架，提供了一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.765Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Security 的学习和使用">
+<meta name="twitter:description" content="Spring Security 的学习和使用  Elim 的博客 Spring Security Reference mkyong.com - Spring Security Tutorial spring security 只要熟悉每个 filter 的作用和顺序   Spring 是一个非常流行和成功的 Java 应用开发框架。Spring Security 基于 Spring 框架，提供了一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/">
+
+
+
+
+
+  <title>Spring Security 的学习和使用 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">01月</div>
+			<div class="post-day">20</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Spring/" itemprop="url" rel="index">
+          <span itemprop="name">Spring</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Security 的学习和使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-20T00:00:00+08:00">
+                2017-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring-Security-的学习和使用"><a href="#Spring-Security-的学习和使用" class="headerlink" title="Spring Security 的学习和使用"></a>Spring Security 的学习和使用</h1><hr>
+<blockquote>
+<p><a href="http://elim.iteye.com/category/182468" target="_blank" rel="noopener">Elim 的博客</a></p>
+<p><a href="http://docs.spring.io/spring-security/site/docs/current/reference/html/" target="_blank" rel="noopener">Spring Security Reference</a></p>
+<p><a href="http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/" target="_blank" rel="noopener">mkyong.com - Spring Security Tutorial</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_6fda308501016wjh.html" target="_blank" rel="noopener">spring security 只要熟悉每个 filter 的作用和顺序 </a></p>
+</blockquote>
+<p>Spring 是一个非常流行和成功的 Java 应用开发框架。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。一般来说，Web 应用的安全性包括用户认证（Authentication）和用户授权（Authorization）两个部分。用户认证指的是验证某个用户是否为系统中的合法主体，也就是说用户能否访问该系统。用户认证一般要求用户提供用户名和密码。系统通过校验用户名和密码来完成认证过程。用户授权指的是验证某个用户是否有权限执行某个操作。在一个系统中，不同用户所具有的权限是不同的。比如对一个文件来说，有的用户只能进行读取，而有的用户可以进行修改。一般来说，系统会为不同的用户分配不同的角色，而每个角色则对应一系列的权限。</p>
+<a id="more"></a>
+
+<h2 id="Java-Configuration"><a href="#Java-Configuration" class="headerlink" title="Java Configuration"></a>Java Configuration</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.*;</span><br><span class="line">import org.springframework.security.config.annotation.authentication.builders.*;</span><br><span class="line">import org.springframework.security.config.annotation.web.configuration.*;</span><br><span class="line"></span><br><span class="line">@EnableWebSecurity</span><br><span class="line">public class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码是一个 Spring Security Java Configuration 类，该配置类创建了一个叫做 <code>springspringSecurityFilterChain</code> 的 Servlet Filter，它负责管理整个应用的安全。</p>
+<p>Spring Security 提供了一个基类 <code>AbstractSecurityWebApplicationInitializer</code> 来注册该 <code>springSecurityFilterChain</code>。</p>
+<h3 id="HttpSecurity"><a href="#HttpSecurity" class="headerlink" title="HttpSecurity"></a>HttpSecurity</h3><p><code>WebSecurityConfigurerAdapter</code> 在 <code>configure(HttpSecurity http)</code> 方法中提供了一个默认的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">	http</span><br><span class="line">		.authorizeRequests()</span><br><span class="line">			.anyRequest().authenticated()</span><br><span class="line">			.and()</span><br><span class="line">		.formLogin()</span><br><span class="line">			.and()</span><br><span class="line">		.httpBasic();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的默认配置：</p>
+<ul>
+<li>确保对我们的应用程序的任何请求都要求用户进行身份验证。</li>
+<li>允许用户使用基于表单的登录进行身份验证，formLogin() 方法里面也可以传递一个登录页 URL。</li>
+<li>允许用户使用 HTTP Basic 身份验证进行身份验证。</li>
+</ul>
+<p>上面的 Java Config 等价于下面的 XML 命名空间配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;http&gt;</span><br><span class="line">	&lt;intercept-url pattern=&quot;/**&quot; access=&quot;authenticated&quot;/&gt;</span><br><span class="line">	&lt;form-login /&gt;</span><br><span class="line">	&lt;http-basic /&gt;</span><br><span class="line">&lt;/http&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Authorize-Requests"><a href="#Authorize-Requests" class="headerlink" title="Authorize Requests"></a>Authorize Requests</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">	http</span><br><span class="line">		.authorizeRequests()                                                            1</span><br><span class="line">			.antMatchers(&quot;/resources/**&quot;, &quot;/signup&quot;, &quot;/about&quot;).permitAll()               2</span><br><span class="line">			.antMatchers(&quot;/admin/**&quot;).hasRole(&quot;ADMIN&quot;)                                   3</span><br><span class="line">			.antMatchers(&quot;/db/**&quot;).access(&quot;hasRole(&apos;ADMIN&apos;) and hasRole(&apos;DBA&apos;)&quot;)         4</span><br><span class="line">			.anyRequest().authenticated()                                                5</span><br><span class="line">			.and()</span><br><span class="line">		// ...</span><br><span class="line">		.formLogin();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1：按代码声明顺序执行 <code>http.authorizeRequests()</code> 下声明的每一个的 matcher 。</p>
+<p>2：所有用户可以访问以 “/resources/“ 开头 , 等于 “/signup” 或者等于 “/about” 的 URL 而不需要验证 。</p>
+<p>3：访问所有以 “/admin/“ 开头的 URL 要求用户有 “ROLE<em>ADMIN” 权限, 因为调用了 hasRole 方法，所以不需要指定 “ROLE</em>“ 前缀 。</p>
+<p>4：访问所有以 “/db/“ 开头的 URL 要求用户有 “ROLE_ADMIN” 和 “DBA” 权限 。</p>
+<p>5：访问所有没有匹配的 URL 要求用户被验证 。</p>
+<h3 id="Handling-Logouts"><a href="#Handling-Logouts" class="headerlink" title="Handling Logouts"></a>Handling Logouts</h3><p>当使用 <code>WebSecurityConfigurerAdapter</code> 时, 就自动拥有退出登录功能, 默认访问 <code>/logout</code> 时将退出登录 :</p>
+<ul>
+<li>使 HTTP Session 失效 。</li>
+<li>清除所有配置的 RemeberMe 验证 。</li>
+<li>清除 <code>SecurityContextHolder</code> 。</li>
+<li>重定向到 <code>/login?logout</code> 。</li>
+</ul>
+<p>类似于配置 login, 这里也有很多选项让你更进一步的配置 logout:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">	http</span><br><span class="line">		.logout()                                                                   1</span><br><span class="line">			.logoutUrl(&quot;/my/logout&quot;)                                                 2</span><br><span class="line">			.logoutSuccessUrl(&quot;/my/index&quot;)                                           3</span><br><span class="line">			.logoutSuccessHandler(logoutSuccessHandler)                              4</span><br><span class="line">			.invalidateHttpSession(true)                                             5</span><br><span class="line">			.addLogoutHandler(logoutHandler)                                         6</span><br><span class="line">			.deleteCookies(cookieNamesToClear)                                       7</span><br><span class="line">			.and()</span><br><span class="line">		...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提供 logout 支持，当使用 <code>WebSecurityConfigurerAdapter</code> 时该功能自动被应用。</li>
+<li>该 URL (默认是 /logout) 触发 logout。如果 CSRF 保护被启用了(默认启用)，该请求必须要是一个 POST 请求。</li>
+<li>该 URL 是 logout 执行后跳转的链接，默认是 /login?logout。</li>
+<li>让你指定一个自定义的 <code>LogoutSuccessHandler</code> , 如果被指定了, logoutSuccessUrl() 就会被忽略 。</li>
+<li>指定是否在 logout 时使 HttpSession 失效，默认是 true。</li>
+<li>添加一个 <code>LogoutHandler</code> ，默认会在 <code>LogoutHandler</code> 最后添加一个 <code>SecurityContextLogoutHandler</code> 。</li>
+<li>允许指定在 logout 成功时被清理的 cookies 的名称。这是添加 <code>CookieClearingLogoutHandler</code>的一种快捷方式。</li>
+</ul>
+<p>通常，要想自定义 logout 功能，你可以添加 <code>LogoutHandler</code> 和/或 <code>LogoutSuccessHandler</code> 实现类就可以了。</p>
+<h4 id="LogoutHandler"><a href="#LogoutHandler" class="headerlink" title="LogoutHandler"></a>LogoutHandler</h4><p>通常，<code>LogoutHandler</code> 实现类指示该类会参与到 logout 的处理过程中，这些实现类会被调用来处理必要的清理工作。Spring Security 提供的实现类：</p>
+<ul>
+<li><a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/rememberme/PersistentTokenBasedRememberMeServices.html" target="_blank" rel="noopener">PersistentTokenBasedRememberMeServices</a></li>
+<li><a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/rememberme/TokenBasedRememberMeServices.html" target="_blank" rel="noopener">TokenBasedRememberMeServices</a></li>
+<li><a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/logout/CookieClearingLogoutHandler.html" target="_blank" rel="noopener">CookieClearingLogoutHandler</a></li>
+<li><a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/csrf/CsrfLogoutHandler.html" target="_blank" rel="noopener">CsrfLogoutHandler</a></li>
+<li><a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/logout/SecurityContextLogoutHandler.html" target="_blank" rel="noopener">SecurityContextLogoutHandler</a></li>
+</ul>
+<p>我们不需要直接提供 <code>LogoutHandler</code> 的实现类，fluent API 为每一个 <code>LogoutHandler</code> 实现类各自提供了一个快捷的入口，例如 <code>deleteCookies()</code> 方法允许指定一个多多个在退出成功要清理的 cookie 的名称。</p>
+<h4 id="LogoutSuccessHandler"><a href="#LogoutSuccessHandler" class="headerlink" title="LogoutSuccessHandler"></a>LogoutSuccessHandler</h4><p><code>LogoutSuccessHandler</code> 是在成功退出后由 <code>LogoutFilter</code> 调用的，里面处理重定向或转发到相应的目的地址等逻辑。Spring Security 提供了下面两个实现类：</p>
+<ul>
+<li><a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/logout/SimpleUrlLogoutSuccessHandler.html" target="_blank" rel="noopener">SimpleUrlLogoutSuccessHandler</a></li>
+<li>HttpStatusReturningLogoutSuccessHandler</li>
+</ul>
+<p>自定义 <code>LogoutSuccessHandler</code></p>
+<blockquote>
+<p><a href="http://blog.csdn.net/w605283073/article/details/51322771" target="_blank" rel="noopener">Spring Security 4 基于角色的登录例子（带源码）</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">    public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler &#123;</span><br><span class="line"></span><br><span class="line">        private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();</span><br><span class="line"></span><br><span class="line">        private String targetUrl = &quot;/home&quot;;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException &#123;</span><br><span class="line">            String targetUrl = determineTargetUrl(request, response);</span><br><span class="line">            if (response.isCommitted()) &#123;</span><br><span class="line">                this.logger.debug(&quot;Response has already been committed. Unable to redirect to &quot; + targetUrl);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                this.redirectStrategy.sendRedirect(request, response, targetUrl);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) &#123;</span><br><span class="line">            //:todo</span><br><span class="line">            return targetUrl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Authentication-Configuration"><a href="#Authentication-Configuration" class="headerlink" title="Authentication Configuration"></a>Authentication Configuration</h3><h4 id="In-Memory-Authentication"><a href="#In-Memory-Authentication" class="headerlink" title="In-Memory Authentication"></a>In-Memory Authentication</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableWebSecurity</span><br><span class="line">public class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line">	@Autowired</span><br><span class="line">	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception &#123;</span><br><span class="line">          InMemoryUserDetailsManagerConfigurer&lt;AuthenticationManagerBuilder&gt; configurer = auth.inMemoryAuthentication();</span><br><span class="line">          configurer.withUser(&quot;administrator&quot;).password(&quot;123456&quot;).roles(&quot;ADMIN&quot;).authorities(&quot;/admins/**&quot;);</span><br><span class="line">          configurer.withUser(&quot;user&quot;).password(&quot;123456&quot;).roles(&quot;USER&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="JDBC-Authentication"><a href="#JDBC-Authentication" class="headerlink" title="JDBC Authentication"></a>JDBC Authentication</h4><blockquote>
+<p><a href="http://www.mkyong.com/spring-security/spring-security-form-login-using-database/" target="_blank" rel="noopener">Spring Security form login using database</a></p>
+</blockquote>
+<p>下面是基于 JDBC 的验证配置, 假设你已经在应用中配置了 <code>DataSource</code> 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableWebSecurity</span><br><span class="line">public class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line">	@Autowired</span><br><span class="line">	private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception &#123;</span><br><span class="line">	//        auth</span><br><span class="line">	//                .jdbcAuthentication()</span><br><span class="line">	//                    .dataSource(dataSource)</span><br><span class="line">	//                    .withDefaultSchema()</span><br><span class="line">	//                    .withUser(&quot;user&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;).and()</span><br><span class="line">	//                    .withUser(&quot;admin&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;, &quot;ADMIN&quot;);</span><br><span class="line">			 auth</span><br><span class="line">              		.jdbcAuthentication()</span><br><span class="line">                    	.dataSource(dataSource)</span><br><span class="line">                    	.usersByUsernameQuery( &quot;select username, password, enabled from users where username = ?&quot;)</span><br><span class="line">                    	.authoritiesByUsernameQuery( &quot;select username, authority from authorities where username = ?&quot;)</span><br><span class="line">	//                  .groupAuthoritiesByUsername(&quot;&quot;)</span><br><span class="line">                    	.passwordEncoder(passwordEncoder());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Bean</span><br><span class="line">    public PasswordEncoder passwordEncoder() &#123;</span><br><span class="line">        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span><br><span class="line">        return passwordEncoder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于 Jdbc 的自定义验证参考：<a href="http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/" target="_blank" rel="noopener">Spring Security + Hibernate Annotation Example</a> 。</p>
+<h3 id="Multiple-HttpSecurity"><a href="#Multiple-HttpSecurity" class="headerlink" title="Multiple HttpSecurity"></a>Multiple HttpSecurity</h3><p>我们可以配置多个 HttpSecurity 实例，好比我们有多个 <code>&lt;http&gt;</code> 块一样，主要是多次继承 <code>WebSecurityConfigurationAdapter</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@EnableWebSecurity</span><br><span class="line">public class MultiHttpSecurityConfig &#123;</span><br><span class="line">	@Bean</span><br><span class="line">	public UserDetailsService userDetailsService() throws Exception &#123;</span><br><span class="line">		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();</span><br><span class="line">		manager.createUser(User.withUsername(&quot;user&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;).build());</span><br><span class="line">		manager.createUser(User.withUsername(&quot;admin&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;,&quot;ADMIN&quot;).build());</span><br><span class="line">		return manager;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Configuration</span><br><span class="line">	@Order(1)                                                    	 1</span><br><span class="line">	public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line">		protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">			http</span><br><span class="line">				.antMatcher(&quot;/api/**&quot;)                                 2</span><br><span class="line">				.authorizeRequests()</span><br><span class="line">					.anyRequest().hasRole(&quot;ADMIN&quot;)</span><br><span class="line">					.and()</span><br><span class="line">				.httpBasic();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Configuration                                                  3</span><br><span class="line">	public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">			http</span><br><span class="line">				.authorizeRequests()</span><br><span class="line">					.anyRequest().authenticated()</span><br><span class="line">					.and()</span><br><span class="line">				.formLogin();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1：创建一个 <code>WebSecurityConfigurerAdapter</code> 类， <code>@Order</code> 注解指定哪个 <code>WebSecurityConfigurerAdapter</code> 类被优先执行。</p>
+<p>2： <code>http.antMatcher</code> 声明了这个 <code>HttpSecurity</code> 只接受以 <code>/api/</code> 开头的 URL 请求。</p>
+<p>3：创建另一个 <code>WebSecurityConfigurerAdapter</code> 类，如果请求的 URL 不是以 <code>/api/</code> 开头的就进入这个类，这个类会在 <code>ApiWebSecurityConfigurationAdapter</code> 之后被执行，因为它有一个 1 之后的 <code>@order</code> 值 (没有 <code>@Order</code> 注解默认最后被执行)。</p>
+<h2 id="Core-Components"><a href="#Core-Components" class="headerlink" title="Core Components"></a>Core Components</h2><blockquote>
+<p>转载自 <a href="http://elim.iteye.com/blog/2155786" target="_blank" rel="noopener">Elim 的博客</a></p>
+</blockquote>
+<h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><p>Authentication 是一个接口，用来表示用户认证信息的，在用户登录认证之前相关信息会封装为一个 Authentication 具体实现类的对象，在登录认证成功之后又会生成一个信息更全面，包含用户权限等信息的 Authentication 对象，然后把它保存在 SecurityContextHolder 所持有的 SecurityContext 中，供后续的程序进行调用，如访问权限的鉴定等。</p>
+<h3 id="SecurityContext"><a href="#SecurityContext" class="headerlink" title="SecurityContext"></a>SecurityContext</h3><p><code>org.springframework.security.core.context.SecurityContext</code> 接口表示的是当前应用的安全上下文。通过此接口可以获取和设置当前的 Authentication 认证对象。通过认证对象的方法可以判断当前用户是否已经通过认证，以及获取当前认证用户的相关信息，包括用户名、密码和权限等。要使用此认证对象，首先需要获取到 <code>SecurityContext</code> 对象。通过 <code>org.springframework.security.core.context.SecurityContextHolder</code> 类提供的静态方法 <code>getContext()</code> 就可以获取，再通过 <code>SecurityContext</code>对象的 <code>getAuthentication()</code> 就可以得到认证对象。</p>
+<h3 id="SecurityContextHolder"><a href="#SecurityContextHolder" class="headerlink" title="SecurityContextHolder"></a>SecurityContextHolder</h3><p>SecurityContextHolder 是用来保存 SecurityContext 的。SecurityContext 中含有当前正在访问系统的用户的详细信息。默认情况下，SecurityContextHolder 将使用 ThreadLocal 来保存 SecurityContext，这也就意味着在处于同一线程中的方法中我们可以从 ThreadLocal 中获取到当前的 SecurityContext。因为线程池的原因，如果我们每次在请求完成后都将 ThreadLocal 进行清除的话，那么我们把 SecurityContext 存放在 ThreadLocal 中还是比较安全的。这些工作 Spring Security 已经自动为我们做了，即在每一次 request 结束后都将清除当前线程的 ThreadLocal。</p>
+<p>既然 SecurityContext 是存放在 ThreadLocal 中的，而且在每次权限鉴定的时候都是从 ThreadLocal 中获取 SecurityContext 中对应的 Authentication 所拥有的权限，并且不同的 request 是不同的线程，为什么每次都可以从 ThreadLocal 中获取到当前用户对应的 SecurityContext 呢？在 Web 应用中这是通过 SecurityContextPersistentFilter 实现的，默认情况下其会在每次请求开始的时候从 session 中获取 SecurityContext，然后把它设置给 SecurityContextHolder，在请求结束后又会将 SecurityContextHolder 所持有的 SecurityContext 保存在 session 中，并且清除 SecurityContextHolder 所持有的 SecurityContext。这样当我们第一次访问系统的时候，SecurityContextHolder 所持有的 SecurityContext 肯定是空的，待我们登录成功后，SecurityContextHolder 所持有的 SecurityContext 就不是空的了，且包含有认证成功的 Authentication 对象，待请求结束后我们就会将 SecurityContext 存在 session 中，等到下次请求的时候就可以从 session 中获取到该 SecurityContext 并把它赋予给 SecurityContextHolder 了，由于 SecurityContextHolder 已经持有认证过的 Authentication 对象了，所以下次访问的时候也就不再需要进行登录认证了。</p>
+<p>SecurityContextHolder 中定义了一系列的静态方法，而这些静态方法内部逻辑基本上都是通过 SecurityContextHolder 持有的 SecurityContextHolderStrategy 来实现的，如 getContext()、setContext()、clearContext() 等。而默认使用的 strategy 就是基于 ThreadLocal 的 ThreadLocalSecurityContextHolderStrategy。另外，Spring Security 还提供了两种类型的 strategy 实现，GlobalSecurityContextHolderStrategy 和 InheritableThreadLocalSecurityContextHolderStrategy，前者表示全局使用同一个 SecurityContext，如 C/S 结构的客户端；后者使用 InheritableThreadLocal 来存放 SecurityContext，即子线程可以使用父线程中存放的变量。</p>
+<p>一般而言，我们使用默认的 strategy 就可以了，但是如果要改变默认的 strategy，Spring Security 为我们提供了两种方法，这两种方式都是通过改变 strategyName 来实现的。SecurityContextHolder 中为三种不同类型的 strategy 分别命名为 MODE_THREADLOCAL、MODE_INHERITABLETHREADLOCAL 和 MODE_GLOBAL。第一种方式是通过 SecurityContextHolder 的静态方法 setStrategyName() 来指定需要使用的 strategy；第二种方式是通过系统属性进行指定，其中属性名默认为 “spring.security.strategy”，属性值为对应 strategy 的名称。</p>
+<p>使用全局唯一的 SecurityContextHolder:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void useGlobalSecurityContextHolder() &#123;</span><br><span class="line">   SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring Security 使用一个 Authentication 对象来描述当前用户的相关信息。SecurityContextHolder 中持有的是当前用户的 SecurityContext，而 SecurityContext 持有的是代表当前用户相关信息的 Authentication 的引用。这个 Authentication 对象不需要我们自己去创建，在与系统交互的过程中，Spring Security 会自动为我们创建相应的 Authentication 对象，然后赋值给当前的 SecurityContext。但是往往我们需要在程序中获取当前用户的相关信息，比如最常见的是获取当前登录用户的用户名。在程序的任何地方，通过如下方式我们可以获取到当前用户的用户名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();</span><br><span class="line"></span><br><span class="line">if (principal instanceof UserDetails) &#123;</span><br><span class="line">String username = ((UserDetails)principal).getUsername();</span><br><span class="line">&#125; else &#123;</span><br><span class="line">String username = principal.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 Authentication.getPrincipal() 可以获取到代表当前用户的信息，这个对象通常是 UserDetails 的实例。获取当前用户的用户名是一种比较常见的需求，关于上述代码其实 Spring Security 在 Authentication 中的实现类中已经为我们做了相关实现，所以获取当前用户的用户名最简单的方式应当如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public String getCurrentUsername() &#123;</span><br><span class="line">	return SecurityContextHolder.getContext().getAuthentication().getName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此外，调用 SecurityContextHolder.getContext() 获取 SecurityContext 时，如果对应的 SecurityContext 不存在，则 Spring Security 将为我们建立一个空的 SecurityContext 并进行返回。</p>
+<h3 id="AuthenticationManager-和-AuthenticationProvider"><a href="#AuthenticationManager-和-AuthenticationProvider" class="headerlink" title="AuthenticationManager 和 AuthenticationProvider"></a>AuthenticationManager 和 AuthenticationProvider</h3><p>AuthenticationManager 是一个用来处理认证（Authentication）请求的接口。在其中只定义了一个方法 authenticate()，该方法只接收一个代表认证请求的 Authentication 对象作为参数，如果认证成功，则会返回一个封装了当前用户权限等信息的 Authentication 对象进行返回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authentication authenticate(Authentication authentication) throws AuthenticationException;</span><br></pre></td></tr></table></figure>
+
+<p>在 Spring Security 中，AuthenticationManager 的默认实现是 ProviderManager，而且它不直接自己处理认证请求，而是委托给其所配置的 AuthenticationProvider 列表，然后会依次使用每一个 AuthenticationProvider 进行认证，如果有一个 AuthenticationProvider 认证后的结果不为 null，则表示该 AuthenticationProvider 已经认证成功，之后的 AuthenticationProvider 将不再继续认证。然后直接以该 AuthenticationProvider 的认证结果作为 ProviderManager 的认证结果。如果所有的 AuthenticationProvider 的认证结果都为 null，则表示认证失败，将抛出一个 ProviderNotFoundException。校验认证请求最常用的方法是根据请求的用户名加载对应的 UserDetails，然后比对 UserDetails 的密码与认证请求的密码是否一致，一致则表示认证通过。Spring Security 内部的 DaoAuthenticationProvider 就是使用的这种方式。其内部使用 UserDetailsService 来负责加载 UserDetails，UserDetailsService 将在下节讲解。在认证成功以后会使用加载的 UserDetails 来封装要返回的 Authentication 对象，加载的 UserDetails 对象是包含用户权限等信息的。认证成功返回的 Authentication 对象将会保存在当前的 SecurityContext 中。</p>
+<p>当我们在使用 NameSpace 时， authentication-manager 元素的使用会使 Spring Security 在内部创建一个 ProviderManager，然后可以通过 authentication-provider 元素往其中添加 AuthenticationProvider。当定义 authentication-provider 元素时，如果没有通过 ref 属性指定关联哪个 AuthenticationProvider，Spring Security 默认就会使用 DaoAuthenticationProvider。使用了 NameSpace 后我们就不要再声明 ProviderManager 了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:authentication-manager alias=&quot;authenticationManager&quot;&gt;</span><br><span class="line">     &lt;security:authentication-provider</span><br><span class="line">        user-service-ref=&quot;userDetailsService&quot;/&gt;</span><br><span class="line">&lt;/security:authentication-manager&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果我们没有使用 NameSpace，那么我们就应该在 ApplicationContext 中声明一个 ProviderManager。</p>
+<p>默认情况下，在认证成功后 ProviderManager 将清除返回的 Authentication 中的凭证信息，如密码。所以如果你在无状态的应用中将返回的 Authentication 信息缓存起来了，那么以后你再利用缓存的信息去认证将会失败，因为它已经不存在密码这样的凭证信息了。所以在使用缓存的时候你应该考虑到这个问题。一种解决办法是设置 ProviderManager 的 eraseCredentialsAfterAuthentication 属性为 false，或者想办法在缓存时将凭证信息一起缓存。</p>
+<h3 id="UserDetailsService"><a href="#UserDetailsService" class="headerlink" title="UserDetailsService"></a>UserDetailsService</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.security.core.userdetails;</span><br><span class="line"></span><br><span class="line">public interface UserDetailsService &#123;</span><br><span class="line">	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 Authentication.getPrincipal() 的返回类型是 Object，但很多情况下其返回的其实是一个 UserDetails 的实例。UserDetails 是 Spring Security 中一个核心的接口。其中定义了一些可以获取用户名、密码、权限等与认证相关的信息的方法。Spring Security 内部使用的 UserDetails 实现类大都是内置的 User 类，我们如果要使用 UserDetails 时也可以直接使用该类。在 Spring Security 内部很多地方需要使用用户信息的时候基本上都是使用的 UserDetails，比如在登录认证的时候。登录认证的时候 Spring Security 会通过 UserDetailsService 的 loadUserByUsername() 方法获取对应的 UserDetails 进行认证，认证通过后会将该 UserDetails 赋给认证通过的 Authentication 的 principal，然后再把该 Authentication 存入到 SecurityContext 中。之后如果需要使用用户信息的时候就是通过 SecurityContextHolder 获取存放在 SecurityContext 中的 Authentication 的 principal。</p>
+<p>通常我们需要在应用中获取当前用户的其它信息，如 Email、电话等。这时存放在 Authentication 的 principal 中只包含有认证相关信息的 UserDetails 对象可能就不能满足我们的要求了。这时我们可以实现自己的 UserDetails，在该实现类中我们可以定义一些获取用户其它信息的方法，这样将来我们就可以直接从当前 SecurityContext 的 Authentication 的 principal 中获取这些信息了。上文已经提到了 UserDetails 是通过 UserDetailsService 的 loadUserByUsername() 方法进行加载的。UserDetailsService 也是一个接口，我们也需要实现自己的 UserDetailsService 来加载我们自定义的 UserDetails 信息。然后把它指定给 AuthenticationProvider 即可。如下是一个配置 UserDetailsService 的示例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 用于认证的 AuthenticationManager --&gt;</span><br><span class="line">   &lt;security:authentication-manager alias=&quot;authenticationManager&quot;&gt;</span><br><span class="line">      &lt;security:authentication-provider</span><br><span class="line">         user-service-ref=&quot;userDetailsService&quot; /&gt;</span><br><span class="line">   &lt;/security:authentication-manager&gt;</span><br><span class="line"></span><br><span class="line">   &lt;bean id=&quot;userDetailsService&quot;</span><br><span class="line">      class=&quot;org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl&quot;&gt;</span><br><span class="line">      &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中我们使用的 JdbcDaoImpl 是 Spring Security 为我们提供的 UserDetailsService 的实现，另外 Spring Security 还为我们提供了 UserDetailsService 另外一个实现，InMemoryDaoImpl。其作用是从数据库中加载 UserDetails 信息。其中已经定义好了加载相关信息的默认脚本，这些脚本也可以通过 JdbcDaoImpl 的相关属性进行指定。</p>
+<h4 id="org-springframework-security-core-userdetails-jdbc-JdbcDaoImpl-java"><a href="#org-springframework-security-core-userdetails-jdbc-JdbcDaoImpl-java" class="headerlink" title="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.java"></a>org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.java</h4><p>JdbcDaoImpl 允许我们从数据库来加载 UserDetails，其底层使用的是 Spring 的 JdbcTemplate 进行操作，所以我们需要给其指定一个数据源。</p>
+<p>使用 NameSpace 时，使用 jdbc-user-service 元素时在底层 Spring Security 默认使用的就是 JdbcDaoImpl:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:authentication-manager alias=&quot;authenticationManager&quot;&gt;</span><br><span class="line">      &lt;security:authentication-provider&gt;</span><br><span class="line">         &lt;!-- 基于 Jdbc 的 UserDetailsService 实现，JdbcDaoImpl --&gt;</span><br><span class="line">         &lt;security:jdbc-user-service data-source-ref=&quot;dataSource&quot;/&gt;</span><br><span class="line">      &lt;/security:authentication-provider&gt;</span><br><span class="line">   &lt;/security:authentication-manager&gt;</span><br></pre></td></tr></table></figure>
+
+<p>JdbcDaoImpl.java 中重写了 loadUserByUsername(String username) 方法.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException &#123;</span><br><span class="line">        List&lt;UserDetails&gt; users = this.loadUsersByUsername(username);</span><br><span class="line">        if(users.size() == 0) &#123;</span><br><span class="line">            this.logger.debug(&quot;Query returned no results for user &apos;&quot; + username + &quot;&apos;&quot;);</span><br><span class="line">            throw new UsernameNotFoundException(this.messages.getMessage(&quot;JdbcDaoImpl.notFound&quot;, new Object[]&#123;username&#125;, &quot;Username &#123;0&#125; not found&quot;));</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            UserDetails user = (UserDetails)users.get(0);</span><br><span class="line">            Set&lt;GrantedAuthority&gt; dbAuthsSet = new HashSet();</span><br><span class="line">            if(this.enableAuthorities) &#123;</span><br><span class="line">                dbAuthsSet.addAll(this.loadUserAuthorities(user.getUsername()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(this.enableGroups) &#123;</span><br><span class="line">                dbAuthsSet.addAll(this.loadGroupAuthorities(user.getUsername()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            List&lt;GrantedAuthority&gt; dbAuths = new ArrayList(dbAuthsSet);</span><br><span class="line">            this.addCustomAuthorities(user.getUsername(), dbAuths);</span><br><span class="line">            if(dbAuths.size() == 0) &#123;</span><br><span class="line">                this.logger.debug(&quot;User &apos;&quot; + username + &quot;&apos; has no authorities and will be treated as &apos;not found&apos;&quot;);</span><br><span class="line">                throw new UsernameNotFoundException(this.messages.getMessage(&quot;JdbcDaoImpl.noAuthority&quot;, new Object[]&#123;username&#125;, &quot;User &#123;0&#125; has no GrantedAuthority&quot;));</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return this.createUserDetails(username, user, dbAuths);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>loadUserByUsername() 方法分别调用了下面几个方法：</p>
+<ol>
+<li>loadUsersByUsername(String username) ：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">protected List&lt;UserDetails&gt; loadUsersByUsername(String username) &#123;</span><br><span class="line">        return this.getJdbcTemplate().query(this.usersByUsernameQuery, new String[]&#123;username&#125;, new RowMapper&lt;UserDetails&gt;() &#123;</span><br><span class="line">            public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException &#123;</span><br><span class="line">                String username = rs.getString(1);</span><br><span class="line">                String password = rs.getString(2);</span><br><span class="line">                boolean enabled = rs.getBoolean(3);</span><br><span class="line">                return new User(username, password, enabled, true, true, true, AuthorityUtils.NO_AUTHORITIES);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 usersByUsernameQuery 属性指定通过 username 查询用户信息的 SQL 语句。</p>
+<ol start="2">
+<li>loadUserAuthorities(String username) ：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">protected List&lt;GrantedAuthority&gt; loadUserAuthorities(String username) &#123;</span><br><span class="line">       return this.getJdbcTemplate().query(this.authoritiesByUsernameQuery, new String[]&#123;username&#125;, new RowMapper&lt;GrantedAuthority&gt;() &#123;</span><br><span class="line">           public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException &#123;</span><br><span class="line">               String roleName = JdbcDaoImpl.this.rolePrefix + rs.getString(2);</span><br><span class="line">               return new SimpleGrantedAuthority(roleName);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 authoritiesByUsernameQuery 属性指定通过 username 查询用户所拥有的权限。</p>
+<ol start="3">
+<li>loadGroupAuthorities(String username) ：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">protected List&lt;GrantedAuthority&gt; loadGroupAuthorities(String username) &#123;</span><br><span class="line">       return this.getJdbcTemplate().query(this.groupAuthoritiesByUsernameQuery, new String[]&#123;username&#125;, new RowMapper&lt;GrantedAuthority&gt;() &#123;</span><br><span class="line">           public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException &#123;</span><br><span class="line">               String roleName = JdbcDaoImpl.this.getRolePrefix() + rs.getString(3);</span><br><span class="line">               return new SimpleGrantedAuthority(roleName);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 groupAuthoritiesByUsernameQuery 属性指定根据 username 查询用户组权限（如果通过设置 JdbcDaoImpl 的 enableGroups 为 true 启用了用户组权限的支持）。</p>
+<p>上面的 usersByUsernameQuery 属性, authoritiesByUsernameQuery 属性和 groupAuthoritiesByUsernameQuery 属性分别对应下面三条默认的 SQL 语句, 当这些信息都没有指定时，将使用默认的 SQL 语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private String usersByUsernameQuery = &quot;select username,password,enabled from users where username = ?&quot;;</span><br><span class="line"></span><br><span class="line">private String authoritiesByUsernameQuery = &quot;select username,authority from authorities where username = ?&quot;;</span><br><span class="line"></span><br><span class="line">private String groupAuthoritiesByUsernameQuery = &quot;select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id&quot;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Spring Security 默认创建的表结构: <a href="http://docs.spring.io/spring-security/site/docs/current/reference/html/appendix-schema.html" target="_blank" rel="noopener">Security Database Schema</a> 。</p>
+</blockquote>
+<p>上面权限的启用和 sql 查询语句都是可以在 SecurityConfig 类（实现了 WebSecurityConfigurerAdapter 的配置类）中控制和配置的，sql 语句可以根据自己定义的安全实体来查询，但是 select 后面的查询属性的位置顺序要和上面一样，只能改变 where 子句, 例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableWebSecurity</span><br><span class="line">public class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configure(WebSecurity webSecurity) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @param auth</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    @Autowired</span><br><span class="line">    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception &#123;</span><br><span class="line">        JdbcUserDetailsManagerConfigurer&lt;AuthenticationManagerBuilder&gt; configurer = auth.jdbcAuthentication();</span><br><span class="line">        configurer</span><br><span class="line">                .dataSource(dataSource)</span><br><span class="line">                .usersByUsernameQuery(</span><br><span class="line">                        &quot;select username, password, enabled from users where username = ?&quot;)</span><br><span class="line">                .authoritiesByUsernameQuery(</span><br><span class="line">                        &quot;select gm.username, g.role_name &quot;</span><br><span class="line">                        + &quot;from groups g, group_members gm, group_authorities ga &quot;</span><br><span class="line">                        + &quot;where gm.username = ? &quot; + &quot;and g.id = ga.group_id &quot;</span><br><span class="line">                        + &quot;and g.id = gm.group_id&quot;)</span><br><span class="line">                .groupAuthoritiesByUsername(</span><br><span class="line">                		&quot;select g.id, g.group_name, ga.authority &quot;</span><br><span class="line">                        + &quot;from groups g, group_members gm, group_authorities ga,authorities a &quot;</span><br><span class="line">                        + &quot;where gm.username = ? &quot; + &quot;and g.id = ga.group_id &quot;</span><br><span class="line">                        + &quot;and g.id = gm.group_id and a.authority = ga.authority and 			a.enabled=true&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="InMemoryDaoImpl"><a href="#InMemoryDaoImpl" class="headerlink" title="InMemoryDaoImpl"></a>InMemoryDaoImpl</h4><p>InMemoryDaoImpl 主要是测试用的，其只是简单的将用户信息保存在内存中。使用 NameSpace 时，使用 user-service 元素 Spring Security 底层使用的 UserDetailsService 就是 InMemoryDaoImpl。此时，我们可以简单的使用 user 元素来定义一个 UserDetails:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:user-service&gt;</span><br><span class="line">      &lt;security:user name=&quot;user&quot; password=&quot;user&quot; authorities=&quot;ROLE_USER&quot;/&gt;</span><br><span class="line">   &lt;/security:user-service&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如上配置表示我们定义了一个用户 user，其对应的密码为 user，拥有 ROLE_USER 的权限。此外，user-service 还支持通过 properties 文件来指定用户信息，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:user-service properties=&quot;/WEB-INF/config/users.properties&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中属性文件应遵循如下格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=password,grantedAuthority[,grantedAuthority][,enabled|disabled]</span><br></pre></td></tr></table></figure>
+
+<p>所以，对应上面的配置文件，我们的 users.properties 文件的内容应该如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#username=password,grantedAuthority[,grantedAuthority][,enabled|disabled]</span><br><span class="line">user=user,ROLE_USER</span><br></pre></td></tr></table></figure>
+
+<h3 id="GrantedAuthority"><a href="#GrantedAuthority" class="headerlink" title="GrantedAuthority"></a>GrantedAuthority</h3><p>Authentication 的 getAuthorities() 可以返回当前 Authentication 对象拥有的权限，即当前用户拥有的权限。其返回值是一个 GrantedAuthority 类型的数组，每一个 GrantedAuthority 对象代表赋予给当前用户的一种权限。GrantedAuthority 是一个接口，其通常是通过 UserDetailsService 进行加载，然后赋予给 UserDetails 的。</p>
+<p>GrantedAuthority 中只定义了一个 getAuthority() 方法，该方法返回一个字符串，表示对应权限的字符串表示，如果对应权限不能用字符串表示，则应当返回 null。</p>
+<p>Spring Security 针对 GrantedAuthority 有一个简单实现 SimpleGrantedAuthority。该类只是简单的接收一个表示权限的字符串。Spring Security 内部的所有 AuthenticationProvider 都是使用 SimpleGrantedAuthority 来封装 Authentication 对象。</p>
+<h2 id="Web-应用认证过程"><a href="#Web-应用认证过程" class="headerlink" title="Web 应用认证过程"></a>Web 应用认证过程</h2><p>当用户输入了用户名和密码之后，Spring Security 将获取到的用户名和密码封装成一个 <code>org.springframework.security.authentication.UsernamePasswordAuthenticationToken</code> 对象 ( <code>Authentication</code> 接口的实现类) ，并将生成的 Token 对象带入 <code>AuthenticationManager</code> ( <code>org.springframework.security.authentication.ProviderManager</code> ) 验证，AuthenticationManager 实际是 ProviderManager，ProviderManager 实现了 AuthenticationManager 接口。将认证的工作交给 AuthenticationProvider，AuthenticationManager 都会包含多个 AuthenticationProvider 对象，有任何一个 AuthenticationProvider 验证通过，都属于认证通过。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.security.web.authentication;</span><br><span class="line"></span><br><span class="line">import org.springframework.security.authentication.AuthenticationServiceException;</span><br><span class="line">import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;</span><br><span class="line">import org.springframework.security.core.Authentication;</span><br><span class="line">import org.springframework.security.core.AuthenticationException;</span><br><span class="line">import org.springframework.security.web.util.matcher.AntPathRequestMatcher;</span><br><span class="line">import org.springframework.util.Assert;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">public class UsernamePasswordAuthenticationFilter extends</span><br><span class="line">		AbstractAuthenticationProcessingFilter &#123;</span><br><span class="line"></span><br><span class="line">	public static final String SPRING_SECURITY_FORM_USERNAME_KEY = &quot;username&quot;;</span><br><span class="line">	public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = &quot;password&quot;;</span><br><span class="line"></span><br><span class="line">	private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;</span><br><span class="line">	private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;</span><br><span class="line">	private boolean postOnly = true;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	public Authentication attemptAuthentication(HttpServletRequest request,</span><br><span class="line">			HttpServletResponse response) throws AuthenticationException &#123;</span><br><span class="line">		if (postOnly &amp;&amp; !request.getMethod().equals(&quot;POST&quot;)) &#123;</span><br><span class="line">			throw new AuthenticationServiceException(</span><br><span class="line">					&quot;Authentication method not supported: &quot; + request.getMethod());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		String username = obtainUsername(request);</span><br><span class="line">		String password = obtainPassword(request);</span><br><span class="line"></span><br><span class="line">		if (username == null) &#123;</span><br><span class="line">			username = &quot;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (password == null) &#123;</span><br><span class="line">			password = &quot;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		username = username.trim();</span><br><span class="line"></span><br><span class="line">		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(</span><br><span class="line">				username, password);</span><br><span class="line"></span><br><span class="line">		// Allow subclasses to set the &quot;details&quot; property</span><br><span class="line">		setDetails(request, authRequest);</span><br><span class="line"></span><br><span class="line">		return this.getAuthenticationManager().authenticate(authRequest);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>验证成功后返回一个封装了用户权限信息的 <code>Authentication</code> 对象 , 再通过调用 <code>SecurityContextHolder.getContext().setAuthentication()</code> 将该对象保存到当前的 <code>SecurityContext</code> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.security.web.authentication;</span><br><span class="line"></span><br><span class="line">public abstract class AbstractAuthenticationProcessingFilter extends GenericFilterBean implements ApplicationEventPublisherAware, MessageSourceAware &#123;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException &#123;</span><br><span class="line">        if(this.logger.isDebugEnabled()) &#123;</span><br><span class="line">            this.logger.debug(&quot;Authentication success. Updating SecurityContextHolder to contain: &quot; + authResult);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SecurityContextHolder.getContext().setAuthentication(authResult);</span><br><span class="line">        this.rememberMeServices.loginSuccess(request, response, authResult);</span><br><span class="line">        if(this.eventPublisher != null) &#123;</span><br><span class="line">            this.eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        this.successHandler.onAuthenticationSuccess(request, response, authResult);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跳转验证成功后的页面 (可自定义设置) :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.security.web.authentication;</span><br><span class="line"></span><br><span class="line">public abstract class AbstractAuthenticationTargetUrlRequestHandler &#123;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException &#123;</span><br><span class="line">        String targetUrl = this.determineTargetUrl(request, response);</span><br><span class="line">        if(response.isCommitted()) &#123;</span><br><span class="line">            this.logger.debug(&quot;Response has already been committed. Unable to redirect to &quot; + targetUrl);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            this.redirectStrategy.sendRedirect(request, response, targetUrl);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h2><p>Spring Security 的底层是通过一系列的 Filter 来管理的，每个 Filter 都有其自身的功能，而且各个 Filter 在功能上还有关联关系，所以它们的顺序也是非常重要的。</p>
+<p>Spring Security 已经定义了一些 Filter，不管实际应用中你用到了哪些，它们应当保持如下顺序。</p>
+<ul>
+<li>ChannelProcessingFilter，如果你访问的 channel 错了，那首先就会在 channel 之间进行跳转，如 http 变为 https。</li>
+<li>SecurityContextPersistenceFilter，这样的话在一开始进行 request 的时候就可以在 SecurityContextHolder 中建立一个 SecurityContext，然后在请求结束的时候，任何对 SecurityContext 的改变都可以被 copy 到 HttpSession。</li>
+<li>ConcurrentSessionFilter，因为它需要使用 SecurityContextHolder 的功能，而且更新对应 session 的最后更新时间，以及通过 SessionRegistry 获取当前的 SessionInformation 以检查当前的 session 是否已经过期，过期则会调用 LogoutHandler。</li>
+<li>认证处理机制，如 UsernamePasswordAuthenticationFilter，CasAuthenticationFilter，BasicAuthenticationFilter 等，以至于 SecurityContextHolder 可以被更新为包含一个有效的 Authentication 请求。</li>
+<li>SecurityContextHolderAwareRequestFilter，它将会把 HttpServletRequest 封装成一个继承自 HttpServletRequestWrapper 的 SecurityContextHolderAwareRequestWrapper，同时使用 SecurityContext 实现了 HttpServletRequest 中与安全相关的方法。</li>
+<li>JaasApiIntegrationFilter，如果 SecurityContextHolder 中拥有的 Authentication 是一个 JaasAuthenticationToken，那么该 Filter 将使用包含在 JaasAuthenticationToken 中的 Subject 继续执行 FilterChain。</li>
+<li>RememberMeAuthenticationFilter，如果之前的认证处理机制没有更新 SecurityContextHolder，并且用户请求包含了一个 Remember-Me 对应的 cookie，那么一个对应的 Authentication 将会设给 SecurityContextHolder。</li>
+<li>AnonymousAuthenticationFilter，如果之前的认证机制都没有更新 SecurityContextHolder 拥有的 Authentication，那么一个 AnonymousAuthenticationToken 将会设给 SecurityContextHolder。</li>
+<li>ExceptionTransactionFilter，用于处理在 FilterChain 范围内抛出的 AccessDeniedException 和 AuthenticationException，并把它们转换为对应的 Http 错误码返回或者对应的页面。</li>
+<li>FilterSecurityInterceptor，保护 Web URI，并且在访问被拒绝时抛出异常。</li>
+</ul>
+<p>当我们在使用 NameSpace 时，Spring Security 是会自动为我们建立对应的 FilterChain 以及其中的 Filter。但有时我们可能需要添加我们自己的 Filter 到 FilterChain，又或者是因为某些特性需要自己显示的定义 Spring Security 已经为我们提供好的 Filter，然后再把它们添加到 FilterChain。使用 NameSpace 时添加 Filter 到 FilterChain 是通过 http 元素下的 custom-filter 元素来定义的。定义 custom-filter 时需要我们通过 ref 属性指定其对应关联的是哪个 Filter，此外还需要通过 position、before 或者 after 指定该 Filter 放置的位置。如上面提到的那样，Spring Security 对 FilterChain 中 Filter 顺序是有严格的规定的。Spring Security 对那些内置的 Filter 都指定了一个别名，同时指定了它们的位置。我们在定义 custom-filter 的 position、before 和 after 时使用的值就是对应着这些别名所处的位置。如 position=”CAS_FILTER” 就表示将定义的 Filter 放在 CAS_FILTER 对应的那个位置，before=”CAS_FILTER” 就表示将定义的 Filter 放在 CAS_FILTER 之前，after=”CAS_FILTER” 就表示将定义的 Filter 放在 CAS_FILTER 之后。此外还有两个特殊的位置可以指定，FIRST 和 LAST，分别对应第一个和最后一个 Filter，如你想把定义好的 Filter 放在最后，则可以使用 after=”LAST”。</p>
+<p>下面按顺序展示 Spring Security 给我们定义好的 FilterChain 中 Filter 对应的位置顺序、它们的别名以及将触发自动添加到 FilterChain 的元素或属性定义 ：</p>
+<table>
+<thead>
+<tr>
+<th><strong>别名</strong></th>
+<th><strong>Filter 类</strong></th>
+<th><strong>对应元素或属性</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CHANNEL_FILTER</td>
+<td>ChannelProcessingFilter</td>
+<td>http/intercept-url@requires-channel</td>
+</tr>
+<tr>
+<td>SECURITY_CONTEXT_FILTER</td>
+<td>SecurityContextPersistenceFilter</td>
+<td>http</td>
+</tr>
+<tr>
+<td>CONCURRENT_SESSION_FILTER</td>
+<td>ConcurrentSessionFilter</td>
+<td>http/session-management/concurrency-control</td>
+</tr>
+<tr>
+<td>LOGOUT_FILTER</td>
+<td>LogoutFilter</td>
+<td>http/logout</td>
+</tr>
+<tr>
+<td>X509_FILTER</td>
+<td>X509AuthenticationFilter</td>
+<td>http/x509</td>
+</tr>
+<tr>
+<td>PRE_AUTH_FILTER</td>
+<td>AstractPreAuthenticatedProcessingFilter 的子类</td>
+<td>无</td>
+</tr>
+<tr>
+<td>CAS_FILTER</td>
+<td>CasAuthenticationFilter</td>
+<td>无</td>
+</tr>
+<tr>
+<td>FORM_LOGIN_FILTER</td>
+<td>UsernamePasswordAuthenticationFilter</td>
+<td>http/form-login</td>
+</tr>
+<tr>
+<td>BASIC_AUTH_FILTER</td>
+<td>BasicAuthenticationFilter</td>
+<td>http/http-basic</td>
+</tr>
+<tr>
+<td>SERVLET_API_SUPPORT_FILTER</td>
+<td>SecurityContextHolderAwareRequestFilter</td>
+<td>http@servlet-api-provision</td>
+</tr>
+<tr>
+<td>JAAS_API_SUPPORT_FILTER</td>
+<td>JaasApiIntegrationFilter</td>
+<td>http@jaas-api-provision</td>
+</tr>
+<tr>
+<td>REMEMBER_ME_FILTER</td>
+<td>RememberMeAuthenticationFilter</td>
+<td>http/remember-me</td>
+</tr>
+<tr>
+<td>ANONYMOUS_FILTER</td>
+<td>AnonymousAuthenticationFilter</td>
+<td>http/anonymous</td>
+</tr>
+<tr>
+<td>SESSION_MANAGEMENT_FILTER</td>
+<td>SessionManagementFilter</td>
+<td>http/session-management</td>
+</tr>
+<tr>
+<td>EXCEPTION_TRANSLATION_FILTER</td>
+<td>ExceptionTranslationFilter</td>
+<td>http</td>
+</tr>
+<tr>
+<td>FILTER_SECURITY_INTERCEPTOR</td>
+<td>FilterSecurityInterceptor</td>
+<td>http</td>
+</tr>
+<tr>
+<td>SWITCH_USER_FILTER</td>
+<td>SwitchUserFilter</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<h3 id="DelegatingFilterProxy"><a href="#DelegatingFilterProxy" class="headerlink" title="DelegatingFilterProxy"></a>DelegatingFilterProxy</h3><p>上面这些 Filter 不需要手动在 web.xml 文件中一个个配置，只需要配置下面这一个 Filter 就行了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">	&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;</span><br><span class="line">	&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">	&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;</span><br><span class="line">	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<p>配置中 DelegatingFilterProxy 是 Spring 中定义的一个 Filter 实现类，其作用是代理真正的 Filter 实现类，也就是说在调用 DelegatingFilterProxy 的 doFilter() 方法时实际上调用的是其代理 Filter 的 doFilter() 方法。其代理 Filter 必须是一个 Spring bean 对象，所以使用 DelegatingFilterProxy 的好处就是其代理 Filter 类可以使用 Spring 的依赖注入机制方便自由的使用 ApplicationContext 中的 bean。那么 DelegatingFilterProxy 如何知道其所代理的 Filter 是哪个呢？这是通过其自身的一个叫 targetBeanName 的属性来确定的，通过该名称，DelegatingFilterProxy 可以从 WebApplicationContext 中获取指定的 bean 作为代理对象。该属性可以通过在 web.xml 中定义 DelegatingFilterProxy 时通过 init-param 来指定，如果未指定的话将默认取其在 web.xml 中声明时定义的名称。在上述配置中，DelegatingFilterProxy 代理的就是名为 SpringSecurityFilterChain 的 Filter。需要注意的是被代理的 Filter 的初始化方法 init() 和销毁方法 destroy() 默认是不会被执行的。通过设置 DelegatingFilterProxy 的 targetFilterLifecycle 属性为 true，可以使被代理 Filter 与 DelegatingFilterProxy 具有同样的生命周期。</p>
+<h3 id="FilterChainProxy"><a href="#FilterChainProxy" class="headerlink" title="FilterChainProxy"></a>FilterChainProxy</h3><p>Spring Security 底层是通过一系列的 Filter 来工作的，每个 Filter 都有其各自的功能，而且各个 Filter 之间还有关联关系，所以它们的组合顺序也是非常重要的。</p>
+<p>使用 Spring Security 时，DelegatingFilterProxy 代理的就是一个 FilterChainProxy。一个 FilterChainProxy 中可以包含有多个 FilterChain，但是某个请求只会对应一个 FilterChain，而一个 FilterChain 中又可以包含有多个 Filter。当我们使用基于 Spring Security 的 NameSpace 进行配置时，系统会自动为我们注册一个名为 springSecurityFilterChain 类型为 FilterChainProxy 的 bean（这也是为什么我们在使用 SpringSecurity 时需要在 web.xml 中声明一个 name 为 springSecurityFilterChain 类型为 DelegatingFilterProxy 的 Filter 了。），而且每一个 http 元素的定义都将拥有自己的 FilterChain，而 FilterChain 中所拥有的 Filter 则会根据定义的服务自动增减。所以我们不需要显示的再定义这些 Filter 对应的 bean 了，除非你想实现自己的逻辑，又或者你想定义的某个属性 NameSpace 没有提供对应支持等。</p>
+<p>Spring security 允许我们在配置文件中配置多个 http 元素，以针对不同形式的 URL 使用不同的安全控制。Spring Security 将会为每一个 http 元素创建对应的 FilterChain，同时按照它们的声明顺序加入到 FilterChainProxy。所以当我们同时定义多个 http 元素时要确保将更具有特性的 URL 配置在前。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;springSecurityFilterChain&quot; class=&quot;org.springframework.security.web.FilterChainProxy&quot;&gt;</span><br><span class="line">   &lt;sec:filter-chain-map path-type=&quot;ant&quot;&gt;</span><br><span class="line">       &lt;sec:filter-chain pattern=&quot;/**&quot; filters=&quot;</span><br><span class="line">           securityContextPersistenceFilter,</span><br><span class="line">           logoutFilter,</span><br><span class="line">           usernamePasswordAuthenticationFilter,</span><br><span class="line">           securityContextHolderAwareRequestFilte,</span><br><span class="line">           rememberMeFilter,</span><br><span class="line">           sessionManagementFilter,</span><br><span class="line">           anonymousProcessingFilter,</span><br><span class="line">           exceptionTranslationFilter,</span><br><span class="line">           filterSecurityInterceptor&quot; /&gt;</span><br><span class="line">   &lt;/sec:filter-chain-map&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring-Security-定义好的核心-Filter"><a href="#Spring-Security-定义好的核心-Filter" class="headerlink" title="Spring Security 定义好的核心 Filter"></a>Spring Security 定义好的核心 Filter</h3><p>通过前面的介绍我们知道 Spring Security 是通过 Filter 来工作的，为保证 Spring Security 的顺利运行，其内部实现了一系列的 Filter。这其中有几个是在使用 Spring Security 的 Web 应用中必定会用到的。接下来我们来简要的介绍一下 FilterSecurityInterceptor、ExceptionTranslationFilter、SecurityContextPersistenceFilter 和 UsernamePasswordAuthenticationFilter。在我们使用 http 元素时前三者会自动添加到对应的 FilterChain 中，当我们使用了 form-login 元素时 UsernamePasswordAuthenticationFilter 也会自动添加到 FilterChain 中。所以我们在利用 custom-filter 往 FilterChain 中添加自己定义的这些 Filter 时需要注意它们的位置。</p>
+<h4 id="FilterSecurityInterceptor"><a href="#FilterSecurityInterceptor" class="headerlink" title="FilterSecurityInterceptor"></a>FilterSecurityInterceptor</h4><p>FilterSecurityInterceptor 是用于保护 Http 资源的，它需要一个 AccessDecisionManager 和一个 AuthenticationManager 的引用。它会从 SecurityContextHolder 获取 Authentication，然后通过 SecurityMetadataSource 可以得知当前请求是否在请求受保护的资源。对于请求那些受保护的资源，如果 Authentication.isAuthenticated() 返回 false 或者 FilterSecurityInterceptor 的 alwaysReauthenticate 属性为 true，那么将会使用其引用的 AuthenticationManager 再认证一次，认证之后再使用认证后的 Authentication 替换 SecurityContextHolder 中拥有的那个。然后就是利用 AccessDecisionManager 进行权限的检查。</p>
+<p>我们在使用基于 NameSpace 的配置时所配置的 intercept-url 就会跟 FilterChain 内部的 FilterSecurityInterceptor 绑定。如果要自己定义 FilterSecurityInterceptor 对应的 bean，那么该 bean 定义大致如下所示 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;filterSecurityInterceptor&quot;</span><br><span class="line">  class=&quot;org.springframework.security.web.access.intercept.FilterSecurityInterceptor&quot;&gt;</span><br><span class="line">     &lt;property name=&quot;authenticationManager&quot; ref=&quot;authenticationManager&quot; /&gt;</span><br><span class="line">     &lt;property name=&quot;accessDecisionManager&quot; ref=&quot;accessDecisionManager&quot; /&gt;</span><br><span class="line">     &lt;property name=&quot;securityMetadataSource&quot;&gt;</span><br><span class="line">        &lt;security:filter-security-metadata-source&gt;</span><br><span class="line">           &lt;security:intercept-url pattern=&quot;/admin/**&quot; access=&quot;ROLE_ADMIN&quot; /&gt;</span><br><span class="line">           &lt;security:intercept-url pattern=&quot;/**&quot; access=&quot;ROLE_USER,ROLE_ADMIN&quot; /&gt;</span><br><span class="line">        &lt;/security:filter-security-metadata-source&gt;</span><br><span class="line">     &lt;/property&gt;</span><br><span class="line">  &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>filter-security-metadata-source 用于配置其 securityMetadataSource 属性。intercept-url 用于配置需要拦截的 URL 与对应的权限关系。</p>
+<h4 id="ExceptionTranslationFilter"><a href="#ExceptionTranslationFilter" class="headerlink" title="ExceptionTranslationFilter"></a>ExceptionTranslationFilter</h4><p>通过前面的介绍我们知道在 Spring Security 的 Filter 链表中 ExceptionTranslationFilter 就放在 FilterSecurityInterceptor 的前面。而 ExceptionTranslationFilter 是捕获来自 FilterChain 的异常，并对这些异常做处理。ExceptionTranslationFilter 能够捕获来自 FilterChain 所有的异常，但是它只会处理两类异常，AuthenticationException 和 AccessDeniedException，其它的异常它会继续抛出。如果捕获到的是 AuthenticationException，那么将会使用其对应的 AuthenticationEntryPoint 的 commence() 处理。如果捕获的异常是一个 AccessDeniedException，那么将视当前访问的用户是否已经登录认证做不同的处理，如果未登录，则会使用关联的 AuthenticationEntryPoint 的 commence() 方法进行处理，否则将使用关联的 AccessDeniedHandler 的 handle() 方法进行处理。</p>
+<p><strong>AuthenticationEntryPoint</strong> 是在用户没有登录时用于引导用户进行登录认证的，在实际应用中应根据具体的认证机制选择对应的 AuthenticationEntryPoint。</p>
+<p><strong>AccessDeniedHandler</strong> 用于在用户已经登录了，但是访问了其自身没有权限的资源时做出对应的处理。ExceptionTranslationFilter 拥有的 AccessDeniedHandler 默认是 AccessDeniedHandlerImpl，其会返回一个 403 错误码到客户端。我们可以通过显示的配置 AccessDeniedHandlerImpl，同时给其指定一个 errorPage 使其可以返回对应的错误页面。当然我们也可以实现自己的 AccessDeniedHandler。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;exceptionTranslationFilter&quot;</span><br><span class="line">     class=&quot;org.springframework.security.web.access.ExceptionTranslationFilter&quot;&gt;</span><br><span class="line">     &lt;property name=&quot;authenticationEntryPoint&quot;&gt;</span><br><span class="line">        &lt;bean class=&quot;org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint&quot;&gt;</span><br><span class="line">           &lt;property name=&quot;loginFormUrl&quot; value=&quot;/login.jsp&quot; /&gt;</span><br><span class="line">        &lt;/bean&gt;</span><br><span class="line">     &lt;/property&gt;</span><br><span class="line">     &lt;property name=&quot;accessDeniedHandler&quot;&gt;</span><br><span class="line">        &lt;bean class=&quot;org.springframework.security.web.access.AccessDeniedHandlerImpl&quot;&gt;</span><br><span class="line">           &lt;property name=&quot;errorPage&quot; value=&quot;/access_denied.jsp&quot; /&gt;</span><br><span class="line">        &lt;/bean&gt;</span><br><span class="line">     &lt;/property&gt;</span><br><span class="line">  &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在上述配置中我们指定了 AccessDeniedHandler 为 AccessDeniedHandlerImpl，同时为其指定了 errorPage，这样发生 AccessDeniedException 后将转到对应的 errorPage 上。指定了 AuthenticationEntryPoint 为使用表单登录的 LoginUrlAuthenticationEntryPoint。此外，需要注意的是如果该 filter 是作为自定义 filter 加入到由 NameSpace 自动建立的 FilterChain 中时需把它放在内置的 ExceptionTranslationFilter 后面，否则异常都将被内置的 ExceptionTranslationFilter 所捕获。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:http&gt;</span><br><span class="line">      &lt;security:form-login login-page=&quot;/login.jsp&quot;</span><br><span class="line">         username-parameter=&quot;username&quot; password-parameter=&quot;password&quot;</span><br><span class="line">         login-processing-url=&quot;/login.do&quot; /&gt;</span><br><span class="line">      &lt;!-- 退出登录时删除 session 对应的 cookie --&gt;</span><br><span class="line">      &lt;security:logout delete-cookies=&quot;JSESSIONID&quot; /&gt;</span><br><span class="line">      &lt;!-- 登录页面应当是不需要认证的 --&gt;</span><br><span class="line">      &lt;security:intercept-url pattern=&quot;/login*.jsp*&quot;</span><br><span class="line">         access=&quot;IS_AUTHENTICATED_ANONYMOUSLY&quot; /&gt;</span><br><span class="line">      &lt;security:intercept-url pattern=&quot;/**&quot; access=&quot;ROLE_USER&quot; /&gt;</span><br><span class="line">      &lt;security:custom-filter ref=&quot;exceptionTranslationFilter&quot; after=&quot;EXCEPTION_TRANSLATION_FILTER&quot;/&gt;</span><br><span class="line">   &lt;/security:http&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在捕获到 AuthenticationException 之后，调用 AuthenticationEntryPoint 的 commence() 方法引导用户登录之前，ExceptionTranslationFilter 还做了一件事，那就是使用 RequestCache 将当前 HttpServletRequest 的信息保存起来，以至于用户成功登录后需要跳转到之前的页面时可以获取到这些信息，然后继续之前的请求，比如用户可能在未登录的情况下发表评论，待用户提交评论的时候就会将包含评论信息的当前请求保存起来，同时引导用户进行登录认证，待用户成功登录后再利用原来的 request 包含的信息继续之前的请求，即继续提交评论，所以待用户登录成功后我们通常看到的是用户成功提交了评论之后的页面。Spring Security 默认使用的 RequestCache 是 HttpSessionRequestCache，其会将 HttpServletRequest 相关信息封装为一个 SavedRequest 保存在 HttpSession 中。</p>
+<h4 id="SecurityContextPersistenceFilter"><a href="#SecurityContextPersistenceFilter" class="headerlink" title="SecurityContextPersistenceFilter"></a>SecurityContextPersistenceFilter</h4><p>SecurityContextPersistenceFilter 会在请求开始时从配置好的 SecurityContextRepository 中获取 SecurityContext，然后把它设置给 SecurityContextHolder。在请求完成后将 SecurityContextHolder 持有的 SecurityContext 再保存到配置好的 SecurityContextRepository，同时清除 SecurityContextHolder 所持有的 SecurityContext。在使用 NameSpace 时，Spring Security 默认会给 SecurityContextPersistenceFilter 的 SecurityContextRepository 设置一个 HttpSessionSecurityContextRepository，其会将 SecurityContext 保存在 HttpSession 中。此外 HttpSessionSecurityContextRepository 有一个很重要的属性 allowSessionCreation，默认为 true。这样需要把 SecurityContext 保存在 session 中时，如果不存在 session，可以自动创建一个。也可以把它设置为 false，这样在请求结束后如果没有可用的 session 就不会保存 SecurityContext 到 session 了。SecurityContextRepository 还有一个空实现，NullSecurityContextRepository，如果在请求完成后不想保存 SecurityContext 也可以使用它。</p>
+<p>这里再补充说明一点为什么 SecurityContextPersistenceFilter 在请求完成后需要清除 SecurityContextHolder 的 SecurityContext。SecurityContextHolder 在设置和保存 SecurityContext 都是使用的静态方法，具体操作是由其所持有的 SecurityContextHolderStrategy 完成的。默认使用的是基于线程变量的实现，即 SecurityContext 是存放在 ThreadLocal 里面的，这样各个独立的请求都将拥有自己的 SecurityContext。在请求完成后清除 SecurityContextHolder 中的 SucurityContext 就是清除 ThreadLocal，Servlet 容器一般都有自己的线程池，这可以避免 Servlet 容器下一次分发线程时线程中还包含 SecurityContext 变量，从而引起不必要的错误。</p>
+<p>下面是一个 SecurityContextPersistenceFilter 的简单配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;securityContextPersistenceFilter&quot;</span><br><span class="line">   class=&quot;org.springframework.security.web.context.SecurityContextPersistenceFilter&quot;&gt;</span><br><span class="line">      &lt;property name=&apos;securityContextRepository&apos;&gt;</span><br><span class="line">         &lt;bean</span><br><span class="line">         class=&apos;org.springframework.security.web.context.HttpSessionSecurityContextRepository&apos;&gt;</span><br><span class="line">            &lt;property name=&apos;allowSessionCreation&apos; value=&apos;false&apos; /&gt;</span><br><span class="line">         &lt;/bean&gt;</span><br><span class="line">      &lt;/property&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="UsernamePasswordAuthenticationFilter"><a href="#UsernamePasswordAuthenticationFilter" class="headerlink" title="UsernamePasswordAuthenticationFilter"></a>UsernamePasswordAuthenticationFilter</h4><p>UsernamePasswordAuthenticationFilter 用于处理来自表单提交的认证。该表单必须提供对应的用户名和密码，对应的参数名默认为 j_username 和 j_password。如果不想使用默认的参数名，可以通过 UsernamePasswordAuthenticationFilter 的 usernameParameter 和 passwordParameter 进行指定。表单的提交路径默认是 “j_spring_security_check”，也可以通过 UsernamePasswordAuthenticationFilter 的 filterProcessesUrl 进行指定。通过属性 postOnly 可以指定只允许登录表单进行 post 请求，默认是 true。其内部还有登录成功或失败后进行处理的 AuthenticationSuccessHandler 和 AuthenticationFailureHandler，这些都可以根据需求做相关改变。此外，它还需要一个 AuthenticationManager 的引用进行认证，这个是没有默认配置的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;usernamePasswordAuthenticationFilter&quot;</span><br><span class="line">   class=&quot;org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter&quot;&gt;</span><br><span class="line">      &lt;property name=&quot;authenticationManager&quot; ref=&quot;authenticationManager&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;authenticationFailureHandler&quot; ref=&quot;failureHandler&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;authenticationSuccessHandler&quot; ref=&quot;successHandler&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;usernameParameter&quot; value=&quot;username&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;passwordParameter&quot; value=&quot;password&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;filterProcessesUrl&quot; value=&quot;/login.do&quot; /&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果要在 http 元素定义中使用上述 AuthenticationFilter 定义，那么完整的配置应该类似于如下这样子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">   xmlns:security=&quot;http://www.springframework.org/schema/security&quot;</span><br><span class="line">   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd</span><br><span class="line">          http://www.springframework.org/schema/security</span><br><span class="line">          http://www.springframework.org/schema/security/spring-security-3.1.xsd&quot;&gt;</span><br><span class="line">   &lt;!-- entry-point-ref 指定登录入口 --&gt;</span><br><span class="line">   &lt;security:http entry-point-ref=&quot;authEntryPoint&quot;&gt;</span><br><span class="line">      &lt;security:logout delete-cookies=&quot;JSESSIONID&quot; /&gt;</span><br><span class="line">      &lt;security:intercept-url pattern=&quot;/login*.jsp*&quot;</span><br><span class="line">         access=&quot;IS_AUTHENTICATED_ANONYMOUSLY&quot; /&gt;</span><br><span class="line">      &lt;security:intercept-url pattern=&quot;/**&quot; access=&quot;ROLE_USER&quot; /&gt;</span><br><span class="line">      &lt;!-- 添加自己定义的 AuthenticationFilter 到 FilterChain 的 FORM_LOGIN_FILTER 位置 --&gt;</span><br><span class="line">      &lt;security:custom-filter ref=&quot;authenticationFilter&quot; position=&quot;FORM_LOGIN_FILTER&quot;/&gt;</span><br><span class="line">   &lt;/security:http&gt;</span><br><span class="line">   &lt;!-- AuthenticationEntryPoint，引导用户进行登录 --&gt;</span><br><span class="line">   &lt;bean id=&quot;authEntryPoint&quot; class=&quot;org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint&quot;&gt;</span><br><span class="line">      &lt;property name=&quot;loginFormUrl&quot; value=&quot;/login.jsp&quot;/&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br><span class="line">   &lt;!-- 认证过滤器 --&gt;</span><br><span class="line">   &lt;bean id=&quot;usernamePasswordAuthenticationFilter&quot;</span><br><span class="line">   class=&quot;org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter&quot;&gt;</span><br><span class="line">      &lt;property name=&quot;authenticationManager&quot; ref=&quot;authenticationManager&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;authenticationFailureHandler&quot; ref=&quot;failureHandler&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;authenticationSuccessHandler&quot; ref=&quot;successHandler&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;usernameParameter&quot; value=&quot;username&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;passwordParameter&quot; value=&quot;password&quot; /&gt;</span><br><span class="line">      &lt;property name=&quot;filterProcessesUrl&quot; value=&quot;/login.do&quot; /&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">   &lt;security:authentication-manager alias=&quot;authenticationManager&quot;&gt;</span><br><span class="line">      &lt;security:authentication-provider</span><br><span class="line">         user-service-ref=&quot;userDetailsService&quot;&gt;</span><br><span class="line">         &lt;security:password-encoder hash=&quot;md5&quot;</span><br><span class="line">            base64=&quot;true&quot;&gt;</span><br><span class="line">            &lt;security:salt-source user-property=&quot;username&quot; /&gt;</span><br><span class="line">         &lt;/security:password-encoder&gt;</span><br><span class="line">      &lt;/security:authentication-provider&gt;</span><br><span class="line">   &lt;/security:authentication-manager&gt;</span><br><span class="line"></span><br><span class="line">   &lt;bean id=&quot;userDetailsService&quot;</span><br><span class="line">      class=&quot;org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl&quot;&gt;</span><br><span class="line">      &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果验证成功,进入 <code>SavedRequestAwareAuthenticationSuccessHandler</code> 的 <code>onAuthenticationSuccess</code> 方法，如果验证是否则进入 <code>SimpleUrlAuthenticationFailureHandler</code> 的 <code>onAuthenticationFailure</code> 方法。</p>
+<h2 id="AccessDecisionManager"><a href="#AccessDecisionManager" class="headerlink" title="AccessDecisionManager"></a>AccessDecisionManager</h2><p>所有的 Authentication 实现类都保存了一个 GrantedAuthority 列表，其表示用户所具有的权限。GrantedAuthority 是通过 AuthenticationManager 设置到 Authentication 对象中的，然后 AccessDecisionManager 将从 Authentication 中获取用户所具有的 GrantedAuthority 来鉴定用户是否具有访问对应资源的权限。</p>
+<p>GrantedAuthority 是一个接口，其中只定义了一个 getAuthority() 方法，其返回值为 String 类型。该方法允许 AccessDecisionManager 获取一个能够精确代表该权限的字符串。通过返回一个字符串，一个 GrantedAuthority 能够很轻易的被大部分 AccessDecisionManager 读取。如果一个 GrantedAuthority 不能够精确的使用一个 String 来表示，那么其对应的 getAuthority() 方法调用应当返回一个 null，这表示 AccessDecisionManager 必须对该 GrantedAuthority 的实现有特定的支持，从而可以获取该 GrantedAuthority 所代表的权限信息。</p>
+<p>Spring Security 内置了一个 GrantedAuthority 的实现，SimpleGrantedAuthority。它直接接收一个表示权限信息的字符串，然后 getAuthority() 方法直接返回该字符串。Spring Security 内置的所有 AuthenticationProvider 都是使用它来封装 Authentication 对象的。</p>
+<p>Spring Security 是通过拦截器来控制受保护对象的访问的，如方法调用和 Web 请求。在正式访问受保护对象之前，Spring Security 将使用 AccessDecisionManager 来鉴定当前用户是否有访问对应受保护对象的权限。</p>
+<p>AccessDecisionManager 是由 AbstractSecurityInterceptor 调用的，它负责鉴定用户是否有访问对应资源（方法或 URL）的权限。AccessDecisionManager 是一个接口，其中只定义了三个方法，其定义如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public interface AccessDecisionManager &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 通过传递的参数来决定用户是否有访问对应受保护对象的权限</span><br><span class="line">     *</span><br><span class="line">     * @param authentication 当前正在请求受包含对象的 Authentication</span><br><span class="line">     * @param object 受保护对象，其可以是一个 MethodInvocation、JoinPoint 或 FilterInvocation。</span><br><span class="line">     * @param configAttributes 与正在请求的受保护对象相关联的配置属性</span><br><span class="line">     *</span><br><span class="line">     */</span><br><span class="line">    void decide(Authentication authentication, Object object, Collection&lt;ConfigAttribute&gt; configAttributes)</span><br><span class="line">        throws AccessDeniedException, InsufficientAuthenticationException;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 表示当前 AccessDecisionManager 是否支持对应的 ConfigAttribute</span><br><span class="line">     */</span><br><span class="line">    boolean supports(ConfigAttribute attribute);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 表示当前 AccessDecisionManager 是否支持对应的受保护对象类型</span><br><span class="line">     */</span><br><span class="line">    boolean supports(Class&lt;?&gt; clazz);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>decide() 方法用于决定 authentication 是否符合受保护对象要求的 configAttributes。</p>
+<p>supports(ConfigAttribute attribute) 方法是用来判断 AccessDecisionManager 是否能够处理对应的 ConfigAttribute 的。</p>
+<p>supports(Class&lt;?&gt; clazz) 方法用于判断配置的 AccessDecisionManager 是否支持对应的受保护对象类型。</p>
+<h3 id="基于投票的-AccessDecisionManager-实现"><a href="#基于投票的-AccessDecisionManager-实现" class="headerlink" title="基于投票的 AccessDecisionManager 实现"></a>基于投票的 AccessDecisionManager 实现</h3><p>Spring Security 已经内置了几个基于投票的 AccessDecisionManager，当然如果需要你也可以实现自己的 AccessDecisionManager。使用这种方式，一系列的 AccessDecisionVoter 将会被 AccessDecisionManager 用来对 Authentication 是否有权访问受保护对象进行投票，然后再根据投票结果来决定是否要抛出 AccessDeniedException。AccessDecisionVoter 是一个接口，其中定义有三个方法，具体结构如下所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public interface AccessDecisionVoter&lt;S&gt; &#123;</span><br><span class="line"></span><br><span class="line">    intACCESS_GRANTED = 1;</span><br><span class="line">    intACCESS_ABSTAIN = 0;</span><br><span class="line">    intACCESS_DENIED = -1;</span><br><span class="line"></span><br><span class="line">    boolean supports(ConfigAttribute attribute);</span><br><span class="line"></span><br><span class="line">    boolean supports(Class&lt;?&gt; clazz);</span><br><span class="line"></span><br><span class="line">    int vote(Authentication authentication, S object, Collection&lt;ConfigAttribute&gt; attributes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>vote() 方法的返回结果会是 AccessDecisionVoter 中定义的三个常量之一。ACCESS_GRANTED 表示同意，ACCESS_DENIED 表示返回，ACCESS_ABSTAIN 表示弃权。如果一个 AccessDecisionVoter 不能判定当前 Authentication 是否拥有访问对应受保护对象的权限，则其 vote() 方法的返回值应当为弃权 ACCESS_ABSTAIN。</p>
+<p>Spring Security 内置了三个基于投票的 AccessDecisionManager 实现类，它们分别是 AffirmativeBased、ConsensusBased 和 UnanimousBased。</p>
+<p><strong>AffirmativeBased</strong> 的逻辑是这样的：</p>
+<ul>
+<li>只要有 AccessDecisionVoter 的投票为 ACCESS_GRANTED 则同意用户进行访问；</li>
+<li>如果全部弃权也表示通过；</li>
+<li>如果没有一个人投赞成票，但是有人投反对票，则将抛出 AccessDeniedException。</li>
+</ul>
+<p><strong>ConsensusBased</strong> 的逻辑是这样的：</p>
+<ul>
+<li>如果赞成票多于反对票则表示通过。</li>
+<li>反过来，如果反对票多于赞成票则将抛出 AccessDeniedException。</li>
+<li>如果赞成票与反对票相同且不等于 0，并且属性 allowIfEqualGrantedDeniedDecisions 的值为 true，则表示通过，否则将抛出异常 AccessDeniedException。参数 allowIfEqualGrantedDeniedDecisions 的值默认为 true。</li>
+<li>如果所有的 AccessDecisionVoter 都弃权了，则将视参数 allowIfAllAbstainDecisions 的值而定，如果该值为 true 则表示通过，否则将抛出异常 AccessDeniedException。参数 allowIfAllAbstainDecisions 的值默认为 false。</li>
+</ul>
+<p><strong>UnanimousBased</strong> 的逻辑与另外两种实现有点不一样，另外两种会一次性把受保护对象的配置属性全部传递给 AccessDecisionVoter 进行投票，而 UnanimousBased 会一次只传递一个 ConfigAttribute 给 AccessDecisionVoter 进行投票。这也就意味着如果我们的 AccessDecisionVoter 的逻辑是只要传递进来的 ConfigAttribute 中有一个能够匹配则投赞成票，但是放到 UnanimousBased 中其投票结果就不一定是赞成了。UnanimousBased 的逻辑具体来说是这样的：</p>
+<ul>
+<li>如果受保护对象配置的某一个 ConfigAttribute 被任意的 AccessDecisionVoter 反对了，则将抛出 AccessDeniedException。</li>
+<li>如果没有反对票，但是有赞成票，则表示通过。</li>
+<li>如果全部弃权了，则将视参数 allowIfAllAbstainDecisions 的值而定，true 则通过，false 则抛出 AccessDeniedException。</li>
+</ul>
+<h4 id="RoleVoter"><a href="#RoleVoter" class="headerlink" title="RoleVoter"></a>RoleVoter</h4><p>RoleVoter 是 Spring Security 内置的一个 AccessDecisionVoter，其会将 ConfigAttribute 简单的看作是一个角色名称，在投票的时如果拥有该角色即投赞成票。如果 ConfigAttribute 是以 “ROLE<em>” 开头的，则将使用 RoleVoter 进行投票。当用户拥有的权限中有一个或多个能匹配受保护对象配置的以 “ROLE</em>” 开头的 ConfigAttribute 时其将投赞成票；如果用户拥有的权限中没有一个能匹配受保护对象配置的以 “ROLE<em>” 开头的 ConfigAttribute，则 RoleVoter 将投反对票；如果受保护对象配置的 ConfigAttribute 中没有以 “ROLE</em>” 开头的，则 RoleVoter 将弃权。</p>
+<h4 id="AuthenticatedVoter"><a href="#AuthenticatedVoter" class="headerlink" title="AuthenticatedVoter"></a>AuthenticatedVoter</h4><p>AuthenticatedVoter 也是 Spring Security 内置的一个 AccessDecisionVoter 实现。其主要用来区分匿名用户、通过 Remember-Me 认证的用户和完全认证的用户。完全认证的用户是指由系统提供的登录入口进行成功登录认证的用户。</p>
+<p>AuthenticatedVoter 可以处理的 ConfigAttribute 有 IS_AUTHENTICATED_FULLY、IS_AUTHENTICATED_REMEMBERED 和 IS_AUTHENTICATED_ANONYMOUSLY。如果 ConfigAttribute 不在这三者范围之内，则 AuthenticatedVoter 将弃权。否则将视 ConfigAttribute 而定，如果 ConfigAttribute 为 IS_AUTHENTICATED_ANONYMOUSLY，则不管用户是匿名的还是已经认证的都将投赞成票；如果是 IS_AUTHENTICATED_REMEMBERED 则仅当用户是由 Remember-Me 自动登录，或者是通过登录入口进行登录认证时才会投赞成票，否则将投反对票；而当 ConfigAttribute 为 IS_AUTHENTICATED_FULLY 时仅当用户是通过登录入口进行登录的才会投赞成票，否则将投反对票。</p>
+<p>AuthenticatedVoter 是通过 AuthenticationTrustResolver 的 isAnonymous() 方法和 isRememberMe() 方法来判断 SecurityContextHolder 持有的 Authentication 是否为 AnonymousAuthenticationToken 或 RememberMeAuthenticationToken 的，即是否为 IS_AUTHENTICATED_ANONYMOUSLY 和 IS_AUTHENTICATED_REMEMBERED。</p>
+<h4 id="自定义-Voter"><a href="#自定义-Voter" class="headerlink" title="自定义 Voter"></a>自定义 Voter</h4><p>用户也可以通过实现 AccessDecisionVoter 来实现自己的投票逻辑。</p>
+<h2 id="基于表达式的权限控制"><a href="#基于表达式的权限控制" class="headerlink" title="基于表达式的权限控制"></a><strong>基于表达式的权限控制</strong></h2><p>Spring Security 允许我们在定义 URL 访问或方法访问所应有的权限时使用 Spring EL 表达式，在定义所需的访问权限时如果对应的表达式返回结果为 true 则表示拥有对应的权限，反之则无。Spring Security 可用表达式对象的基类是 SecurityExpressionRoot，其为我们提供了如下在使用 Spring EL 表达式对 URL 或方法进行权限控制时通用的内置表达式。</p>
+<table>
+<thead>
+<tr>
+<th><strong>表达式</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hasRole([role])</td>
+<td>当前用户是否拥有指定角色。</td>
+</tr>
+<tr>
+<td>hasAnyRole([role1,role2])</td>
+<td>多个角色是一个以逗号进行分隔的字符串。如果当前用户拥有指定角色中的任意一个则返回 true。</td>
+</tr>
+<tr>
+<td>hasAuthority([auth])</td>
+<td>等同于 hasRole</td>
+</tr>
+<tr>
+<td>hasAnyAuthority([auth1,auth2])</td>
+<td>等同于 hasAnyRole</td>
+</tr>
+<tr>
+<td>Principle</td>
+<td>代表当前用户的 principle 对象</td>
+</tr>
+<tr>
+<td>authentication</td>
+<td>直接从 SecurityContext 获取的当前 Authentication 对象</td>
+</tr>
+<tr>
+<td>permitAll</td>
+<td>总是返回 true，表示允许所有的</td>
+</tr>
+<tr>
+<td>denyAll</td>
+<td>总是返回 false，表示拒绝所有的</td>
+</tr>
+<tr>
+<td>isAnonymous()</td>
+<td>当前用户是否是一个匿名用户</td>
+</tr>
+<tr>
+<td>isRememberMe()</td>
+<td>表示当前用户是否是通过 Remember-Me 自动登录的</td>
+</tr>
+<tr>
+<td>isAuthenticated()</td>
+<td>表示当前用户是否已经登录认证成功了。</td>
+</tr>
+<tr>
+<td>isFullyAuthenticated()</td>
+<td>如果当前用户既不是一个匿名用户，同时又不是通过 Remember-Me 自动登录的，则返回 true。</td>
+</tr>
+</tbody></table>
+<h3 id="通过表达式控制-URL-权限"><a href="#通过表达式控制-URL-权限" class="headerlink" title="通过表达式控制 URL 权限"></a>通过表达式控制 URL 权限</h3><p>URL 的访问权限是通过 http 元素下的 intercept-url 元素进行定义的，其 access 属性用来定义访问配置属性。默认情况下该属性值只能是以字符串进行分隔的字符串列表，且每一个元素都对应着一个角色，因为默认使用的是 RoleVoter。通过设置 http 元素的 use-expressions=”true” 可以启用 intercept-url 元素的 access 属性对 Spring EL 表达式的支持，use-expressions 的值默认为 false。启用 access 属性对 Spring EL 表达式的支持后每个 access 属性值都应该是一个返回结果为 boolean 类型的表达式，当表达式返回结果为 true 时表示当前用户拥有访问权限。此外 WebExpressionVoter 将加入 AccessDecisionManager 的 AccessDecisionVoter 列表，所以如果不使用 NameSpace 时应当手动添加 WebExpressionVoter 到 AccessDecisionVoter。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:http use-expressions=&quot;true&quot;&gt;</span><br><span class="line">      &lt;security:form-login/&gt;</span><br><span class="line">      &lt;security:logout/&gt;</span><br><span class="line">      &lt;security:intercept-url pattern=&quot;/**&quot; access=&quot;hasRole(&apos;ROLE_USER&apos;)&quot; /&gt;</span><br><span class="line">   &lt;/security:http&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在上述配置中我们定义了只有拥有 ROLE_USER 角色的用户才能访问系统。</p>
+<p>使用表达式控制 URL 权限使用的表达式对象类是继承自 SecurityExpressionRoot 的 WebSecurityExpressionRoot 类。其相比基类而言新增了一个表达式 hasIpAddress。hasIpAddress 可用来限制只有指定 IP 或指定范围内的 IP 才可以访问。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:http use-expressions=&quot;true&quot;&gt;</span><br><span class="line">      &lt;security:form-login/&gt;</span><br><span class="line">      &lt;security:logout/&gt;</span><br><span class="line">      &lt;security:intercept-url pattern=&quot;/**&quot; access=&quot;hasRole(&apos;ROLE_USER&apos;) and hasIpAddress(&apos;10.10.10.3&apos;)&quot; /&gt;</span><br><span class="line">   &lt;/security:http&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的配置中我们限制了只有 IP 为”10.10.10.3”，且拥有 ROLE_USER 角色的用户才能访问。hasIpAddress 是通过 Ip 地址或子网掩码来进行匹配的。如果要设置 10.10.10 下所有的子网都可以使用，那么我们对应的 hasIpAddress 的参数应为 “10.10.10.n/24”，其中 n 可以是合法 IP 内的任意值。具体规则可以参照 hasIpAddress() 表达式用于比较的 IpAddressMatcher 的 matches 方法源码。以下是 IpAddressMatcher 的源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.security.web.util;</span><br><span class="line"></span><br><span class="line">import java.net.InetAddress;</span><br><span class="line">import java.net.UnknownHostException;</span><br><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line">import org.springframework.util.StringUtils;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Matches a request based on IP Address or subnet mask matching against the remote address.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Both IPv6 and IPv4 addresses are supported, but a matcher which is configured with an IPv4 address will</span><br><span class="line"> * never match a request which returns an IPv6 address, and vice-versa.</span><br><span class="line"> *</span><br><span class="line"> * @author Luke Taylor</span><br><span class="line"> * @since 3.0.2</span><br><span class="line"> */</span><br><span class="line">public final class IpAddressMatcher implements RequestMatcher &#123;</span><br><span class="line">    private final int nMaskBits;</span><br><span class="line">    private final InetAddress requiredAddress;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Takes a specific IP address or a range specified using the</span><br><span class="line">     * IP/Netmask (e.g. 192.168.1.0/24 or 202.24.0.0/14).</span><br><span class="line">     *</span><br><span class="line">     * @param ipAddress the address or range of addresses from which the request must come.</span><br><span class="line">     */</span><br><span class="line">    public IpAddressMatcher(String ipAddress) &#123;</span><br><span class="line"></span><br><span class="line">        if (ipAddress.indexOf(&apos;/&apos;) &gt; 0) &#123;</span><br><span class="line">            String[] addressAndMask = StringUtils.split(ipAddress, &quot;/&quot;);</span><br><span class="line">            ipAddress = addressAndMask[0];</span><br><span class="line">            nMaskBits = Integer.parseInt(addressAndMask[1]);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            nMaskBits = -1;</span><br><span class="line">        &#125;</span><br><span class="line">        requiredAddress = parseAddress(ipAddress);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean matches(HttpServletRequest request) &#123;</span><br><span class="line">        return matches(request.getRemoteAddr());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean matches(String address) &#123;</span><br><span class="line">        InetAddress remoteAddress = parseAddress(address);</span><br><span class="line"></span><br><span class="line">        if (!requiredAddress.getClass().equals(remoteAddress.getClass())) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (nMaskBits &lt;0) &#123;</span><br><span class="line">            return remoteAddress.equals(requiredAddress);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        byte[] remAddr = remoteAddress.getAddress();</span><br><span class="line">        byte[] reqAddr = requiredAddress.getAddress();</span><br><span class="line"></span><br><span class="line">        int oddBits = nMaskBits % 8;</span><br><span class="line">        int nMaskBytes = nMaskBits/8 + (oddBits == 0 ? 0 : 1);</span><br><span class="line">        byte[] mask = newbyte[nMaskBytes];</span><br><span class="line"></span><br><span class="line">        Arrays.fill(mask, 0, oddBits == 0 ? mask.length : mask.length - 1, (byte)0xFF);</span><br><span class="line"></span><br><span class="line">        if (oddBits != 0) &#123;</span><br><span class="line">            int finalByte = (1 &lt;&lt; oddBits) - 1;</span><br><span class="line">            finalByte &lt;&lt;= 8-oddBits;</span><br><span class="line">            mask[mask.length - 1] = (byte) finalByte;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"> //       System.out.println(&quot;Mask is&quot; + new sun.misc.HexDumpEncoder().encode(mask));</span><br><span class="line"></span><br><span class="line">        for (int i=0; i &lt; mask.length; i++) &#123;</span><br><span class="line">            if ((remAddr[i] &amp; mask[i]) != (reqAddr[i] &amp; mask[i])) &#123;</span><br><span class="line">                return alse;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private InetAddress parseAddress(String address) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return InetAddress.getByName(address);</span><br><span class="line">        &#125; catch (UnknownHostException e) &#123;</span><br><span class="line">            thrownew IllegalArgumentException(&quot;Failed to parse address&quot; + address, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过表达式控制方法权限"><a href="#通过表达式控制方法权限" class="headerlink" title="通过表达式控制方法权限"></a>通过表达式控制方法权限</h3><p>Spring Security 中定义了四个支持使用表达式的注解，分别是 @PreAuthorize、@PostAuthorize、@PreFilter 和 @PostFilter。其中前两者可以用来在方法调用前或者调用后进行权限检查，后两者可以用来对集合类型的参数或者返回值进行过滤。要使它们的定义能够对我们的方法的调用产生影响我们需要设置 global-method-security 元素的 pre-post-annotations=”enabled”，默认为 disabled。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:global-method-security pre-post-annotations=&quot;disabled&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-PreAuthorize-和-PostAuthorize-进行访问控制"><a href="#使用-PreAuthorize-和-PostAuthorize-进行访问控制" class="headerlink" title="使用 @PreAuthorize 和 @PostAuthorize 进行访问控制"></a>使用 @PreAuthorize 和 @PostAuthorize 进行访问控制</h4><p>@PreAuthorize 可以用来控制一个方法是否能够被调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line"></span><br><span class="line">   @PreAuthorize(&quot;hasRole(&apos;ROLE_ADMIN&apos;)&quot;)</span><br><span class="line">   public void addUser(User user) &#123;</span><br><span class="line">      System.out.println(&quot;addUser................&quot; + user);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @PreAuthorize(&quot;hasRole(&apos;ROLE_USER&apos;) or hasRole(&apos;ROLE_ADMIN&apos;)&quot;)</span><br><span class="line">   public User find(int id) &#123;</span><br><span class="line">      System.out.println(&quot;find user by id.............&quot; + id);</span><br><span class="line">      return null;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中我们定义了只有拥有角色 ROLE_ADMIN 的用户才能访问 adduser() 方法，而访问 find() 方法需要有 ROLE_USER 角色或 ROLE_ADMIN 角色。</p>
+<p>使用表达式时我们还可以在表达式中使用方法参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 限制只能查询 Id 小于 10 的用户</span><br><span class="line">    */</span><br><span class="line">   @PreAuthorize(&quot;#id&lt;10&quot;)</span><br><span class="line">   public User find(int id) &#123;</span><br><span class="line">      System.out.println(&quot;find user by id.........&quot; + id);</span><br><span class="line">      return null;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 限制只能查询自己的信息</span><br><span class="line">    */</span><br><span class="line">   @PreAuthorize(&quot;principal.username.equals(#username)&quot;)</span><br><span class="line">   public User find(String username) &#123;</span><br><span class="line">      System.out.println(&quot;find user by username......&quot; + username);</span><br><span class="line">      return null;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 限制只能新增用户名称为 abc 的用户</span><br><span class="line">    */</span><br><span class="line">   @PreAuthorize(&quot;#user.name.equals(&apos;abc&apos;)&quot;)</span><br><span class="line">   public void add(User user) &#123;</span><br><span class="line">      System.out.println(&quot;addUser............&quot; + user);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面代码中我们定义了调用 find(int id) 方法时，只允许参数 id 小于 10 的调用；调用 find(String username) 时只允许 username 为当前用户的用户名；定义了调用 add() 方法时只有当参数 user 的 name 为 abc 时才可以调用。</p>
+<p>有时候可能你会想在方法调用完之后进行权限检查，这种情况比较少，但是如果你有的话，Spring Security 也为我们提供了支持，通过 @PostAuthorize 可以达到这一效果。使用 @PostAuthorize 时我们可以使用内置的表达式 returnObject 表示方法的返回值。我们来看下面这一段示例代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@PostAuthorize(&quot;returnObject.id%2==0&quot;)</span><br><span class="line">   public User find(int id) &#123;</span><br><span class="line">      User user = new User();</span><br><span class="line">      user.setId(id);</span><br><span class="line">      return user;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这一段代码表示将在方法 find() 调用完成后进行权限检查，如果返回值的 id 是偶数则表示校验通过，否则表示校验失败，将抛出 AccessDeniedException。 需要注意的是 @PostAuthorize 是在方法调用完成后进行权限检查，它不能控制方法是否能被调用，只能在方法调用完成后检查权限决定是否要抛出 AccessDeniedException。</p>
+<h4 id="使用-PreFilter-和-PostFilter-进行过滤"><a href="#使用-PreFilter-和-PostFilter-进行过滤" class="headerlink" title="使用 @PreFilter 和 @PostFilter 进行过滤"></a>使用 @PreFilter 和 @PostFilter 进行过滤</h4><p>使用 @PreFilter 和 @PostFilter 可以对集合类型的参数或返回值进行过滤。使用 @PreFilter 和 @PostFilter 时，Spring Security 将移除使对应表达式的结果为 false 的元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@PostFilter(&quot;filterObject.id%2==0&quot;)</span><br><span class="line">   public List&lt;User&gt; findAll() &#123;</span><br><span class="line">      List&lt;User&gt; userList = new ArrayList&lt;User&gt;();</span><br><span class="line">      User user;</span><br><span class="line">      for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">         user = new User();</span><br><span class="line">         user.setId(i);</span><br><span class="line">         userList.add(user);</span><br><span class="line">      &#125;</span><br><span class="line">      return userList;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码表示将对返回结果中 id 不为偶数的 user 进行移除。filterObject 是使用 @PreFilter 和 @PostFilter 时的一个内置表达式，表示集合中的当前对象。当 @PreFilter 标注的方法拥有多个集合类型的参数时，需要通过 @PreFilter 的 filterTarget 属性指定当前 @PreFilter 是针对哪个参数进行过滤的。如下面代码就通过 filterTarget 指定了当前 @PreFilter 是用来过滤参数 ids 的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@PreFilter(filterTarget=&quot;ids&quot;, value=&quot;filterObject%2==0&quot;)</span><br><span class="line">   public void delete(List&lt;Integer&gt; ids, List&lt;String&gt; usernames) &#123;</span><br><span class="line">      ...</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-hasPermission-表达式"><a href="#使用-hasPermission-表达式" class="headerlink" title="使用 hasPermission 表达式"></a>使用 hasPermission 表达式</h3><p>Spring Security 为我们定义了 hasPermission 的两种使用方式，它们分别对应着 PermissionEvaluator 的两个不同的 hasPermission() 方法。Spring Security 默认处理 Web、方法的表达式处理器分别为 DefaultWebSecurityExpressionHandler 和 DefaultMethodSecurityExpressionHandler，它们都继承自 AbstractSecurityExpressionHandler，其所持有的 PermissionEvaluator 是 DenyAllPermissionEvaluator，其对于所有的 hasPermission 表达式都将返回 false。所以当我们要使用表达式 hasPermission 时，我们需要自已手动定义 SecurityExpressionHandler 对应的 bean 定义，然后指定其 PermissionEvaluator 为我们自己实现的 PermissionEvaluator，然后通过 global-method-security 元素或 http 元素下的 expression-handler 元素指定使用的 SecurityExpressionHandler 为我们自己手动定义的那个 bean。</p>
+<p>接下来看一个自己实现 PermissionEvaluator 使用 hasPermission() 表达式的简单示例。</p>
+<p>首先实现自己的 PermissionEvaluator，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class MyPermissionEvaluator implements PermissionEvaluator &#123;</span><br><span class="line"></span><br><span class="line">   public boolean hasPermission(Authentication authentication,</span><br><span class="line">         Object targetDomainObject, Object permission) &#123;</span><br><span class="line">      if (&quot;user&quot;.equals(targetDomainObject)) &#123;</span><br><span class="line">         return this.hasPermission(authentication, permission);</span><br><span class="line">      &#125;</span><br><span class="line">      return false;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 总是认为有权限</span><br><span class="line">    */</span><br><span class="line">   public boolean hasPermission(Authentication authentication,</span><br><span class="line">         Serializable targetId, String targetType, Object permission) &#123;</span><br><span class="line">      return true;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 简单的字符串比较，相同则认为有权限</span><br><span class="line">    */</span><br><span class="line">   private boolean hasPermission(Authentication authentication, Object permission) &#123;</span><br><span class="line">      Collection&lt;? extends GrantedAuthority&gt; authorities = authentication.getAuthorities();</span><br><span class="line">      for (GrantedAuthority authority : authorities) &#123;</span><br><span class="line">         if (authority.getAuthority().equals(permission)) &#123;</span><br><span class="line">            returntrue;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return false;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来在 ApplicationContext 中显示的配置一个将使用 PermissionEvaluator 的 SecurityExpressionHandler 实现类，然后指定其所使用的 PermissionEvaluator 为我们自己实现的那个。这里我们选择配置一个针对于方法调用使用的表达式处理器，DefaultMethodSecurityExpressionHandler，具体如下所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;expressionHandler&quot;</span><br><span class="line">   class=&quot;org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler&quot;&gt;</span><br><span class="line">      &lt;property name=&quot;permissionEvaluator&quot; ref=&quot;myPermissionEvaluator&quot; /&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br><span class="line">   &lt;!-- 自定义的 PermissionEvaluator 实现 --&gt;</span><br><span class="line">   &lt;bean id=&quot;myPermissionEvaluator&quot; class=&quot;com.xxx.MyPermissionEvaluator&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有了 SecurityExpressionHandler 之后，我们还要告诉 Spring Security，在使用 SecurityExpressionHandler 时应该使用我们显示配置的那个，这样我们自定义的 PermissionEvaluator 才能起作用。因为我们上面定义的是针对于方法的 SecurityExpressionHandler，所以我们要指定在进行方法权限控制时应该使用它来进行处理，同时注意设置 pre-post-annotations=”true” 以启用对支持使用表达式的 @PreAuthorize 等注解的支持。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;security:global-method-security</span><br><span class="line">      pre-post-annotations=&quot;enabled&quot;&gt;</span><br><span class="line">      &lt;security:expression-handler ref=&quot;expressionHandler&quot; /&gt;</span><br><span class="line">   &lt;/security:global-method-security&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之后我们就可以在需要进行权限控制的方法上使用 @PreAuthorize 以及 hasPermission() 表达式进行权限控制了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 将使用方法 hasPermission(Authentication authentication,</span><br><span class="line">         Object targetDomainObject, Object permission) 进行验证。</span><br><span class="line">    */</span><br><span class="line">   @PreAuthorize(&quot;hasPermission(&apos;user&apos;,&apos;ROLE_USER&apos;)&quot;)</span><br><span class="line">   public User find(int id) &#123;</span><br><span class="line">      return null;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /**</span><br><span class="line">    * 将使用 PermissionEvaluator 的第二个方法，即 hasPermission(Authentication authentication,</span><br><span class="line">         Serializable targetId, String targetType, Object permission) 进行验证。</span><br><span class="line">    */</span><br><span class="line">   @PreAuthorize(&quot;hasPermission(&apos;targetId&apos;,&apos;targetType&apos;,&apos;permission&apos;)&quot;)</span><br><span class="line">   public User find(String username) &#123;</span><br><span class="line">      return null;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @PreAuthorize(&quot;hasPermission(&apos;user&apos;,&apos;ROLE_ADMIN&apos;)&quot;)</span><br><span class="line">   public void add(User user) &#123;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的配置中，find(int id) 和 add() 方法将使用 PermissionEvaluator 中接收三个参数的 hasPermission() 方法进行验证，而 find(String username) 方法将使用四个参数的 hasPermission() 方法进行验证。因为 hasPermission() 表达式与 PermissionEvaluator 中 hasPermission() 方法的对应关系就是在 hasPermission() 表达式使用的参数基础上加上当前 Authentication 对象调用对应的 hasPermission() 方法进行验证。</p>
+<h2 id="Thymeleaf-与-Spring-Security"><a href="#Thymeleaf-与-Spring-Security" class="headerlink" title="Thymeleaf 与 Spring Security"></a>Thymeleaf 与 Spring Security</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Security/" rel="tag"># Spring Security</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/10/hibernate-2017-01-10-Hibernate的学习和使用/" rel="next" title="Hibernate 的学习和使用">
+                <i class="fa fa-chevron-left"></i> Hibernate 的学习和使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/25/notes-2017-02-25-Liquibase的学习和使用/" rel="prev" title="Liquibase 的学习和使用">
+                Liquibase 的学习和使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/';
+            this.page.identifier = '2017/01/20/spring-2017-01-20-Spring-Security/';
+            this.page.title = 'Spring Security 的学习和使用';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/';
+                this.page.identifier = '2017/01/20/spring-2017-01-20-Spring-Security/';
+                this.page.title = 'Spring Security 的学习和使用';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/';
+            this.page.identifier = '2017/01/20/spring-2017-01-20-Spring-Security/';
+            this.page.title = 'Spring Security 的学习和使用';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Security-的学习和使用"><span class="nav-number">1.</span> <span class="nav-text">Spring Security 的学习和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Configuration"><span class="nav-number">1.1.</span> <span class="nav-text">Java Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpSecurity"><span class="nav-number">1.1.1.</span> <span class="nav-text">HttpSecurity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Authorize-Requests"><span class="nav-number">1.1.2.</span> <span class="nav-text">Authorize Requests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-Logouts"><span class="nav-number">1.1.3.</span> <span class="nav-text">Handling Logouts</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LogoutHandler"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">LogoutHandler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LogoutSuccessHandler"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">LogoutSuccessHandler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Authentication-Configuration"><span class="nav-number">1.1.4.</span> <span class="nav-text">Authentication Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#In-Memory-Authentication"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">In-Memory Authentication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDBC-Authentication"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">JDBC Authentication</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-HttpSecurity"><span class="nav-number">1.1.5.</span> <span class="nav-text">Multiple HttpSecurity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-Components"><span class="nav-number">1.2.</span> <span class="nav-text">Core Components</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Authentication"><span class="nav-number">1.2.1.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SecurityContext"><span class="nav-number">1.2.2.</span> <span class="nav-text">SecurityContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SecurityContextHolder"><span class="nav-number">1.2.3.</span> <span class="nav-text">SecurityContextHolder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AuthenticationManager-和-AuthenticationProvider"><span class="nav-number">1.2.4.</span> <span class="nav-text">AuthenticationManager 和 AuthenticationProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UserDetailsService"><span class="nav-number">1.2.5.</span> <span class="nav-text">UserDetailsService</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#org-springframework-security-core-userdetails-jdbc-JdbcDaoImpl-java"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InMemoryDaoImpl"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">InMemoryDaoImpl</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GrantedAuthority"><span class="nav-number">1.2.6.</span> <span class="nav-text">GrantedAuthority</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-应用认证过程"><span class="nav-number">1.3.</span> <span class="nav-text">Web 应用认证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter"><span class="nav-number">1.4.</span> <span class="nav-text">Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DelegatingFilterProxy"><span class="nav-number">1.4.1.</span> <span class="nav-text">DelegatingFilterProxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FilterChainProxy"><span class="nav-number">1.4.2.</span> <span class="nav-text">FilterChainProxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Security-定义好的核心-Filter"><span class="nav-number">1.4.3.</span> <span class="nav-text">Spring Security 定义好的核心 Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FilterSecurityInterceptor"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">FilterSecurityInterceptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ExceptionTranslationFilter"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">ExceptionTranslationFilter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SecurityContextPersistenceFilter"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">SecurityContextPersistenceFilter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UsernamePasswordAuthenticationFilter"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">UsernamePasswordAuthenticationFilter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccessDecisionManager"><span class="nav-number">1.5.</span> <span class="nav-text">AccessDecisionManager</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于投票的-AccessDecisionManager-实现"><span class="nav-number">1.5.1.</span> <span class="nav-text">基于投票的 AccessDecisionManager 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RoleVoter"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">RoleVoter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AuthenticatedVoter"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">AuthenticatedVoter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义-Voter"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">自定义 Voter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于表达式的权限控制"><span class="nav-number">1.6.</span> <span class="nav-text">基于表达式的权限控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过表达式控制-URL-权限"><span class="nav-number">1.6.1.</span> <span class="nav-text">通过表达式控制 URL 权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过表达式控制方法权限"><span class="nav-number">1.6.2.</span> <span class="nav-text">通过表达式控制方法权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-PreAuthorize-和-PostAuthorize-进行访问控制"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">使用 @PreAuthorize 和 @PostAuthorize 进行访问控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-PreFilter-和-PostFilter-进行过滤"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">使用 @PreFilter 和 @PostFilter 进行过滤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-hasPermission-表达式"><span class="nav-number">1.6.3.</span> <span class="nav-text">使用 hasPermission 表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thymeleaf-与-Spring-Security"><span class="nav-number">1.7.</span> <span class="nav-text">Thymeleaf 与 Spring Security</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

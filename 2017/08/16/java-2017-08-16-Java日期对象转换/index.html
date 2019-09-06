@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Date,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JSR310 时间类型转换1234567final java.util.Date date = new java.util.Date();final Timestamp timestamp = new Timestamp(date.getTime());final Calendar calendar = Calendar.getInstance();    final Instant instan">
+<meta name="keywords" content="Date">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 日期时间转换">
+<meta property="og:url" content="https://wuchao.github.io/2017/08/16/java-2017-08-16-Java日期对象转换/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="JSR310 时间类型转换1234567final java.util.Date date = new java.util.Date();final Timestamp timestamp = new Timestamp(date.getTime());final Calendar calendar = Calendar.getInstance();    final Instant instan">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.714Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 日期时间转换">
+<meta name="twitter:description" content="JSR310 时间类型转换1234567final java.util.Date date = new java.util.Date();final Timestamp timestamp = new Timestamp(date.getTime());final Calendar calendar = Calendar.getInstance();    final Instant instan">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/08/16/java-2017-08-16-Java日期对象转换/">
+
+
+
+
+
+  <title>Java 日期时间转换 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">08月</div>
+			<div class="post-day">16</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/08/16/java-2017-08-16-Java日期对象转换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 日期时间转换</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T00:00:00+08:00">
+                2017-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="JSR310-时间类型转换"><a href="#JSR310-时间类型转换" class="headerlink" title="JSR310 时间类型转换"></a>JSR310 时间类型转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">final java.util.Date date = new java.util.Date();</span><br><span class="line">final Timestamp timestamp = new Timestamp(date.getTime());</span><br><span class="line">final Calendar calendar = Calendar.getInstance();</span><br><span class="line">    </span><br><span class="line">final Instant instant = Instant.now();</span><br><span class="line">final LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">final ZonedDateTime zonedDateTime = ZonedDateTime.now();</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="转-Instant"><a href="#转-Instant" class="headerlink" title="转 Instant"></a>转 Instant</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// java.util.Date 转 Instant</span><br><span class="line">Instant dateInstant = date.toInstant();</span><br><span class="line">    </span><br><span class="line">// Timestamp 转 Instant</span><br><span class="line">Instant timestampInstant = timestamp.toInstant();</span><br><span class="line"></span><br><span class="line">// Calendar 转 Instant</span><br><span class="line">Instant calendarInstant = calendar.toInstant();</span><br><span class="line"></span><br><span class="line">// LocalDateTime 转 Instant</span><br><span class="line">1. Instant localDateTimeInstant = localDateTime.toInstant(ZoneOffset.of(ZoneId.systemDefault().getId()));</span><br><span class="line">2. Instant localDateTimeInstant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()</span><br><span class="line">第一种使用中报错：Invalid ID for ZoneOffset, invalid format: Asia/Shanghai</span><br><span class="line"></span><br><span class="line">// ZonedDateTime 转 Instant</span><br><span class="line">Instant zonedDateTimeInstant = zonedDateTime.toInstant();</span><br></pre></td></tr></table></figure>
+
+<h3 id="转-LocalDateTime"><a href="#转-LocalDateTime" class="headerlink" title="转 LocalDateTime"></a>转 LocalDateTime</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// java.util.Date 转 LocalDateTime</span><br><span class="line">LocalDateTime dateLocalDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// Timestamp 转 LocalDateTime</span><br><span class="line">LocalDateTime timestampLocalDateTime = timestamp.toLocalDateTime();</span><br><span class="line"></span><br><span class="line">// Calendar 转 LocalDateTime</span><br><span class="line">LocalDateTime calendarLocalDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneOffset.systemDefault());</span><br><span class="line"></span><br><span class="line">// Instant 转 LocalDateTime</span><br><span class="line">LocalDateTime instantLocalDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// ZonedDateTime 转 LocalDateTime</span><br><span class="line">LocalDateTime zonedDateTimeLocalDateTime = zonedDateTime.toLocalDateTime();</span><br><span class="line"></span><br><span class="line">// 日期字符串转 LocalDateTime</span><br><span class="line">LocalDateTime localDateTime = LocalDate.parse(dateStr).atStartOfDay();</span><br><span class="line"></span><br><span class="line">// 日期时间字符串转 ZonedDateTime</span><br><span class="line">LocalDateTime localDateTime = LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;));</span><br></pre></td></tr></table></figure>
+
+<h3 id="转-ZonedDateTime"><a href="#转-ZonedDateTime" class="headerlink" title="转 ZonedDateTime"></a>转 ZonedDateTime</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// java.util.Date 转 ZonedDateTime</span><br><span class="line">ZonedDateTime dateZonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// Timestamp 转 ZonedDateTime</span><br><span class="line">ZonedDateTime timestampZonedDateTime = ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// Calendar 转 ZonedDateTime</span><br><span class="line">ZonedDateTime calendarZonedDateTime = ZonedDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// Instant 转 ZonedDateTime</span><br><span class="line">ZonedDateTime instantZonedDateTime = instant.atZone(ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// LocalDateTime 转 ZonedDateTime</span><br><span class="line">ZonedDateTime localDateTimeZonedDateTime = localDateTime.atZone(ZoneId.systemDefault());</span><br><span class="line"></span><br><span class="line">// 日期字符串转 ZonedDateTime </span><br><span class="line">ZonedDateTime zonedDateTime = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;)).atStartOfDay(ZoneId.systemDefault())</span><br><span class="line"></span><br><span class="line">// 日期时间字符串转 ZonedDateTime</span><br><span class="line">ZonedDateTime zonedDateTime = LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;)).atZone(ZoneId.systemDefault())</span><br></pre></td></tr></table></figure>
+
+<h3 id="转-java-util-Date"><a href="#转-java-util-Date" class="headerlink" title="转 java.util.Date"></a>转 java.util.Date</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Timestamp 转 Date</span><br><span class="line">Date timestampDate = new Date(timestamp.getTime());</span><br><span class="line"></span><br><span class="line">// Calendar 转 Date</span><br><span class="line">Date calendarDate = calendar.getTime();</span><br><span class="line"></span><br><span class="line">// Instant 转 Date</span><br><span class="line">Date instantDate = Date.from(instant);</span><br><span class="line"></span><br><span class="line">// LocalDateTime 转 Date</span><br><span class="line">Date localDateTimeDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());</span><br><span class="line"></span><br><span class="line">// ZonedDateTime 转 Date</span><br><span class="line">Date zonedDateTimeDate = Date.from(zonedDateTime.toInstant());</span><br></pre></td></tr></table></figure>
+
+<h3 id="转-Timestamp"><a href="#转-Timestamp" class="headerlink" title="转 Timestamp"></a>转 Timestamp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// java.util.Date 转 Timestamp</span><br><span class="line">Timestamp dateTimestamp = new Timestamp(date.getTime());</span><br><span class="line"></span><br><span class="line">// Calendar 转 Timestamp</span><br><span class="line">Timestamp calendarTimestamp = new Timestamp(calendar.getTimeInMillis());</span><br><span class="line"></span><br><span class="line">// Instant 转 Timestamp</span><br><span class="line">Timestamp instantTimestamp = Timestamp.from(instant);</span><br><span class="line"></span><br><span class="line">// LocalDateTime 转 Timestamp</span><br><span class="line">Timestamp localDateTimeTimestamp = Timestamp.valueOf(localDateTime);</span><br><span class="line"></span><br><span class="line">// ZonedDateTime 转 Timestamp</span><br><span class="line">Timestamp zonedDateTimeTimestamp = Timestamp.from(zonedDateTime.toInstant());</span><br></pre></td></tr></table></figure>
+
+<h3 id="转-Calendar"><a href="#转-Calendar" class="headerlink" title="转 Calendar"></a>转 Calendar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// java.util.Date 转 Calendar</span><br><span class="line">Calendar dateCalendar = Calendar.getInstance();</span><br><span class="line">dateCalendar.setTime(date);</span><br><span class="line"></span><br><span class="line">// Timestamp 转 Calendar</span><br><span class="line">Calendar timestampCalendar = Calendar.getInstance();</span><br><span class="line">timestampCalendar.setTimeInMillis(timestamp.getTime());</span><br><span class="line"></span><br><span class="line">// Instant 转 Calendar</span><br><span class="line">Calendar instantCalendar = GregorianCalendar.from(ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()));</span><br><span class="line">    </span><br><span class="line">// LocalDateTime 转 Calendar</span><br><span class="line">Calendar localDateTimeCalendar = GregorianCalendar.from(ZonedDateTime.of(localDateTime, ZoneId.systemDefault()));</span><br><span class="line">    </span><br><span class="line">// ZonedDateTime 转 Calendar</span><br><span class="line">Calendar zonedDateTimeInstantCalendar = GregorianCalendar.from(zonedDateTime);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>转载自 <a href="https://www.cnblogs.com/niceboat/p/7027394.html" target="_blank" rel="noopener">JSR310 时间类型转换</a>   </p>
+</blockquote>
+<h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ:"></a>FAQ:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2017-08-16 11:08:49.729  WARN 28128 --- [  XNIO-2 task-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved exception caused by Handler execution: org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type &apos;java.lang.String&apos; to required type &apos;java.time.ZonedDateTime&apos;; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [@org.springframework.web.bind.annotation.RequestParam @org.springframework.format.annotation.DateTimeFormat java.time.ZonedDateTime] for value &apos;02/17/2011&apos;; nested exception is java.lang.IllegalArgumentException: Parse attempt failed for value [02/17/2011].</span><br></pre></td></tr></table></figure>
+
+<p>接收的数据只有 date，目标类型是 date 和 time。  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Date/" rel="tag"># Date</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/15/spring-2017-08-15-JPA-Criteria-Querydsl/" rel="next" title="JPA-Criteria-Querydsl">
+                <i class="fa fa-chevron-left"></i> JPA-Criteria-Querydsl
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/07/java-2017-09-07-Java8/" rel="prev" title="Java 8">
+                Java 8 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/08/16/java-2017-08-16-Java日期对象转换/';
+            this.page.identifier = '2017/08/16/java-2017-08-16-Java日期对象转换/';
+            this.page.title = 'Java 日期时间转换';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/08/16/java-2017-08-16-Java日期对象转换/';
+                this.page.identifier = '2017/08/16/java-2017-08-16-Java日期对象转换/';
+                this.page.title = 'Java 日期时间转换';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/08/16/java-2017-08-16-Java日期对象转换/';
+            this.page.identifier = '2017/08/16/java-2017-08-16-Java日期对象转换/';
+            this.page.title = 'Java 日期时间转换';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSR310-时间类型转换"><span class="nav-number">1.</span> <span class="nav-text">JSR310 时间类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转-Instant"><span class="nav-number">2.</span> <span class="nav-text">转 Instant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转-LocalDateTime"><span class="nav-number">3.</span> <span class="nav-text">转 LocalDateTime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转-ZonedDateTime"><span class="nav-number">4.</span> <span class="nav-text">转 ZonedDateTime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转-java-util-Date"><span class="nav-number">5.</span> <span class="nav-text">转 java.util.Date</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转-Timestamp"><span class="nav-number">6.</span> <span class="nav-text">转 Timestamp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转-Calendar"><span class="nav-number">7.</span> <span class="nav-text">转 Calendar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FAQ"><span class="nav-number">8.</span> <span class="nav-text">FAQ:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

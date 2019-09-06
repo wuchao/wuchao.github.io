@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Quartz,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="分布式 Quartz 的配置与 Spring 的集成使用。初始化数据库 运行下面的（mysql）数据库脚本，创建数据库表（先参照 quartz.properties 文件中 org.quartz.dataSource.myDS.URL属性配置的数据库名称创建数据库，这里我的数据库名称即为 quartz_scheduler） 其他数据库脚本见官网源代码（http://www.quartz-sched">
+<meta name="keywords" content="Quartz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quartz 的学习和使用">
+<meta property="og:url" content="https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="分布式 Quartz 的配置与 Spring 的集成使用。初始化数据库 运行下面的（mysql）数据库脚本，创建数据库表（先参照 quartz.properties 文件中 org.quartz.dataSource.myDS.URL属性配置的数据库名称创建数据库，这里我的数据库名称即为 quartz_scheduler） 其他数据库脚本见官网源代码（http://www.quartz-sched">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Quartz 的学习和使用">
+<meta name="twitter:description" content="分布式 Quartz 的配置与 Spring 的集成使用。初始化数据库 运行下面的（mysql）数据库脚本，创建数据库表（先参照 quartz.properties 文件中 org.quartz.dataSource.myDS.URL属性配置的数据库名称创建数据库，这里我的数据库名称即为 quartz_scheduler） 其他数据库脚本见官网源代码（http://www.quartz-sched">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/">
+
+
+
+
+
+  <title>Quartz 的学习和使用 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">03月</div>
+			<div class="post-day">01</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Quartz/" itemprop="url" rel="index">
+          <span itemprop="name">Quartz</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Quartz 的学习和使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-01T00:00:00+08:00">
+                2017-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Quartz/" itemprop="url" rel="index">
+                    <span itemprop="name">Quartz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="分布式-Quartz-的配置与-Spring-的集成使用。"><a href="#分布式-Quartz-的配置与-Spring-的集成使用。" class="headerlink" title="分布式 Quartz 的配置与 Spring 的集成使用。"></a>分布式 Quartz 的配置与 Spring 的集成使用。</h1><h2 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h2><blockquote>
+<p>运行下面的（mysql）数据库脚本，创建数据库表（先参照 quartz.properties 文件中 <code>org.quartz.dataSource.myDS.URL</code>属性配置的数据库名称创建数据库，这里我的数据库名称即为 quartz_scheduler）</p>
+<p>其他数据库脚本见官网源代码（<a href="http://www.quartz-scheduler.org/downloads/）中" target="_blank" rel="noopener">http://www.quartz-scheduler.org/downloads/）中</a> quartz-xxx-distribution\quartz-xxx\docs\dbTables 文件夹。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>mysql.sql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># Quartz seems to work best with the driver mm.mysql-2.0.7-bin.jar</span><br><span class="line">#</span><br><span class="line"># PLEASE consider using mysql with innodb tables to avoid locking issues</span><br><span class="line">#</span><br><span class="line"># In your Quartz properties file, you&apos;ll need to set </span><br><span class="line"># org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_PAUSED_TRIGGER_GRPS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_SCHEDULER_STATE;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_LOCKS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_SIMPLE_TRIGGERS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_SIMPROP_TRIGGERS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_CRON_TRIGGERS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_BLOB_TRIGGERS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_TRIGGERS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_JOB_DETAILS;</span><br><span class="line">DROP TABLE IF EXISTS QRTZ_CALENDARS;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_JOB_DETAILS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    JOB_NAME  VARCHAR(200) NOT NULL,</span><br><span class="line">    JOB_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    DESCRIPTION VARCHAR(250) NULL,</span><br><span class="line">    JOB_CLASS_NAME   VARCHAR(250) NOT NULL,</span><br><span class="line">    IS_DURABLE VARCHAR(1) NOT NULL,</span><br><span class="line">    IS_NONCONCURRENT VARCHAR(1) NOT NULL,</span><br><span class="line">    IS_UPDATE_DATA VARCHAR(1) NOT NULL,</span><br><span class="line">    REQUESTS_RECOVERY VARCHAR(1) NOT NULL,</span><br><span class="line">    JOB_DATA BLOB NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_TRIGGERS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    TRIGGER_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    JOB_NAME  VARCHAR(200) NOT NULL,</span><br><span class="line">    JOB_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    DESCRIPTION VARCHAR(250) NULL,</span><br><span class="line">    NEXT_FIRE_TIME BIGINT(13) NULL,</span><br><span class="line">    PREV_FIRE_TIME BIGINT(13) NULL,</span><br><span class="line">    PRIORITY INTEGER NULL,</span><br><span class="line">    TRIGGER_STATE VARCHAR(16) NOT NULL,</span><br><span class="line">    TRIGGER_TYPE VARCHAR(8) NOT NULL,</span><br><span class="line">    START_TIME BIGINT(13) NOT NULL,</span><br><span class="line">    END_TIME BIGINT(13) NULL,</span><br><span class="line">    CALENDAR_NAME VARCHAR(200) NULL,</span><br><span class="line">    MISFIRE_INSTR SMALLINT(2) NULL,</span><br><span class="line">    JOB_DATA BLOB NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),</span><br><span class="line">    FOREIGN KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)</span><br><span class="line">        REFERENCES QRTZ_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_SIMPLE_TRIGGERS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    TRIGGER_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    REPEAT_COUNT BIGINT(7) NOT NULL,</span><br><span class="line">    REPEAT_INTERVAL BIGINT(12) NOT NULL,</span><br><span class="line">    TIMES_TRIGGERED BIGINT(10) NOT NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),</span><br><span class="line">    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_CRON_TRIGGERS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    TRIGGER_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    CRON_EXPRESSION VARCHAR(200) NOT NULL,</span><br><span class="line">    TIME_ZONE_ID VARCHAR(80),</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),</span><br><span class="line">    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_SIMPROP_TRIGGERS</span><br><span class="line">  (          </span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    TRIGGER_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    STR_PROP_1 VARCHAR(512) NULL,</span><br><span class="line">    STR_PROP_2 VARCHAR(512) NULL,</span><br><span class="line">    STR_PROP_3 VARCHAR(512) NULL,</span><br><span class="line">    INT_PROP_1 INT NULL,</span><br><span class="line">    INT_PROP_2 INT NULL,</span><br><span class="line">    LONG_PROP_1 BIGINT NULL,</span><br><span class="line">    LONG_PROP_2 BIGINT NULL,</span><br><span class="line">    DEC_PROP_1 NUMERIC(13,4) NULL,</span><br><span class="line">    DEC_PROP_2 NUMERIC(13,4) NULL,</span><br><span class="line">    BOOL_PROP_1 VARCHAR(1) NULL,</span><br><span class="line">    BOOL_PROP_2 VARCHAR(1) NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),</span><br><span class="line">    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) </span><br><span class="line">    REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_BLOB_TRIGGERS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    TRIGGER_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    BLOB_DATA BLOB NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),</span><br><span class="line">    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_CALENDARS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    CALENDAR_NAME  VARCHAR(200) NOT NULL,</span><br><span class="line">    CALENDAR BLOB NOT NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,CALENDAR_NAME)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_PAUSED_TRIGGER_GRPS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP  VARCHAR(200) NOT NULL, </span><br><span class="line">    PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_FIRED_TRIGGERS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    ENTRY_ID VARCHAR(95) NOT NULL,</span><br><span class="line">    TRIGGER_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    TRIGGER_GROUP VARCHAR(200) NOT NULL,</span><br><span class="line">    INSTANCE_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    FIRED_TIME BIGINT(13) NOT NULL,</span><br><span class="line">    SCHED_TIME BIGINT(13) NOT NULL,</span><br><span class="line">    PRIORITY INTEGER NOT NULL,</span><br><span class="line">    STATE VARCHAR(16) NOT NULL,</span><br><span class="line">    JOB_NAME VARCHAR(200) NULL,</span><br><span class="line">    JOB_GROUP VARCHAR(200) NULL,</span><br><span class="line">    IS_NONCONCURRENT VARCHAR(1) NULL,</span><br><span class="line">    REQUESTS_RECOVERY VARCHAR(1) NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,ENTRY_ID)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_SCHEDULER_STATE</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    INSTANCE_NAME VARCHAR(200) NOT NULL,</span><br><span class="line">    LAST_CHECKIN_TIME BIGINT(13) NOT NULL,</span><br><span class="line">    CHECKIN_INTERVAL BIGINT(13) NOT NULL,</span><br><span class="line">    PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE QRTZ_LOCKS</span><br><span class="line">  (</span><br><span class="line">    SCHED_NAME VARCHAR(120) NOT NULL,</span><br><span class="line">    LOCK_NAME  VARCHAR(40) NOT NULL, </span><br><span class="line">    PRIMARY KEY (SCHED_NAME,LOCK_NAME)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-quartz-properties-文件"><a href="#配置-quartz-properties-文件" class="headerlink" title="配置 quartz.properties 文件"></a>配置 quartz.properties 文件</h2><blockquote>
+<p>quartz.properties 文件位置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">#============================================================================</span><br><span class="line"># Configure Main Scheduler Properties</span><br><span class="line">#============================================================================</span><br><span class="line"></span><br><span class="line">org.quartz.scheduler.instanceName: Quartz_Scheduler</span><br><span class="line">org.quartz.scheduler.instanceId: AUTO</span><br><span class="line"></span><br><span class="line">org.quartz.scheduler.skipUpdateCheck: true</span><br><span class="line"></span><br><span class="line">#============================================================================</span><br><span class="line"># Configure ThreadPool</span><br><span class="line">#============================================================================</span><br><span class="line"></span><br><span class="line">org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool</span><br><span class="line">org.quartz.threadPool.threadCount: 5</span><br><span class="line">org.quartz.threadPool.threadPriority: 5</span><br><span class="line"></span><br><span class="line">#============================================================================</span><br><span class="line"># Configure JobStore</span><br><span class="line">#============================================================================</span><br><span class="line"></span><br><span class="line">org.quartz.jobStore.misfireThreshold: 60000</span><br><span class="line"></span><br><span class="line">org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX</span><br><span class="line">org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span><br><span class="line">org.quartz.jobStore.useProperties=false</span><br><span class="line">org.quartz.jobStore.dataSource=myDS</span><br><span class="line">org.quartz.jobStore.tablePrefix=QRTZ_</span><br><span class="line">org.quartz.jobStore.isClustered=true</span><br><span class="line"></span><br><span class="line">#============================================================================</span><br><span class="line"># Other Example Delegates</span><br><span class="line">#============================================================================</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.DB2v6Delegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.DB2v7Delegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.DriverDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.HSQLDBDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.MSSQLDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.PointbaseDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.PostgreSQLDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.WebLogicDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.oracle.OracleDelegate</span><br><span class="line">#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.oracle.WebLogicOracleDelegate</span><br><span class="line"></span><br><span class="line">#============================================================================</span><br><span class="line"># Configure Datasources</span><br><span class="line">#============================================================================</span><br><span class="line"></span><br><span class="line">org.quartz.dataSource.myDS.driver: com.mysql.jdbc.Driver</span><br><span class="line">org.quartz.dataSource.myDS.URL: jdbc:mysql://localhost:3306/quartz_scheduler</span><br><span class="line">org.quartz.dataSource.myDS.user: root</span><br><span class="line">org.quartz.dataSource.myDS.password:</span><br><span class="line">org.quartz.dataSource.myDS.maxConnections: 5</span><br><span class="line">org.quartz.dataSource.myDS.validationQuery: select 0</span><br><span class="line"></span><br><span class="line">#============================================================================</span><br><span class="line"># Configure Plugins</span><br><span class="line">#============================================================================</span><br><span class="line"></span><br><span class="line">#org.quartz.plugin.shutdownHook.class: org.quartz.plugins.management.ShutdownHookPlugin</span><br><span class="line">#org.quartz.plugin.shutdownHook.cleanShutdown: true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#org.quartz.plugin.triggHistory.class: org.quartz.plugins.history.LoggingJobHistoryPlugin</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要依赖"><a href="#主要依赖" class="headerlink" title="主要依赖"></a>主要依赖</h2><p>Maven：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.quartz-scheduler&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;quartz&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Gradle：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile(&quot;org.quartz-scheduler:quartz:2.2.3&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Server-端示例代码"><a href="#Server-端示例代码" class="headerlink" title="Server 端示例代码"></a>Server 端示例代码</h2><h4 id="SchedulerJob-java"><a href="#SchedulerJob-java" class="headerlink" title="SchedulerJob.java"></a>SchedulerJob.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.scheduling.quartz.QuartzJobBean;</span><br><span class="line"></span><br><span class="line">@Getter</span><br><span class="line">@Setter</span><br><span class="line">public abstract class SchedulerJob extends QuartzJobBean implements java.io.Serializable &#123;</span><br><span class="line"></span><br><span class="line">    String identify;</span><br><span class="line"></span><br><span class="line">    String group;</span><br><span class="line"></span><br><span class="line">    String description;</span><br><span class="line"></span><br><span class="line">    String cron;</span><br><span class="line"></span><br><span class="line">    Map jobDataMap;</span><br><span class="line"></span><br><span class="line">    public abstract void log();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException &#123;</span><br><span class="line">        System.out.println(this.identify + &quot;--------&quot; + this.group);</span><br><span class="line">        log();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让每个Job实例都继承SchedulerJob</p>
+<h4 id="Jdbc-java"><a href="#Jdbc-java" class="headerlink" title="Jdbc.java"></a>Jdbc.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Getter</span><br><span class="line">@Setter</span><br><span class="line">public class Jdbc extends SchedulerJob &#123;</span><br><span class="line"></span><br><span class="line">    public String url;</span><br><span class="line"></span><br><span class="line">    public String username;</span><br><span class="line"></span><br><span class="line">    public String password;</span><br><span class="line"></span><br><span class="line">    public String driverClassName;</span><br><span class="line"></span><br><span class="line">    public String sql;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void log() &#123;</span><br><span class="line">        JdbcUtils jdbcUtils = new JdbcUtils(url, username, password, driverClassName);</span><br><span class="line">        Map&lt;String, Object&gt; results = jdbcUtils.getJdbcTemplate().queryForMap(sql);</span><br><span class="line">        for (Map.Entry e : results.entrySet()) &#123;</span><br><span class="line">            System.out.println(e.getKey() + &quot; -------------- : &quot; + e.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">        jdbcUtils.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="WebConfig-java"><a href="#WebConfig-java" class="headerlink" title="WebConfig.java"></a>WebConfig.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class WebConfig extends WebMvcConfigurerAdapter &#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Scheduler scheduler() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Scheduler scheduler = new StdSchedulerFactory().getScheduler();</span><br><span class="line">            scheduler.setJobFactory(jobFactory());</span><br><span class="line">            scheduler.start();</span><br><span class="line">            return scheduler;</span><br><span class="line">        &#125; catch (SchedulerException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public JobFactory jobFactory() &#123;</span><br><span class="line">        return new QuartzJobFactory();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected class QuartzJobFactory extends PropertySettingJobFactory &#123;</span><br><span class="line"></span><br><span class="line">        @Autowired</span><br><span class="line">        private AutowireCapableBeanFactory autowireCapableBeanFactory;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException &#123;</span><br><span class="line">            Job jobInstance = super.newJob(bundle, scheduler);</span><br><span class="line">            autowireCapableBeanFactory.autowireBean(jobInstance);</span><br><span class="line">            return jobInstance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="http://wenku.baidu.com/link?url=ggiylDIpc9cSx5ygIMLCAIrXwdlu5-xMBFjmzvrjWsAikIQSMBononSzqIoaJH6yN2hQ332621Zs713U5-YkL3sUjCu1bR-41X7caiIBS_C" target="_blank" rel="noopener">Quartz 与 Spring 集成 Job 如何自动注入 Spring 容器托管的对象</a></p>
+</blockquote>
+<h4 id="SchedulerJobServiceImpl-java"><a href="#SchedulerJobServiceImpl-java" class="headerlink" title="SchedulerJobServiceImpl.java"></a>SchedulerJobServiceImpl.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class SchedulerJobServiceImpl implements SchedulerJobService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private Scheduler scheduler;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void addJob(SchedulerJob job) &#123;</span><br><span class="line">        JobDetail jobDetail = JobBuilder.newJob(job.getClass())</span><br><span class="line">                .withIdentity(job.getIdentify(), job.getGroup())</span><br><span class="line">                .usingJobData(job.getJobDataMap())</span><br><span class="line">                .build();</span><br><span class="line">        Trigger trigger = TriggerBuilder.newTrigger()</span><br><span class="line">                .withIdentity(job.getIdentify(), job.getGroup())</span><br><span class="line">                .withDescription(job.getDescription())</span><br><span class="line">                .withSchedule(CronScheduleBuilder.cronSchedule(job.getCron()))</span><br><span class="line">                .build();</span><br><span class="line">        try &#123;</span><br><span class="line">            scheduler.scheduleJob(jobDetail, trigger);</span><br><span class="line">        &#125; catch (SchedulerException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Set&lt;JobKey&gt; allJobs(String matcher) &#123;</span><br><span class="line">        Set&lt;JobKey&gt; jobKeys = new HashSet&lt;&gt;();</span><br><span class="line">        try &#123;</span><br><span class="line">            jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(matcher));</span><br><span class="line">        &#125; catch (SchedulerException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return jobKeys;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="SchedulerCreateController-java"><a href="#SchedulerCreateController-java" class="headerlink" title="SchedulerCreateController.java"></a>SchedulerCreateController.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">public class SchedulerCreateController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private SchedulerJobService schedulerJobService;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/jdbc&quot;, method = RequestMethod.POST)</span><br><span class="line">    public ResponseEntity jdbc(@RequestBody Jdbc job) &#123;</span><br><span class="line">        schedulerJobService.addJob(job);</span><br><span class="line">        return ResponseEntity.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="对Job实例的其他操作"><a href="#对Job实例的其他操作" class="headerlink" title="对Job实例的其他操作"></a>对Job实例的其他操作</h4><p>略</p>
+<h2 id="Client-端示例代码"><a href="#Client-端示例代码" class="headerlink" title="Client 端示例代码"></a>Client 端示例代码</h2><h4 id="ValueObject-java"><a href="#ValueObject-java" class="headerlink" title="ValueObject.java"></a>ValueObject.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public interface ValueObject&lt;T&gt; extends Serializable &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Value objects compare by the values of their attributes, they don&apos;t have an identity.</span><br><span class="line">     *</span><br><span class="line">     * @param other The other value object.</span><br><span class="line">     * @return &lt;code&gt;true&lt;/code&gt; if the given value object&apos;s and this value object&apos;s attributes are the same.</span><br><span class="line">     */</span><br><span class="line">    boolean sameValueAs(T other);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Jobable-java"><a href="#Jobable-java" class="headerlink" title="Jobable.java"></a>Jobable.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Jobable &#123;</span><br><span class="line"></span><br><span class="line">    SchedulerJob convertToScheduler();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="SchedulerJob-java-1"><a href="#SchedulerJob-java-1" class="headerlink" title="SchedulerJob.java"></a>SchedulerJob.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class SchedulerJob implements ValueObject&lt;SchedulerJob&gt; &#123;</span><br><span class="line"></span><br><span class="line">    protected String identify;</span><br><span class="line"></span><br><span class="line">    protected String group;</span><br><span class="line"></span><br><span class="line">    protected String cron;</span><br><span class="line"></span><br><span class="line">    protected String description;</span><br><span class="line"></span><br><span class="line">    protected Map&lt;String, String&gt; jobDataMap = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean sameValueAs(final SchedulerJob other) &#123;</span><br><span class="line">        return this.equals(other);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Jdbc-java-1"><a href="#Jdbc-java-1" class="headerlink" title="Jdbc.java"></a>Jdbc.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Getter</span><br><span class="line">@Setter</span><br><span class="line">public class Jdbc implements Jobable &#123;</span><br><span class="line"></span><br><span class="line">    public String url;</span><br><span class="line"></span><br><span class="line">    public String username;</span><br><span class="line"></span><br><span class="line">    public String password;</span><br><span class="line"></span><br><span class="line">    public String driverClassName;</span><br><span class="line"></span><br><span class="line">    public String sql;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public SchedulerJob convertToScheduler() &#123;</span><br><span class="line">        SchedulerJob job = new SchedulerJob();</span><br><span class="line">        job.setIdentify(&quot;jdbc&quot; + new Random().nextInt());</span><br><span class="line">        job.setGroup(&quot;jdbcs&quot;);</span><br><span class="line">        job.setDescription(&quot;j...d...b...c&quot;);</span><br><span class="line">        job.setCron(&quot;0 */1 * * * ? *&quot;);</span><br><span class="line">        return job;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="RemoteSchedulerJobServiceImpl-java"><a href="#RemoteSchedulerJobServiceImpl-java" class="headerlink" title="RemoteSchedulerJobServiceImpl.java"></a>RemoteSchedulerJobServiceImpl.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class RemoteSchedulerJobServiceImpl implements RemoteSchedulerJobService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;spring.quartz.server&#125;&quot;)</span><br><span class="line">    private String remoteSchedulerServer;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void addJob(SchedulerJob job) &#123;</span><br><span class="line">        restTemplate.postForLocation(remoteSchedulerServer + &quot;/jdbc&quot;, job);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="JdbcJobCreateController-java"><a href="#JdbcJobCreateController-java" class="headerlink" title="JdbcJobCreateController.java"></a>JdbcJobCreateController.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">public class JdbcJobCreateController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private RemoteSchedulerJobService remoteSchedulerJobService;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/addJdbc&quot;)</span><br><span class="line">    public ResponseEntity addJob() &#123;</span><br><span class="line">        SchedulerJob jdbcJob = new Jdbc().convertToScheduler();</span><br><span class="line">        Map&lt;String, String&gt; jobDataMap = new HashMap&lt;&gt;();</span><br><span class="line">        jobDataMap.put(&quot;url&quot;, &quot;jdbc:mysql://localhost:3306/quartz_scheduler&quot;);</span><br><span class="line">        jobDataMap.put(&quot;username&quot;, &quot;root&quot;);</span><br><span class="line">        jobDataMap.put(&quot;password&quot;, &quot;&quot;);</span><br><span class="line">        jobDataMap.put(&quot;driverClassName&quot;, &quot;com.mysql.jdbc.Driver&quot;);</span><br><span class="line">        jobDataMap.put(&quot;sql&quot;, &quot;select job_name, job_group, description from qrtz_job_details limit 1&quot;);</span><br><span class="line">        jdbcJob.setJobDataMap(jobDataMap);</span><br><span class="line">        remoteSchedulerJobService.addJob(jdbcJob);</span><br><span class="line">        return ResponseEntity.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="将执行结果输入到日志中"><a href="#将执行结果输入到日志中" class="headerlink" title="将执行结果输入到日志中"></a>将执行结果输入到日志中</h2><h2 id="数据库表的结构"><a href="#数据库表的结构" class="headerlink" title="数据库表的结构"></a>数据库表的结构</h2><blockquote>
+<p>参考：<a href="http://blog.csdn.net/evankaka/article/details/45540885" target="_blank" rel="noopener">Quartz 存储与持久化 - 基于 quartz.properties 的配置</a></p>
+</blockquote>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ol>
+<li><p>如果启动了远程 quartz ，那么本地如果同时启动了 quartz 且使用了远程 quartz 这个数据库，这时会出现 quartz 时间戳不统一的问题。（QRTZ_SCHEDULER_STATE 表）</p>
+</li>
+<li><p>org.quartz.JobPersistenceException: Couldn’t acquire next trigger: Field ‘SCHED_TIME’ doesn’t have a default value.</p>
+<p>详细信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">10:25:58.428 [org.springframework.scheduling.quartz.SchedulerFactoryBean#0_QuartzSchedulerThread] ERROR org.quartz.core.ErrorLogger - An error occurred while scanning for the next triggers to fire.</span><br><span class="line"></span><br><span class="line">org.quartz.JobPersistenceException: Couldn&apos;t acquire next trigger: Field &apos;SCHED_TIME&apos; doesn&apos;t have a default value</span><br><span class="line"></span><br><span class="line">at org.quartz.impl.jdbcjobstore.JobStoreSupport.acquireNextTrigger(JobStoreSupport.java:2822) ~[main/:?]</span><br><span class="line"></span><br><span class="line">at org.quartz.impl.jdbcjobstore.JobStoreSupport$41.execute(JobStoreSupport.java:2749) ~[main/:?]</span><br><span class="line"></span><br><span class="line">at org.quartz.impl.jdbcjobstore.JobStoreSupport.executeInNonManagedTXLock(JobStoreSupport.java:3795) ~[main/:?]</span><br><span class="line"></span><br><span class="line">at org.quartz.impl.jdbcjobstore.JobStoreSupport.acquireNextTriggers(JobStoreSupport.java:2745) ~[main/:?]</span><br><span class="line"></span><br><span class="line">at org.quartz.core.QuartzSchedulerThread.run(QuartzSchedulerThread.java:264) [quartz-2.1.7.jar:?]</span><br><span class="line"></span><br><span class="line">Caused by: java.sql.SQLException: Field &apos;SCHED_TIME&apos; doesn&apos;t have a default value</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:963) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]</span><br><span class="line"></span><br><span class="line">at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeUpdate(NewProxyPreparedStatement.java:105) ~[c3p0-0.9.1.1.jar:0.9.1.1]</span><br><span class="line"></span><br><span class="line">at org.quartz.impl.jdbcjobstore.StdJDBCDelegate.insertFiredTrigger(StdJDBCDelegate.java:2624) ~[quartz-2.1.7.jar:?]</span><br><span class="line"></span><br><span class="line">at org.quartz.impl.jdbcjobstore.JobStoreSupport.acquireNextTrigger(JobStoreSupport.java:2805) ~[main/:?]</span><br><span class="line"></span><br><span class="line">... 4 more</span><br><span class="line"></span><br><span class="line">10:27:56.133 [QuartzScheduler_org.springframework.scheduling.quartz.SchedulerFactoryBean#0-DESKTOP-DGF5RBI1489717255135_MisfireHandler] INFO  org.quartz.impl.jdbcjobstore.JobStoreTX - Handling 1 trigger(s) that missed their scheduled fire-time.</span><br></pre></td></tr></table></figure>
+
+<p>原因：使用的 jar 包版本与执行的数据库脚本不一致。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Quartz/" rel="tag"># Quartz</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/25/notes-2017-02-25-Liquibase的学习和使用/" rel="next" title="Liquibase 的学习和使用">
+                <i class="fa fa-chevron-left"></i> Liquibase 的学习和使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/08/notes-2017-04-08-HTTP协议和HTTPS协议的GET方法请求/" rel="prev" title="HTTP 协议和 HTTPS 协议的 GET 方法请求">
+                HTTP 协议和 HTTPS 协议的 GET 方法请求 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/';
+            this.page.identifier = '2017/03/01/notes-2017-03-01-Quartz的学习和使用/';
+            this.page.title = 'Quartz 的学习和使用';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/';
+                this.page.identifier = '2017/03/01/notes-2017-03-01-Quartz的学习和使用/';
+                this.page.title = 'Quartz 的学习和使用';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/';
+            this.page.identifier = '2017/03/01/notes-2017-03-01-Quartz的学习和使用/';
+            this.page.title = 'Quartz 的学习和使用';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式-Quartz-的配置与-Spring-的集成使用。"><span class="nav-number">1.</span> <span class="nav-text">分布式 Quartz 的配置与 Spring 的集成使用。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化数据库"><span class="nav-number">1.1.</span> <span class="nav-text">初始化数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-quartz-properties-文件"><span class="nav-number">1.2.</span> <span class="nav-text">配置 quartz.properties 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要依赖"><span class="nav-number">1.3.</span> <span class="nav-text">主要依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-端示例代码"><span class="nav-number">1.4.</span> <span class="nav-text">Server 端示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SchedulerJob-java"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">SchedulerJob.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jdbc-java"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">Jdbc.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebConfig-java"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">WebConfig.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SchedulerJobServiceImpl-java"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">SchedulerJobServiceImpl.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SchedulerCreateController-java"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">SchedulerCreateController.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对Job实例的其他操作"><span class="nav-number">1.4.0.6.</span> <span class="nav-text">对Job实例的其他操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-端示例代码"><span class="nav-number">1.5.</span> <span class="nav-text">Client 端示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ValueObject-java"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">ValueObject.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jobable-java"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">Jobable.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SchedulerJob-java-1"><span class="nav-number">1.5.0.3.</span> <span class="nav-text">SchedulerJob.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jdbc-java-1"><span class="nav-number">1.5.0.4.</span> <span class="nav-text">Jdbc.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RemoteSchedulerJobServiceImpl-java"><span class="nav-number">1.5.0.5.</span> <span class="nav-text">RemoteSchedulerJobServiceImpl.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JdbcJobCreateController-java"><span class="nav-number">1.5.0.6.</span> <span class="nav-text">JdbcJobCreateController.java</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#将执行结果输入到日志中"><span class="nav-number">1.6.</span> <span class="nav-text">将执行结果输入到日志中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库表的结构"><span class="nav-number">1.7.</span> <span class="nav-text">数据库表的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">1.8.</span> <span class="nav-text">FAQ</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

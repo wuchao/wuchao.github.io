@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Array、List、Set 互转实例Array、List 互转Array 转 List12String[] s = new String[]&amp;#123;&amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;, &amp;quot;C&amp;quot;, &amp;quot;D&amp;quot;, &amp;quot;E&amp;quot;&amp;#125;;List&amp;lt;String&amp;gt; list = Arrays.asList(s);">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Array、List、Set 的互相转换">
+<meta property="og:url" content="https://wuchao.github.io/2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="Array、List、Set 互转实例Array、List 互转Array 转 List12String[] s = new String[]&amp;#123;&amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;, &amp;quot;C&amp;quot;, &amp;quot;D&amp;quot;, &amp;quot;E&amp;quot;&amp;#125;;List&amp;lt;String&amp;gt; list = Arrays.asList(s);">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.725Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Array、List、Set 的互相转换">
+<meta name="twitter:description" content="Array、List、Set 互转实例Array、List 互转Array 转 List12String[] s = new String[]&amp;#123;&amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;, &amp;quot;C&amp;quot;, &amp;quot;D&amp;quot;, &amp;quot;E&amp;quot;&amp;#125;;List&amp;lt;String&amp;gt; list = Arrays.asList(s);">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/">
+
+
+
+
+
+  <title>Java Array、List、Set 的互相转换 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">16</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java Array、List、Set 的互相转换</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T00:00:00+08:00">
+                2018-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Array、List、Set-互转实例"><a href="#Array、List、Set-互转实例" class="headerlink" title="Array、List、Set 互转实例"></a>Array、List、Set 互转实例</h2><h3 id="Array、List-互转"><a href="#Array、List-互转" class="headerlink" title="Array、List 互转"></a>Array、List 互转</h3><h4 id="Array-转-List"><a href="#Array-转-List" class="headerlink" title="Array 转 List"></a>Array 转 List</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] s = new String[]&#123;&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;&#125;;</span><br><span class="line">List&lt;String&gt; list = Arrays.asList(s);</span><br></pre></td></tr></table></figure>
+
+<p>注意这里 list 里面的元素直接是 s 里面的元素（list backed by the specified array），换句话就是说：对 s 的修改，直接影响 list。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s[0] = &quot;AA&quot;;</span><br><span class="line">System.out.println(&quot;list: &quot; + list);</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list: [AA, B, C, D, E]</span><br></pre></td></tr></table></figure>
+
+<h4 id="List-转-Array"><a href="#List-转-Array" class="headerlink" title="List 转 Array"></a>List 转 Array</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] dest = list.toArray(new String[0]); // new String[0]是指定返回数组的类型</span><br><span class="line">System.out.println(&quot;dest: &quot; + Arrays.toString(dest));</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dest: [AA, B, C, D, E]</span><br></pre></td></tr></table></figure>
+
+<p>注意这里的 dest 里面的元素不是 list 里面的元素，换句话就是说：对 list 中关于元素的修改，不会影响 dest。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.set(0, &quot;Z&quot;);</span><br><span class="line">System.out.println(&quot;modified list: &quot; + list);</span><br><span class="line">System.out.println(&quot;dest: &quot; + Arrays.toString(dest));</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">modified list: [Z, B, C, D, E]</span><br><span class="line">dest: [AA, B, C, D, E]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 list 虽然被修改了，但是 dest 数组没有没修改。</p>
+<a id="more"></a>
+
+<h3 id="List、Set-互转"><a href="#List、Set-互转" class="headerlink" title="List、Set 互转"></a>List、Set 互转</h3><p>因为 List 和 Set 都实现了 Collection 接口，且 addAll(Collection&lt;? extends E&gt; c) 方法，因此可以采用 addAll() 方法将 List 和 Set 互相转换；另外，List 和 Set 也提供了 <code>Collection&lt;? extends E&gt; c</code> 作为参数的构造函数，因此通常采用构造函数的形式完成互相转化。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// List 转 Set</span><br><span class="line">Set&lt;String&gt; set = new HashSet&lt;&gt;(list);</span><br><span class="line">System.out.println(&quot;set: &quot; + set);</span><br><span class="line"></span><br><span class="line">// Set 转 List</span><br><span class="line">List&lt;String&gt; list_1 = new ArrayList&lt;&gt;(set);</span><br><span class="line">System.out.println(&quot;list_1: &quot; + list_1);</span><br></pre></td></tr></table></figure>
+
+<p>和 toArray() 一样，被转换的 List / Set 的修改不会对被转化后的 Set / List 造成影响。</p>
+<h3 id="Array、Set-互转"><a href="#Array、Set-互转" class="headerlink" title="Array、Set 互转"></a>Array、Set 互转</h3><p>由上面可完成 Array 和 Set 的互转。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// array 转 set</span><br><span class="line">s = new String[]&#123;&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;,&quot;E&quot;&#125;;</span><br><span class="line">set = new HashSet&lt;&gt;(Arrays.asList(s));</span><br><span class="line">System.out.println(&quot;set: &quot; + set);</span><br><span class="line"></span><br><span class="line">// set 转 array</span><br><span class="line">dest = set.toArray(new String[0]);</span><br><span class="line">System.out.println(&quot;dest: &quot; + Arrays.toString(dest));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Array、Array-互转"><a href="#Array、Array-互转" class="headerlink" title="Array、Array 互转"></a>Array、Array 互转</h3><p>使用 <code>org.apache.commons.beanutils.ConvertUtils.java</code> 提供的 <code>convert</code> 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;1,2,3,4,5,6,7,8&quot;;</span><br><span class="line">String[] strAry = str.split(&quot;,&quot;);</span><br><span class="line">// String 数组转成数字型数组</span><br><span class="line">int[] num1 = (int[]) ConvertUtils.convert(strAry, int.class);</span><br><span class="line">Integer[] num2 = (Integer[]) ConvertUtils.convert(strAry, Integer.class);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Arrays-asList-和-Collection-toArray"><a href="#Arrays-asList-和-Collection-toArray" class="headerlink" title="Arrays.asList() 和 Collection.toArray()"></a>Arrays.asList() 和 Collection.toArray()</h2><p>上述列出的互相转换离不开 Arrays.asList() 和 Collection.toArray() 两个重要的方法；</p>
+<blockquote>
+<p>This method acts as bridge between array-based and collection-based APIs, in combination with Collection.toArray. The returned list is serializable and implements RandomAccess.</p>
+</blockquote>
+<h3 id="Arrays-asList"><a href="#Arrays-asList" class="headerlink" title="Arrays.asList()"></a>Arrays.asList()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@SafeVarargs</span><br><span class="line">@SuppressWarnings(&quot;varargs&quot;)</span><br><span class="line">public static &lt;T&gt; List&lt;T&gt; asList(T... a) &#123;</span><br><span class="line">    return new ArrayList&lt;&gt;(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里出现的 ArrayList&lt;&gt; 并不是我们通常使用的 java.util.ArrayList，因为 java.util.ArrayList 没有数组作为参数的构造函数。查看对应的源码发现，其实 Arrays 类的静态内部类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * @serial include</span><br><span class="line">  */</span><br><span class="line">private static class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</span><br><span class="line">    implements RandomAccess, java.io.Serializable &#123;</span><br><span class="line"></span><br><span class="line">    private static final long serialVersionUID = -2764017481108945198L;</span><br><span class="line">    private final E[] a;</span><br><span class="line"></span><br><span class="line">    ArrayList(E[] array) &#123;</span><br><span class="line">        a = Objects.requireNonNull(array);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int size() &#123;</span><br><span class="line">        return a.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object[] toArray() &#123;</span><br><span class="line">        return a.clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public &lt;T&gt; T[] toArray(T[] a) &#123;</span><br><span class="line">        int size = size();</span><br><span class="line">        if (a.length &lt; size)</span><br><span class="line">            return Arrays.copyOf(this.a, size,</span><br><span class="line">                                 (Class&lt;? extends T[]&gt;) a.getClass());</span><br><span class="line">        System.arraycopy(this.a, 0, a, 0, size);</span><br><span class="line">        if (a.length &gt; size)</span><br><span class="line">            a[size] = null;</span><br><span class="line">        return a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public E get(int index) &#123;</span><br><span class="line">        return a[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public E set(int index, E element) &#123;</span><br><span class="line">        E oldValue = a[index];</span><br><span class="line">        a[index] = element;</span><br><span class="line">        return oldValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int indexOf(Object o) &#123;</span><br><span class="line">        E[] a = this.a;</span><br><span class="line">        if (o == null) &#123;</span><br><span class="line">            for (int i = 0; i &lt; a.length; i++)</span><br><span class="line">                if (a[i] == null)</span><br><span class="line">                    return i;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            for (int i = 0; i &lt; a.length; i++)</span><br><span class="line">                if (o.equals(a[i]))</span><br><span class="line">                    return i;</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean contains(Object o) &#123;</span><br><span class="line">        return indexOf(o) != -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Spliterator&lt;E&gt; spliterator() &#123;</span><br><span class="line">        return Spliterators.spliterator(a, Spliterator.ORDERED);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void forEach(Consumer&lt;? super E&gt; action) &#123;</span><br><span class="line">        Objects.requireNonNull(action);</span><br><span class="line">        for (E e : a) &#123;</span><br><span class="line">            action.accept(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void replaceAll(UnaryOperator&lt;E&gt; operator) &#123;</span><br><span class="line">        Objects.requireNonNull(operator);</span><br><span class="line">        E[] a = this.a;</span><br><span class="line">        for (int i = 0; i &lt; a.length; i++) &#123;</span><br><span class="line">            a[i] = operator.apply(a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void sort(Comparator&lt;? super E&gt; c) &#123;</span><br><span class="line">        Arrays.sort(a, c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这个由 Arrays 类实现的另一个 Arrays$ArrayList，对于 java.util.ArrayList 类来讲，是比较简单粗糙的类。</p>
+<ul>
+<li><p>没有扩容机制；</p>
+</li>
+<li><p>无法在指定位置 add(int index, E element)，调用该方法会抛异常；这些不同让这个 ArrayList 看起来实际上就是一个 List-View 的数组。</p>
+</li>
+</ul>
+<h3 id="Collection-toArray"><a href="#Collection-toArray" class="headerlink" title="Collection.toArray()"></a>Collection.toArray()</h3><p>虽然 List、Set 的具体实现类都对 Collection.toArray() 方法进行了不同程度的重写，但是大致都差不多。</p>
+<p>这里选 AbstractCollection.toArray() 的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public &lt;T&gt; T[] toArray(T[] a) &#123;</span><br><span class="line">    // Estimate size of array; be prepared to see more or fewer elements</span><br><span class="line">    int size = size();</span><br><span class="line">    T[] r = a.length &gt;= size ? a :</span><br><span class="line">              (T[])java.lang.reflect.Array</span><br><span class="line">              .newInstance(a.getClass().getComponentType(), size);//如果给定的参数T[] a的长度足够存放当前collection(list or set)的元素，则采用该参数来存放元素；否则则根据参数给定的类型反射生成一个数组；</span><br><span class="line">//因此这里的参数T[] a有俩作用；第一：可能用作存放元素；第二：为返回数组提供类型</span><br><span class="line">    Iterator&lt;E&gt; it = iterator();</span><br><span class="line">    for (int i = 0; i &lt; r.length; i++) &#123;</span><br><span class="line">        if (! it.hasNext()) &#123; // fewer elements than expected 集合的size少于给定的参数数组的长度</span><br><span class="line">            if (a == r) &#123;</span><br><span class="line">                r[i] = null; // null-terminate 最后一个元素被设置为null，表明collection元素结束；</span><br><span class="line">            &#125; else if (a.length &lt; i) &#123;</span><br><span class="line">                return Arrays.copyOf(r, i);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                System.arraycopy(r, 0, a, 0, i);</span><br><span class="line">                if (a.length &gt; i) &#123;</span><br><span class="line">                    a[i] = null;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return a;</span><br><span class="line">        &#125;</span><br><span class="line">        r[i] = (T)it.next();</span><br><span class="line">    &#125;</span><br><span class="line">    // more elements than expected</span><br><span class="line">    return it.hasNext() ? finishToArray(r, it) : r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a href="https://blog.csdn.net/u014532901/article/details/78820124" target="_blank" rel="noopener">Java Array、List、Set互相转化</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/js-2018-03-29-js-redirect-post/" rel="next" title="JavaScript 以 POST 方式打开新页面">
+                <i class="fa fa-chevron-left"></i> JavaScript 以 POST 方式打开新页面
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/16/hibernate-2018-05-16-Hibernate-Object-States/" rel="prev" title="Hibernate 三种数据状态">
+                Hibernate 三种数据状态 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/';
+            this.page.identifier = '2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/';
+            this.page.title = 'Java Array、List、Set 的互相转换';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/';
+                this.page.identifier = '2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/';
+                this.page.title = 'Java Array、List、Set 的互相转换';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/';
+            this.page.identifier = '2018/05/16/java-2018-05-16-Java-Array-List-Set-Conversion/';
+            this.page.title = 'Java Array、List、Set 的互相转换';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Array、List、Set-互转实例"><span class="nav-number">1.</span> <span class="nav-text">Array、List、Set 互转实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Array、List-互转"><span class="nav-number">1.1.</span> <span class="nav-text">Array、List 互转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-转-List"><span class="nav-number">1.1.1.</span> <span class="nav-text">Array 转 List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-转-Array"><span class="nav-number">1.1.2.</span> <span class="nav-text">List 转 Array</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List、Set-互转"><span class="nav-number">1.2.</span> <span class="nav-text">List、Set 互转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array、Set-互转"><span class="nav-number">1.3.</span> <span class="nav-text">Array、Set 互转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array、Array-互转"><span class="nav-number">1.4.</span> <span class="nav-text">Array、Array 互转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arrays-asList-和-Collection-toArray"><span class="nav-number">2.</span> <span class="nav-text">Arrays.asList() 和 Collection.toArray()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Arrays-asList"><span class="nav-number">2.1.</span> <span class="nav-text">Arrays.asList()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection-toArray"><span class="nav-number">2.2.</span> <span class="nav-text">Collection.toArray()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

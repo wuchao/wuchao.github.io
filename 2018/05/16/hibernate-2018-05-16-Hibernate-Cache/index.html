@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hibernate,Cache,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hibernate 缓存机制什么是缓存？ 　　缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高了应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。　 缓存有什么好处？ 　　缓存的好处是降低了数据库的访问次数，提高应用性能，减少了读写数据的时间。 什么时候适合用缓存？">
+<meta name="keywords" content="Hibernate,Cache">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate 缓存机制">
+<meta property="og:url" content="https://wuchao.github.io/2018/05/16/hibernate-2018-05-16-Hibernate-Cache/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="Hibernate 缓存机制什么是缓存？ 　　缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高了应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。　 缓存有什么好处？ 　　缓存的好处是降低了数据库的访问次数，提高应用性能，减少了读写数据的时间。 什么时候适合用缓存？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate 缓存机制">
+<meta name="twitter:description" content="Hibernate 缓存机制什么是缓存？ 　　缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高了应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。　 缓存有什么好处？ 　　缓存的好处是降低了数据库的访问次数，提高应用性能，减少了读写数据的时间。 什么时候适合用缓存？">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2018/05/16/hibernate-2018-05-16-Hibernate-Cache/">
+
+
+
+
+
+  <title>Hibernate 缓存机制 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">16</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Hibernate/" itemprop="url" rel="index">
+          <span itemprop="name">Hibernate</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/05/16/hibernate-2018-05-16-Hibernate-Cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hibernate 缓存机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T00:00:00+08:00">
+                2018-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hibernate/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Hibernate-缓存机制"><a href="#Hibernate-缓存机制" class="headerlink" title="Hibernate 缓存机制"></a>Hibernate 缓存机制</h2><p>什么是缓存？</p>
+<p>　　缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高了应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。　</p>
+<p>缓存有什么好处？</p>
+<p>　　缓存的好处是降低了数据库的访问次数，提高应用性能，减少了读写数据的时间。</p>
+<p>什么时候适合用缓存？</p>
+<p>　　程序中经常用到一些不变的数据内容，从数据库查出来以后不会去经常修改它而又经常要用到的就可以考虑做一个缓存，以后读取就从缓存来读取，而不必每次都去查询数据库。因为硬盘的速度比内存的速度慢的多。从而提高了程序的性能，缓存的出现就会为了解决这个问题。</p>
+<p>Hibernate中的缓存包括一级缓存（Session缓存）、二级缓存（SessionFactory缓存）和查询缓存。</p>
+<a id="more"></a> 
+
+<h3 id="一级缓存（Session-缓存）"><a href="#一级缓存（Session-缓存）" class="headerlink" title="一级缓存（Session 缓存）"></a>一级缓存（Session 缓存）</h3><p>由于 Session 对象的生命周期通常对应一个数据库事务或者一个应用事务，因此它的缓存是事务范围的缓存。Session 级缓存是必需的，不允许而且事实上也无法卸除。在 Session 级缓存中，持久化类的每个实例都具有唯一的 OID。</p>
+<p>当应用程序调用 Session 的 save()、update()、savaeOrUpdate()、get() 或 load()，以及调用查询接口的 list()、iterate() 或 filter() 方法时，如果在 Session 缓存中还不存在相应的对象，Hibernate 就会把该对象加入到第一级缓存中。</p>
+<p>当清理缓存时，Hibernate 会根据缓存中对象的状态变化来同步更新数据库。</p>
+<p>Session 为应用程序提供了两个管理缓存的方法：</p>
+<ul>
+<li><p>evict(Object obj)：从缓存中清除参数指定的持久化对象。</p>
+</li>
+<li><p>clear()：清空缓存中所有持久化对象。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void testOneLeveCache()&#123;</span><br><span class="line">    Session session = HibernateUtil.getSession();</span><br><span class="line">    // 获取持久化对象 Dept</span><br><span class="line">    Dept d1 = (Dept)session.get(Dept.class, 10);</span><br><span class="line">    // 再次获取持久化对象 Dept</span><br><span class="line">    Dept d2 = (Dept)session.get(Dept.class, 10);    </span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 Session 的 get() 方法获取到了 Dept 对象默认会将 Dept 对象保存到一级缓存中（Session 缓存） 当第二次获取的时候会先从一级缓存中查询对应的对象（前提是不能清空或关闭 Session，否则一级缓存会清空或销毁），如果一级缓存中存在相应的对象就不会到数据库中查询。所以只执行一次查询的查询代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Hibernate:</span><br><span class="line">    select</span><br><span class="line">        dept0_.DEPTNO as DEPTNO0_0_,</span><br><span class="line">        dept0_.DNAME as DNAME0_0_,</span><br><span class="line">        dept0_.LOC as LOC0_0_</span><br><span class="line">    from</span><br><span class="line">        SCOTT.DEPT dept0_</span><br><span class="line">    where</span><br><span class="line">        dept0_.DEPTNO=?</span><br></pre></td></tr></table></figure>
+
+<p>如何清除一级缓存？</p>
+<p>　　通过 session.clear(); // 清除所有缓存</p>
+<p>　　　　 session.evict(); // 清除指定缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static void testOneLeveCache() &#123;</span><br><span class="line">    Session session = HibernateUtil.getSession();</span><br><span class="line">    SessionFactory sf = HibernateUtil.getSessionFactory();</span><br><span class="line">    // 获取持久化对象 Dept</span><br><span class="line">    Dept d1 = (Dept)session.get(Dept.class, 10);</span><br><span class="line">    session.clear(); // 清除所有缓存</span><br><span class="line">    session.evict(d1); // 清除指定缓存</span><br><span class="line">    // 再次获取持久化对象 Dept</span><br><span class="line">    Dept d2 = (Dept)session.get(Dept.class, 10);    </span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 session.evict(Object obj) 会删除指定的 Bean，所以当你查询被你删除二级缓存的 Bean 时也会执行两条SQL语句。</p>
+<p>使用 Session.clear() 清除后会发现执行了两条 SQL 语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Hibernate:</span><br><span class="line">    select</span><br><span class="line">        dept0_.DEPTNO as DEPTNO0_0_,</span><br><span class="line">        dept0_.DNAME as DNAME0_0_,</span><br><span class="line">        dept0_.LOC as LOC0_0_</span><br><span class="line">    from</span><br><span class="line">        SCOTT.DEPT dept0_</span><br><span class="line">    where</span><br><span class="line">        dept0_.DEPTNO=?</span><br><span class="line">Hibernate:</span><br><span class="line">    select</span><br><span class="line">        dept0_.DEPTNO as DEPTNO0_0_,</span><br><span class="line">        dept0_.DNAME as DNAME0_0_,</span><br><span class="line">        dept0_.LOC as LOC0_0_</span><br><span class="line">    from</span><br><span class="line">        SCOTT.DEPT dept0_</span><br><span class="line">    where</span><br><span class="line">        dept0_.DEPTNO=?</span><br></pre></td></tr></table></figure>
+
+<h3 id="二级缓存（SessionFactory-缓存）"><a href="#二级缓存（SessionFactory-缓存）" class="headerlink" title="二级缓存（SessionFactory 缓存）"></a>二级缓存（SessionFactory 缓存）</h3><p>由于 SessionFactory 对象的生命周期和应用程序的整个过程对应，因此 Hibernate 二级缓存是进程范围或者集群范围的缓存，有可能出现并发问题，因此需要采用适当的并发访问策略，该策略为被缓存的数据提供了事务隔离级别。</p>
+<p>　　save、update、saveOrupdate、load、get、list、query、Criteria方法都会填充二级缓存。</p>
+<p>　　get、load、iterate 会从二级缓存中取数据 session.save(user)   </p>
+<p>　　如果 user 主键使用 “native” 生成，则不放入二级缓存。</p>
+<p>　　第二级缓存是可选的，是一个可配置的插件，默认下 SessionFactory 不会启用这个插件。Hibernate 提供了 <code>org.hibernate.cache.CacheProvider</code> 接口，它充当缓存插件与 Hibernate 之间的适配器。</p>
+<p>Hibernate的二级缓存策略的一般过程如下：<br>  1.) 条件查询的时候，总是发出一条 select * from table_name where …. （选择所有字段）这样的 SQL 语句查询数据库，一次获得所有的数据对象。  </p>
+<p>  2.) 把获得的所有数据对象根据 ID 放入到第二级缓存中。  </p>
+<p>  3.) 当 Hibernate 根据 ID 访问数据对象的时候，首先从 Session 一级缓存中查；查不到，如果配置了二级缓存，那么从二级缓存中查；查不到，再查询数据库，把结果按照 ID 放入到缓存。   </p>
+<p>  4.) 删除、更新、增加数据的时候，同时更新缓存。  </p>
+<p>　  Hibernate 的二级缓存策略，是针对于 ID 查询的缓存策略，对于条件查询则毫无作用。为此，Hibernate 提供了针对条件查询的查询缓存（Query Cache）。</p>
+<h4 id="配置二级缓存（SessionFactory-缓存）"><a href="#配置二级缓存（SessionFactory-缓存）" class="headerlink" title="配置二级缓存（SessionFactory 缓存）"></a>配置二级缓存（SessionFactory 缓存）</h4><p>在 hibernate.cfg.xml 中配置以下代码：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 开启二级缓存 --&gt;</span><br><span class="line">&lt;property name=&quot;hibernate.cache.use_second_level_cache&quot;&gt;true&lt;/property&gt;</span><br><span class="line">&lt;!-- 为hibernate指定二级缓存的实现类 --&gt;</span><br><span class="line">&lt;property name=&quot;hibernate.cache.provider_class&quot;&gt;org.hibernate.cache.EhCacheProvider&lt;/property&gt;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">指明哪些类需要放入二级缓存，需要长期使用到的对象才有必要放入二级缓存，放入二级缓存的方式有两种：</span><br><span class="line">1.在 hibernate.cfg.xml 中配置</span><br></pre></td></tr></table></figure>
+
+<p><class-cache class="entity.PetInfo" usage="read-only"> // 不允许更新缓存中的对象<br><class-cache class="entity.PetInfo" usage="read-write">  // 允许更新缓存中的对象</class-cache></class-cache></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2.在 Bean.hbm 文件中配置</span><br></pre></td></tr></table></figure>
+
+<hibernate-mapping>
+    <class name="com.bdqn.entity.Dept" table="DEPT" schema="SCOTT">
+        <cache usage="read-only">//将这个类放入二级缓存
+        <id name="deptno" type="java.lang.Integer">
+            <column name="DEPTNO" precision="2" scale="0">
+            <generator class="assigned"></generator>
+        </column></id>
+        <property name="dname" type="java.lang.String">
+            <column name="DNAME" length="14">
+        </column></property>
+    </cache></class>
+</hibernate-mapping>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在 ehcache.xml 配置文件中可以设置缓存的最大数量、是否永久有效、时间等。</span><br></pre></td></tr></table></figure>
+
+<p><defaultcache maxelementsinmemory="10000" eternal="false" timetoidleseconds="120" timetoliveseconds="120" overflowtodisk="true"></defaultcache></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 如何清除二级缓存</span><br><span class="line">需要用 SessionFactory 来管理二级缓存代码如下：</span><br></pre></td></tr></table></figure>
+
+<p>// sessionFactory.evict(Entity.class); // 清除所有 Entity<br>// sessionFactory.evict(Entity.class, id); // 清除指定 Entity</p>
+<p>SessionFactory factory=HibernateUtils.getSessionFactory();</p>
+<p>// evict() 把 id 为 1 的 Student 对象从二级缓存中清除<br>factory.evict(Student.class, 1);<br>// evict() 清除所有二级缓存<br>factory.evict(Student.class);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">什么样的数据适合存放到第二级缓存中？      </span><br><span class="line">　　1) 很少被修改的数据   </span><br><span class="line">　　2) 不是很重要的数据，允许出现偶尔并发的数据   </span><br><span class="line">　　3) 不会被并发访问的数据   </span><br><span class="line">　　4) 常量数据</span><br><span class="line"></span><br><span class="line">不适合存放到第二级缓存的数据？  </span><br><span class="line">　　1) 经常被修改的数据  </span><br><span class="line">　　2) 绝对不允许出现并发访问的数据，如财务数据，绝对不允许出现并发  </span><br><span class="line">　　3) 与其他应用共享的数据  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 查询缓存（Query Cache）</span><br><span class="line">hibernate 的查询缓存是主要是针对普通属性结果集的缓存，而对于实体对象的结果集只缓存 id。</span><br><span class="line"></span><br><span class="line">在一级缓存，二级缓存和查询缓存都打开的情况下作查询操作时这样的：</span><br><span class="line"></span><br><span class="line">查询普通属性，会先到查询缓存中取，如果没有，则查询数据库；查询实体，会先到查询缓存中取 id，如果有，则根据 id 到缓存（一级/二级）中取实体，如果缓存中取不到实体，再查询数据库。</span><br><span class="line"></span><br><span class="line">在 hibernate.cfg.xml 配置文件中，开启查询缓存</span><br></pre></td></tr></table></figure>
+
+<!-- 是否开启查询缓存,true开启查询缓存，false关闭查询缓存 -->
+<p><property name="cache.use_query_cache">true</property></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">开启查询缓存后还需要在程序中进行启用查询缓存</span><br></pre></td></tr></table></figure>
+
+<p>public static void testQueryCache() {<br>    Session session = HibernateUtil.getSession();<br>    String hql = “from Emp as e”;<br>    Query query = session.createQuery(hql);<br>    query.setCacheable(true); // 启用查询缓存（二级缓存）<br>    List<emp> empList = query.list();<br>    session.close();<br>}</emp></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查询缓存是基于二级缓存机制，如果根据 Bean 的属性查询，可以不开启二级缓存，代码如下：</span><br></pre></td></tr></table></figure>
+
+<p>session = HibernateUtils.getSession();<br>t = session.beginTransaction();<br>Query query = session.createQuery(“select s.name from Student s”);<br>// 启用查询缓存<br>query.setCacheable(true);<br>List<string> names = query.list();<br>for (Iterator<string> it = names.iterator(); it.hasNext();) {<br>  String name = it.next();<br>  System.out.println(name);<br>}<br>System.out.println(“================================”);<br>query = session.createQuery(“select s.name from Student s”);<br>// 启用查询缓存<br>query.setCacheable(true);<br>// 没有发出查询语句,因为这里使用的查询缓存<br>names = query.list();<br>for (Iterator<string> it = names.iterator(); it.hasNext();) {<br>  String name = it.next();<br>  System.out.println(name);<br>}<br>t.commit();</string></string></string></p>
+<p>```</p>
+<blockquote>
+<p>参考：  </p>
+<p><a href="https://www.cnblogs.com/hcl22/p/6100191.html" target="_blank" rel="noopener">Java三大框架之——Hibernate中的三种数据持久状态和缓存机制</a></p>
+<p><a href="https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/objectstate.html" target="_blank" rel="noopener">Hibernate object states</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hibernate/" rel="tag"># Hibernate</a>
+          
+            <a href="/tags/Cache/" rel="tag"># Cache</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/16/hibernate-2018-05-16-Hibernate-Object-States/" rel="next" title="Hibernate 三种数据状态">
+                <i class="fa fa-chevron-left"></i> Hibernate 三种数据状态
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/20/hibernate-2018-05-20-Hibernate-缓存、快照与对象状态的深入理解/" rel="prev" title="Hibernate 缓存、快照与对象状态的深入理解">
+                Hibernate 缓存、快照与对象状态的深入理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2018/05/16/hibernate-2018-05-16-Hibernate-Cache/';
+            this.page.identifier = '2018/05/16/hibernate-2018-05-16-Hibernate-Cache/';
+            this.page.title = 'Hibernate 缓存机制';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2018/05/16/hibernate-2018-05-16-Hibernate-Cache/';
+                this.page.identifier = '2018/05/16/hibernate-2018-05-16-Hibernate-Cache/';
+                this.page.title = 'Hibernate 缓存机制';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2018/05/16/hibernate-2018-05-16-Hibernate-Cache/';
+            this.page.identifier = '2018/05/16/hibernate-2018-05-16-Hibernate-Cache/';
+            this.page.title = 'Hibernate 缓存机制';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate-缓存机制"><span class="nav-number">1.</span> <span class="nav-text">Hibernate 缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一级缓存（Session-缓存）"><span class="nav-number">1.1.</span> <span class="nav-text">一级缓存（Session 缓存）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二级缓存（SessionFactory-缓存）"><span class="nav-number">1.2.</span> <span class="nav-text">二级缓存（SessionFactory 缓存）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置二级缓存（SessionFactory-缓存）"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置二级缓存（SessionFactory 缓存）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

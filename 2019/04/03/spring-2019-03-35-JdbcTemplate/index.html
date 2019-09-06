@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JdbcTemplate,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Methods dealing with static SQL (java.sql.Statement)StatementCallback1234567891011121314151617181920212223242526272829@Overridepublic &amp;lt;T&amp;gt; T execute(StatementCallback&amp;lt;T&amp;gt; action) throws Data">
+<meta name="keywords" content="JdbcTemplate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JdbcTemplate 笔记">
+<meta property="og:url" content="https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="Methods dealing with static SQL (java.sql.Statement)StatementCallback1234567891011121314151617181920212223242526272829@Overridepublic &amp;lt;T&amp;gt; T execute(StatementCallback&amp;lt;T&amp;gt; action) throws Data">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JdbcTemplate 笔记">
+<meta name="twitter:description" content="Methods dealing with static SQL (java.sql.Statement)StatementCallback1234567891011121314151617181920212223242526272829@Overridepublic &amp;lt;T&amp;gt; T execute(StatementCallback&amp;lt;T&amp;gt; action) throws Data">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/">
+
+
+
+
+
+  <title>JdbcTemplate 笔记 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">03</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Spring/" itemprop="url" rel="index">
+          <span itemprop="name">Spring</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JdbcTemplate 笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T00:00:00+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Methods-dealing-with-static-SQL-java-sql-Statement"><a href="#Methods-dealing-with-static-SQL-java-sql-Statement" class="headerlink" title="Methods dealing with static SQL (java.sql.Statement)"></a>Methods dealing with static SQL (java.sql.Statement)</h1><h2 id="StatementCallback"><a href="#StatementCallback" class="headerlink" title="StatementCallback"></a>StatementCallback</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public &lt;T&gt; T execute(StatementCallback&lt;T&gt; action) throws DataAccessException &#123;</span><br><span class="line">	Assert.notNull(action, &quot;Callback object must not be null&quot;);</span><br><span class="line"></span><br><span class="line">	Connection con = DataSourceUtils.getConnection(obtainDataSource());</span><br><span class="line">	Statement stmt = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		stmt = con.createStatement();</span><br><span class="line">		applyStatementSettings(stmt);</span><br><span class="line">		// 重写 doInStatement 方法时要加上查询和处理返回值的操作</span><br><span class="line">		T result = action.doInStatement(stmt);</span><br><span class="line">		handleWarnings(stmt);</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line">	catch (SQLException ex) &#123;</span><br><span class="line">		// Release Connection early, to avoid potential connection pool deadlock</span><br><span class="line">		// in the case when the exception translator hasn&apos;t been initialized yet.</span><br><span class="line">		String sql = getSql(action);</span><br><span class="line">		JdbcUtils.closeStatement(stmt);</span><br><span class="line">		stmt = null;</span><br><span class="line">		DataSourceUtils.releaseConnection(con, getDataSource());</span><br><span class="line">		con = null;</span><br><span class="line">		throw translateException(&quot;StatementCallback&quot;, sql, ex);</span><br><span class="line">	&#125;</span><br><span class="line">	finally &#123;</span><br><span class="line">		JdbcUtils.closeStatement(stmt);</span><br><span class="line">		DataSourceUtils.releaseConnection(con, getDataSource());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法是基于 Statement 查询的基础方法，查询和修改等都是调用上面的方法。</p>
+<a id="more"></a>  
+
+<p>插入、修改、删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void execute(final String sql) throws DataAccessException &#123;</span><br><span class="line">	if (logger.isDebugEnabled()) &#123;</span><br><span class="line">		logger.debug(&quot;Executing SQL statement [&quot; + sql + &quot;]&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Callback to execute the statement.</span><br><span class="line">	 */</span><br><span class="line">	class ExecuteStatementCallback implements StatementCallback&lt;Object&gt;, SqlProvider &#123;</span><br><span class="line">		@Override</span><br><span class="line">		@Nullable</span><br><span class="line">		public Object doInStatement(Statement stmt) throws SQLException &#123;</span><br><span class="line">			stmt.execute(sql);</span><br><span class="line">			return null;</span><br><span class="line">		&#125;</span><br><span class="line">		@Override</span><br><span class="line">		public String getSql() &#123;</span><br><span class="line">			return sql;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	execute(new ExecuteStatementCallback());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public &lt;T&gt; T query(final String sql, final ResultSetExtractor&lt;T&gt; rse) throws DataAccessException &#123;</span><br><span class="line">	Assert.notNull(sql, &quot;SQL must not be null&quot;);</span><br><span class="line">	Assert.notNull(rse, &quot;ResultSetExtractor must not be null&quot;);</span><br><span class="line">	if (logger.isDebugEnabled()) &#123;</span><br><span class="line">		logger.debug(&quot;Executing SQL query [&quot; + sql + &quot;]&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	class QueryStatementCallback implements StatementCallback&lt;T&gt;, SqlProvider &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public T doInStatement(Statement stmt) throws SQLException &#123;</span><br><span class="line">			ResultSet rs = null;</span><br><span class="line">			try &#123;</span><br><span class="line">				rs = stmt.executeQuery(sql);</span><br><span class="line">				ResultSet rsToUse = rs;</span><br><span class="line">				if (nativeJdbcExtractor != null) &#123;</span><br><span class="line">					rsToUse = nativeJdbcExtractor.getNativeResultSet(rs);</span><br><span class="line">				&#125;</span><br><span class="line">				return rse.extractData(rsToUse);</span><br><span class="line">			&#125;</span><br><span class="line">			finally &#123;</span><br><span class="line">				JdbcUtils.closeResultSet(rs);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		@Override</span><br><span class="line">		public String getSql() &#123;</span><br><span class="line">			return sql;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return execute(new QueryStatementCallback());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ResultSetExtractor-接口"><a href="#ResultSetExtractor-接口" class="headerlink" title="ResultSetExtractor 接口"></a>ResultSetExtractor 接口</h2><p>定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface ResultSetExtractor&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">	T extractData(ResultSet rs) throws SQLException, DataAccessException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="子类及重写方法"><a href="#子类及重写方法" class="headerlink" title="子类及重写方法"></a>子类及重写方法</h3><h4 id="RowMapperResultSetExtractor"><a href="#RowMapperResultSetExtractor" class="headerlink" title="RowMapperResultSetExtractor"></a>RowMapperResultSetExtractor</h4><p>定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class RowMapperResultSetExtractor&lt;T&gt; implements ResultSetExtractor&lt;List&lt;T&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private final RowMapper&lt;T&gt; rowMapper;</span><br><span class="line">    </span><br><span class="line">    private final int rowsExpected;</span><br><span class="line">    </span><br><span class="line">    public RowMapperResultSetExtractor(RowMapper&lt;T&gt; rowMapper) &#123;</span><br><span class="line">    	this(rowMapper, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public RowMapperResultSetExtractor(RowMapper&lt;T&gt; rowMapper, int rowsExpected) &#123;</span><br><span class="line">    	Assert.notNull(rowMapper, &quot;RowMapper is required&quot;);</span><br><span class="line">    	this.rowMapper = rowMapper;</span><br><span class="line">    	this.rowsExpected = rowsExpected;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 返回 List&lt;T&gt;</span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;T&gt; extractData(ResultSet rs) throws SQLException &#123;</span><br><span class="line">    	List&lt;T&gt; results = (this.rowsExpected &gt; 0 ? new ArrayList&lt;&gt;(this.rowsExpected) : new ArrayList&lt;&gt;());</span><br><span class="line">    	int rowNum = 0;</span><br><span class="line">    	while (rs.next()) &#123;</span><br><span class="line">    		results.add(this.rowMapper.mapRow(rs, rowNum++));</span><br><span class="line">    	&#125;</span><br><span class="line">    	return results;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface RowMapper&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Implementations must implement this method to map each row of data</span><br><span class="line">	 * in the ResultSet. This method should not call &#123;@code next()&#125; on</span><br><span class="line">	 * the ResultSet; it is only supposed to map values of the current row.</span><br><span class="line">	 * @param rs the ResultSet to map (pre-initialized for the current row)</span><br><span class="line">	 * @param rowNum the number of the current row</span><br><span class="line">	 * @return the result object for the current row</span><br><span class="line">	 * @throws SQLException if a SQLException is encountered getting</span><br><span class="line">	 * column values (that is, there&apos;s no need to catch SQLException)</span><br><span class="line">	 */</span><br><span class="line">	T mapRow(ResultSet rs, int rowNum) throws SQLException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public &lt;T&gt; List&lt;T&gt; query(String sql, RowMapper&lt;T&gt; rowMapper) throws DataAccessException &#123;</span><br><span class="line">	return result(query(sql, new RowMapperResultSetExtractor&lt;&gt;(rowMapper)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="RowCallbackHandlerResultSetExtractor"><a href="#RowCallbackHandlerResultSetExtractor" class="headerlink" title="RowCallbackHandlerResultSetExtractor"></a>RowCallbackHandlerResultSetExtractor</h4><p>定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">private static class RowCallbackHandlerResultSetExtractor implements ResultSetExtractor&lt;Object&gt; &#123;</span><br><span class="line"></span><br><span class="line">	private final RowCallbackHandler rch;</span><br><span class="line"></span><br><span class="line">	public RowCallbackHandlerResultSetExtractor(RowCallbackHandler rch) &#123;</span><br><span class="line">		this.rch = rch;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	@Nullable</span><br><span class="line">	public Object extractData(ResultSet rs) throws SQLException &#123;</span><br><span class="line">		while (rs.next()) &#123;</span><br><span class="line">			this.rch.processRow(rs);</span><br><span class="line">		&#125;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface RowCallbackHandler &#123;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Implementations must implement this method to process each row of data</span><br><span class="line">	 * in the ResultSet. This method should not call &#123;@code next()&#125; on</span><br><span class="line">	 * the ResultSet; it is only supposed to extract values of the current row.</span><br><span class="line">	 * &lt;p&gt;Exactly what the implementation chooses to do is up to it:</span><br><span class="line">	 * A trivial implementation might simply count rows, while another</span><br><span class="line">	 * implementation might build an XML document.</span><br><span class="line">	 * @param rs the ResultSet to process (pre-initialized for the current row)</span><br><span class="line">	 * @throws SQLException if a SQLException is encountered getting</span><br><span class="line">	 * column values (that is, there&apos;s no need to catch SQLException)</span><br><span class="line">	 */</span><br><span class="line">	void processRow(ResultSet rs) throws SQLException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用法：（无返回值）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void query(String sql, RowCallbackHandler rch) throws DataAccessException &#123;</span><br><span class="line">	query(sql, new RowCallbackHandlerResultSetExtractor(rch));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Methods-dealing-with-prepared-statements"><a href="#Methods-dealing-with-prepared-statements" class="headerlink" title="Methods dealing with prepared statements"></a>Methods dealing with prepared statements</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">/**</span><br><span class="line"> * @param psc 用来创建 PreparedStatement</span><br><span class="line"> * @param action 执行 preparedStatement </span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Override</span><br><span class="line">public &lt;T&gt; T execute(PreparedStatementCreator psc, PreparedStatementCallback&lt;T&gt; action)</span><br><span class="line">		throws DataAccessException &#123;</span><br><span class="line"></span><br><span class="line">	Assert.notNull(psc, &quot;PreparedStatementCreator must not be null&quot;);</span><br><span class="line">	Assert.notNull(action, &quot;Callback object must not be null&quot;);</span><br><span class="line">	if (logger.isDebugEnabled()) &#123;</span><br><span class="line">		String sql = getSql(psc);</span><br><span class="line">		logger.debug(&quot;Executing prepared SQL statement&quot; + (sql != null ? &quot; [&quot; + sql + &quot;]&quot; : &quot;&quot;));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Connection con = DataSourceUtils.getConnection(getDataSource());</span><br><span class="line">	PreparedStatement ps = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		Connection conToUse = con;</span><br><span class="line">		if (this.nativeJdbcExtractor != null &amp;&amp;</span><br><span class="line">				this.nativeJdbcExtractor.isNativeConnectionNecessaryForNativePreparedStatements()) &#123;</span><br><span class="line">			conToUse = this.nativeJdbcExtractor.getNativeConnection(con);</span><br><span class="line">		&#125;</span><br><span class="line">		ps = psc.createPreparedStatement(conToUse);</span><br><span class="line">		applyStatementSettings(ps);</span><br><span class="line">		PreparedStatement psToUse = ps;</span><br><span class="line">		if (this.nativeJdbcExtractor != null) &#123;</span><br><span class="line">			psToUse = this.nativeJdbcExtractor.getNativePreparedStatement(ps);</span><br><span class="line">		&#125;</span><br><span class="line">		T result = action.doInPreparedStatement(psToUse);</span><br><span class="line">		handleWarnings(ps);</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line">	catch (SQLException ex) &#123;</span><br><span class="line">		// Release Connection early, to avoid potential connection pool deadlock</span><br><span class="line">		// in the case when the exception translator hasn&apos;t been initialized yet.</span><br><span class="line">		if (psc instanceof ParameterDisposer) &#123;</span><br><span class="line">			((ParameterDisposer) psc).cleanupParameters();</span><br><span class="line">		&#125;</span><br><span class="line">		String sql = getSql(psc);</span><br><span class="line">		psc = null;</span><br><span class="line">		JdbcUtils.closeStatement(ps);</span><br><span class="line">		ps = null;</span><br><span class="line">		DataSourceUtils.releaseConnection(con, getDataSource());</span><br><span class="line">		con = null;</span><br><span class="line">		throw getExceptionTranslator().translate(&quot;PreparedStatementCallback&quot;, sql, ex);</span><br><span class="line">	&#125;</span><br><span class="line">	finally &#123;</span><br><span class="line">		if (psc instanceof ParameterDisposer) &#123;</span><br><span class="line">			((ParameterDisposer) psc).cleanupParameters();</span><br><span class="line">		&#125;</span><br><span class="line">		JdbcUtils.closeStatement(ps);</span><br><span class="line">		DataSourceUtils.releaseConnection(con, getDataSource());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似于前面的 <code>execute(StatementCallback&lt;T&gt; action)</code> 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public &lt;T&gt; T query(</span><br><span class="line">			PreparedStatementCreator psc, final PreparedStatementSetter pss, final ResultSetExtractor&lt;T&gt; rse)</span><br><span class="line">			throws DataAccessException &#123;</span><br><span class="line"></span><br><span class="line">	Assert.notNull(rse, &quot;ResultSetExtractor must not be null&quot;);</span><br><span class="line">	logger.debug(&quot;Executing prepared SQL query&quot;);</span><br><span class="line"></span><br><span class="line">	return execute(psc, new PreparedStatementCallback&lt;T&gt;() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public T doInPreparedStatement(PreparedStatement ps) throws SQLException &#123;</span><br><span class="line">			ResultSet rs = null;</span><br><span class="line">			try &#123;</span><br><span class="line">				if (pss != null) &#123;</span><br><span class="line">					pss.setValues(ps);</span><br><span class="line">				&#125;</span><br><span class="line">				rs = ps.executeQuery();</span><br><span class="line">				ResultSet rsToUse = rs;</span><br><span class="line">				if (nativeJdbcExtractor != null) &#123;</span><br><span class="line">					rsToUse = nativeJdbcExtractor.getNativeResultSet(rs);</span><br><span class="line">				&#125;</span><br><span class="line">				return rse.extractData(rsToUse);</span><br><span class="line">			&#125;</span><br><span class="line">			finally &#123;</span><br><span class="line">				JdbcUtils.closeResultSet(rs);</span><br><span class="line">				if (pss instanceof ParameterDisposer) &#123;</span><br><span class="line">					((ParameterDisposer) pss).cleanupParameters();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似于前面的 <code>query(final String sql, final ResultSetExtractor&lt;T&gt; rse)</code> 方法。<br>同理，这里除了直接使用 <code>ResultSetExtractor</code> 外，还可以使用 <code>RowMapper</code> 和 <code>RowCallbackHandler</code> 作为形参。</p>
+<p>其中第二个参数 <code>final PreparedStatementSetter pss</code> 是用来设置 sql 参数的，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public &lt;T&gt; T query(String sql, Object[] args, ResultSetExtractor&lt;T&gt; rse) throws DataAccessException &#123;</span><br><span class="line">	return query(sql, newArgPreparedStatementSetter(args), rse);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JdbcTemplate/" rel="tag"># JdbcTemplate</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/26/notes-2019-03-26-Git-常用命令/" rel="next" title="Git 常用命令">
+                <i class="fa fa-chevron-left"></i> Git 常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/03/notes-2019-04-03-VSCode/" rel="prev" title="VS Code 的使用">
+                VS Code 的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/';
+            this.page.identifier = '2019/04/03/spring-2019-03-35-JdbcTemplate/';
+            this.page.title = 'JdbcTemplate 笔记';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/';
+                this.page.identifier = '2019/04/03/spring-2019-03-35-JdbcTemplate/';
+                this.page.title = 'JdbcTemplate 笔记';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/';
+            this.page.identifier = '2019/04/03/spring-2019-03-35-JdbcTemplate/';
+            this.page.title = 'JdbcTemplate 笔记';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Methods-dealing-with-static-SQL-java-sql-Statement"><span class="nav-number">1.</span> <span class="nav-text">Methods dealing with static SQL (java.sql.Statement)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#StatementCallback"><span class="nav-number">1.1.</span> <span class="nav-text">StatementCallback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResultSetExtractor-接口"><span class="nav-number">1.2.</span> <span class="nav-text">ResultSetExtractor 接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类及重写方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">子类及重写方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RowMapperResultSetExtractor"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">RowMapperResultSetExtractor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RowCallbackHandlerResultSetExtractor"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">RowCallbackHandlerResultSetExtractor</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Methods-dealing-with-prepared-statements"><span class="nav-number">2.</span> <span class="nav-text">Methods dealing with prepared statements</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Serializable,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="serialVersionUID的作用    Java基础篇 - Serializable与serialVersionUID的简单说明 关于Java Serial Version UID的一些说明  Java序列化与static   在网络传输Java对象、将Java对象存储到文件、将Java对象以BLOB形式存储到数据库中时，需要对Java对象进行序列化及反序列化，标准模式是实现Seriali">
+<meta name="keywords" content="Serializable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Serializable">
+<meta property="og:url" content="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Serializable/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="serialVersionUID的作用    Java基础篇 - Serializable与serialVersionUID的简单说明 关于Java Serial Version UID的一些说明  Java序列化与static   在网络传输Java对象、将Java对象存储到文件、将Java对象以BLOB形式存储到数据库中时，需要对Java对象进行序列化及反序列化，标准模式是实现Seriali">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Serializable">
+<meta name="twitter:description" content="serialVersionUID的作用    Java基础篇 - Serializable与serialVersionUID的简单说明 关于Java Serial Version UID的一些说明  Java序列化与static   在网络传输Java对象、将Java对象存储到文件、将Java对象以BLOB形式存储到数据库中时，需要对Java对象进行序列化及反序列化，标准模式是实现Seriali">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Serializable/">
+
+
+
+
+
+  <title>Java Serializable | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">11月</div>
+			<div class="post-day">22</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/问题记录/" itemprop="url" rel="index">
+          <span itemprop="name">问题记录</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Serializable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java Serializable</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T00:00:00+08:00">
+                2017-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/问题记录/" itemprop="url" rel="index">
+                    <span itemprop="name">问题记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="http://blog.csdn.net/zzjjiandan/article/details/32336079" target="_blank" rel="noopener">serialVersionUID的作用</a>   </p>
+<p><a href="http://blog.csdn.net/zhengliebin/article/details/60869629" target="_blank" rel="noopener">Java基础篇 - Serializable与serialVersionUID的简单说明</a></p>
+<p><a href="http://blog.csdn.net/u012364372/article/details/51210693" target="_blank" rel="noopener">关于Java Serial Version UID的一些说明</a> </p>
+<p><a href="http://blog.csdn.net/yangxiangyuibm/article/details/43227457" target="_blank" rel="noopener">Java序列化与static</a> </p>
+</blockquote>
+<p>在网络传输Java对象、将Java对象存储到文件、将Java对象以BLOB形式存储到数据库中时，需要对Java对象进行序列化及反序列化，标准模式是实现Serializable接口。<br>实现上述接口时，需要提供一个Serial Version UID，该UID用于标识类的版本。一个对象被序列化后，只要其版本不变，都可以进行反序列化，一旦<br>改变造成版本不一致，会抛出InvalidClassException异常。<br>建议显示定义UID，如果不显示定义，JVM会自动产生一个值，这个值和编译器的实现有关，不稳定，可能在不同JVM环境下出现反序列化抛出InvalidClassException异常的情况。<br>在Eclipse中，提供两种方式显示定义UID，一种是“add default serial version ID”，默认值为1L；另一种是“add generated serial version ID”,默认值是一个很大的数，是根据<br>类的具体属性而生成，当类属性有变动时，该值会更改。<br>建议采用第一种自动生成方法，当对类进行了不兼容性修改时，需要修改UID。<br>采用第二种方法时，如果修改了属性，不重新生成UID时，默认值是不会变的，也可以正常反序列化，但不推荐，毕竟UID的值与实际不符。<br>对类进行兼容性和不兼容性修改的情况请参见 <a href="http://docs.oracle.com/javase/7/docs/platform/serialization/spec/version.html" target="_blank" rel="noopener">Versioning of Serializable Objects</a>。<br>Hibernate的pojo类建议也采用上述方法，便于扩展。<br>对于继承关系，父类实现序列化接口，子类可以继承接口的实现，但需显示定义UID，因为父类UID类型为private static，不可被继承，同时子类作为单独的类需要单独的UID。 </p>
+<a id="more"></a>
+
+<p>对于继承关系，父类实现序列化接口，子类可以继承接口的实现，但需显示定义UID，因为父类UID类型为private static，不可被继承，同时子类作为单独的类需要单独的UID。<br>当一个类有父类有  serialVersionUID<br>子类没有重写serialVersionUID，那么jvm会自动生成一个serialVersionUID </p>
+<h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><p>更新账户时调用了下面的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public void updateAuthentication(String username, Collection&lt;Authority&gt; authorities) &#123;</span><br><span class="line">        Collection&lt;GrantedAuthority&gt; grantedAuthorities = new ArrayList&lt;&gt;();</span><br><span class="line">        for (Authority authority : authorities) &#123;</span><br><span class="line">            grantedAuthorities.add(new GrantedAuthority() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public String getAuthority() &#123;</span><br><span class="line">                    return authority.getName();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(username.trim(), &quot;&quot;, grantedAuthorities);</span><br><span class="line">        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);</span><br><span class="line">        SecurityContextHolder.getContext().setAuthentication(auth);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后跳转页面时报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.data.redis.serializer.SerializationException: Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is java.io.InvalidClassException: com.stone.investment.security.CustomUser; local class incompatible: stream classdesc serialVersionUID = 9141229518910167282, local class serialVersionUID = 1</span><br><span class="line">	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:82)</span><br><span class="line">	at org.springframework.data.redis.core.AbstractOperations.deserializeHashValue(AbstractOperations.java:338)</span><br><span class="line">	at org.springframework.data.redis.core.AbstractOperations.deserializeHashMap(AbstractOperations.java:282)</span><br><span class="line">	at org.springframework.data.redis.core.DefaultHashOperations.entries(DefaultHashOperations.java:227)</span><br><span class="line">	at org.springframework.data.redis.core.DefaultBoundHashOperations.entries(DefaultBoundHashOperations.java:102)</span><br><span class="line">	at org.springframework.session.data.redis.RedisOperationsSessionRepository.getSession(RedisOperationsSessionRepository.java:432)</span><br><span class="line">	at org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:519)</span><br><span class="line">	at org.springframework.data.redis.listener.RedisMessageListenerContainer.executeListener(RedisMessageListenerContainer.java:249)</span><br><span class="line">	at org.springframework.data.redis.listener.RedisMessageListenerContainer.processMessage(RedisMessageListenerContainer.java:239)</span><br><span class="line">	at org.springframework.data.redis.listener.RedisMessageListenerContainer$1.run(RedisMessageListenerContainer.java:967)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br><span class="line">Caused by: org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is java.io.InvalidClassException: com.stone.investment.security.CustomUser; local class incompatible: stream classdesc serialVersionUID = 9141229518910167282, local class serialVersionUID = 1</span><br><span class="line">	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:78)</span><br><span class="line">	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:36)</span><br><span class="line">	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:80)</span><br><span class="line">	... 10 common frames omitted</span><br><span class="line">Caused by: java.io.InvalidClassException: com.stone.investment.security.CustomUser; local class incompatible: stream classdesc serialVersionUID = 9141229518910167282, local class serialVersionUID = 1</span><br><span class="line">	at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:687)</span><br><span class="line">	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1880)</span><br><span class="line">	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1746)</span><br><span class="line">	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2037)</span><br><span class="line">	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)</span><br><span class="line">	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)</span><br><span class="line">	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)</span><br><span class="line">	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)</span><br><span class="line">	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)</span><br><span class="line">	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)</span><br><span class="line">	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)</span><br><span class="line">	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)</span><br><span class="line">	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)</span><br><span class="line">	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:428)</span><br><span class="line">	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:70)</span><br><span class="line">	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:73)</span><br><span class="line">	... 12 common frames omitted</span><br></pre></td></tr></table></figure>
+
+<p>Redis 对 ProviderManager 序列化失败，将该方法改为 static 后程序正常运行，因为 Java 不对 static 序列化。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Serializable/" rel="tag"># Serializable</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/22/java-2017-11-22-Java-hashCode-and-equals-methods/" rel="next" title="Java 类的 hashCode 方法和 equals 方法">
+                <i class="fa fa-chevron-left"></i> Java 类的 hashCode 方法和 equals 方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/22/java-2017-11-22-Java-Inner-Class/" rel="prev" title="Java 内部类">
+                Java 内部类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Serializable/';
+            this.page.identifier = '2017/11/22/java-2017-11-22-Java-Serializable/';
+            this.page.title = 'Java Serializable';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Serializable/';
+                this.page.identifier = '2017/11/22/java-2017-11-22-Java-Serializable/';
+                this.page.title = 'Java Serializable';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Serializable/';
+            this.page.identifier = '2017/11/22/java-2017-11-22-Java-Serializable/';
+            this.page.title = 'Java Serializable';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#FAQ"><span class="nav-number">1.</span> <span class="nav-text">FAQ</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

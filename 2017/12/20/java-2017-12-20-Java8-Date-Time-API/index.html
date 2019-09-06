@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Date,Time,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="转载自 http://www.codeceo.com/article/java-8-date-time-api.html    为什么我们需要新的Java日期/时间API？在开始研究Java 8日期/时间API之前，让我们先来看一下为什么我们需要这样一个新的API。在Java中，现有的与日期和时间相关的类存在诸多问题，其中有：   Java的日期/时间类的定义并不一致，在java.util和ja">
+<meta name="keywords" content="Date,Time">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 8 日期&#x2F;时间（Date Time）API指南">
+<meta property="og:url" content="https://wuchao.github.io/2017/12/20/java-2017-12-20-Java8-Date-Time-API/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="转载自 http://www.codeceo.com/article/java-8-date-time-api.html    为什么我们需要新的Java日期/时间API？在开始研究Java 8日期/时间API之前，让我们先来看一下为什么我们需要这样一个新的API。在Java中，现有的与日期和时间相关的类存在诸多问题，其中有：   Java的日期/时间类的定义并不一致，在java.util和ja">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.723Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 8 日期&#x2F;时间（Date Time）API指南">
+<meta name="twitter:description" content="转载自 http://www.codeceo.com/article/java-8-date-time-api.html    为什么我们需要新的Java日期/时间API？在开始研究Java 8日期/时间API之前，让我们先来看一下为什么我们需要这样一个新的API。在Java中，现有的与日期和时间相关的类存在诸多问题，其中有：   Java的日期/时间类的定义并不一致，在java.util和ja">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/12/20/java-2017-12-20-Java8-Date-Time-API/">
+
+
+
+
+
+  <title>Java 8 日期/时间（Date Time）API指南 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">12月</div>
+			<div class="post-day">20</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/12/20/java-2017-12-20-Java8-Date-Time-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 8 日期/时间（Date Time）API指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T00:00:00+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>转载自 <a href="http://www.codeceo.com/article/java-8-date-time-api.html" target="_blank" rel="noopener">http://www.codeceo.com/article/java-8-date-time-api.html</a>  </p>
+</blockquote>
+<h3 id="为什么我们需要新的Java日期-时间API？"><a href="#为什么我们需要新的Java日期-时间API？" class="headerlink" title="为什么我们需要新的Java日期/时间API？"></a>为什么我们需要新的Java日期/时间API？</h3><p>在开始研究Java 8日期/时间API之前，让我们先来看一下为什么我们需要这样一个新的API。在Java中，现有的与日期和时间相关的类存在诸多问题，其中有： </p>
+<ol>
+<li>Java的日期/时间类的定义并不一致，在java.util和java.sql的包中都有日期类，此外用于格式化和解析的类在java.text包中定义。</li>
+<li>java.util.Date同时包含日期和时间，而java.sql.Date仅包含日期，将其纳入java.sql包并不合理。另外这两个类都有相同的名字，这本身就是一个非常糟糕的设计。</li>
+<li>对于时间、时间戳、格式化以及解析，并没有一些明确定义的类。对于格式化和解析的需求，我们有java.text.DateFormat抽象类，但通常情况下，SimpleDateFormat类被用于此类需求。</li>
+<li>所有的日期类都是可变的，因此他们都不是线程安全的，这是Java日期类最大的问题之一。</li>
+<li>日期类并不提供国际化，没有时区支持，因此Java引入了java.util.Calendar和java.util.TimeZone类，但他们同样存在上述所有的问题。 </li>
+</ol>
+<p>在现有的日期和日历类中定义的方法还存在一些其他的问题，但以上问题已经很清晰地表明：Java需要一个健壮的日期/时间类。这也是为什么Joda Time在Java日期/时间需求中扮演了高质量替换的重要角色。 </p>
+<a id="more"></a> 
+
+<h3 id="Java-8日期-时间API"><a href="#Java-8日期-时间API" class="headerlink" title="Java 8日期/时间API"></a>Java 8日期/时间API</h3><p>Java 8日期/时间API是JSR-310的实现，它的实现目标是克服旧的日期时间实现中所有的缺陷，新的日期/时间API的一些设计原则是： </p>
+<ol>
+<li>不变性：新的日期/时间API中，所有的类都是不可变的，这对多线程环境有好处。</li>
+<li>关注点分离：新的API将人可读的日期时间和机器时间（unix timestamp）明确分离，它为日期（Date）、时间（Time）、日期时间（DateTime）、时间戳（unix timestamp）以及时区定义了不同的类。</li>
+<li>清晰：在所有的类中，方法都被明确定义用以完成相同的行为。举个例子，要拿到当前实例我们可以使用now()方法，在所有的类中都定义了format()和parse()方法，而不是像以前那样专门有一个独立的类。为了更好的处理问题，所有的类都使用了工厂模式和策略模式，一旦你使用了其中某个类的方法，与其他类协同工作并不困难。</li>
+<li>实用操作：所有新的日期/时间API类都实现了一系列方法用以完成通用的任务，如：加、减、格式化、解析、从日期/时间中提取单独部分，等等。</li>
+<li>可扩展性：新的日期/时间API是工作在ISO-8601日历系统上的，但我们也可以将其应用在非IOS的日历上。 </li>
+</ol>
+<h3 id="Java日期-时间API包"><a href="#Java日期-时间API包" class="headerlink" title="Java日期/时间API包"></a>Java日期/时间API包</h3><p>Java日期/时间API包含以下相应的包： </p>
+<ol>
+<li>java.time包：这是新的Java日期/时间API的基础包，所有的主要基础类都是这个包的一部分，如：LocalDate, LocalTime, LocalDateTime, Instant, Period, Duration等等。所有这些类都是不可变的和线程安全的，在绝大多数情况下，这些类能够有效地处理一些公共的需求。</li>
+<li>java.time.chrono包：这个包为非ISO的日历系统定义了一些泛化的API，我们可以扩展AbstractChronology类来创建自己的日历系统。</li>
+<li>java.time.format包：这个包包含能够格式化和解析日期时间对象的类，在绝大多数情况下，我们不应该直接使用它们，因为java.time包中相应的类已经提供了格式化和解析的方法。</li>
+<li>java.time.temporal包：这个包包含一些时态对象，我们可以用其找出关于日期/时间对象的某个特定日期或时间，比如说，可以找到某月的第一天或最后一天。你可以非常容易地认出这些方法，因为它们都具有“withXXX”的格式。</li>
+<li>java.time.zone包：这个包包含支持不同时区以及相关规则的类。 </li>
+</ol>
+<h3 id="Java日期-时间API示例"><a href="#Java日期-时间API示例" class="headerlink" title="Java日期/时间API示例"></a>Java日期/时间API示例</h3><p>我们已经浏览了Java日期/时间API的大多数重要部分，现在是时候根据示例仔细看一下最重要的一些类了。</p>
+<ol>
+<li>java.time.LocalDate：LocalDate是一个不可变的类，它表示默认格式(yyyy-MM-dd)的日期，我们可以使用now()方法得到当前时间，也可以提供输入年份、月份和日期的输入参数来创建一个LocalDate实例。该类为now()方法提供了重载方法，我们可以传入ZoneId来获得指定时区的日期。该类提供与java.sql.Date相同的功能，对于如何使用该类，我们来看一个简单的例子： </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">import java.time.LocalDate;</span><br><span class="line">import java.time.Month;</span><br><span class="line">import java.time.ZoneId;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * LocalDate Examples</span><br><span class="line"> * @author pankaj</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class LocalDateExample &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        //Current Date</span><br><span class="line">        LocalDate today = LocalDate.now();</span><br><span class="line">        System.out.println(&quot;Current Date=&quot;+today);</span><br><span class="line"></span><br><span class="line">        //Creating LocalDate by providing input arguments</span><br><span class="line">        LocalDate firstDay_2014 = LocalDate.of(2014, Month.JANUARY, 1);</span><br><span class="line">        System.out.println(&quot;Specific Date=&quot;+firstDay_2014);</span><br><span class="line"></span><br><span class="line">        //Try creating date by providing invalid inputs</span><br><span class="line">        //LocalDate feb29_2014 = LocalDate.of(2014, Month.FEBRUARY, 29);</span><br><span class="line">        //Exception in thread &quot;main&quot; java.time.DateTimeException: </span><br><span class="line">        //Invalid date &apos;February 29&apos; as &apos;2014&apos; is not a leap year</span><br><span class="line"></span><br><span class="line">        //Current date in &quot;Asia/Kolkata&quot;, you can get it from ZoneId javadoc</span><br><span class="line">        LocalDate todayKolkata = LocalDate.now(ZoneId.of(&quot;Asia/Kolkata&quot;));</span><br><span class="line">        System.out.println(&quot;Current Date in IST=&quot;+todayKolkata);</span><br><span class="line"></span><br><span class="line">        //java.time.zone.ZoneRulesException: Unknown time-zone ID: IST</span><br><span class="line">        //LocalDate todayIST = LocalDate.now(ZoneId.of(&quot;IST&quot;));</span><br><span class="line"></span><br><span class="line">        //Getting date from the base date i.e 01/01/1970</span><br><span class="line">        LocalDate dateFromBase = LocalDate.ofEpochDay(365);</span><br><span class="line">        System.out.println(&quot;365th day from base date= &quot;+dateFromBase);</span><br><span class="line"></span><br><span class="line">        LocalDate hundredDay2014 = LocalDate.ofYearDay(2014, 100);</span><br><span class="line">        System.out.println(&quot;100th day of 2014=&quot;+hundredDay2014);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">示例方法的详解都包含在注释内，当我们运行程序时，可以得到以下输出： </span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">Current Date=2014-04-28</span><br><span class="line">Specific Date=2014-01-01</span><br><span class="line">Current Date in IST=2014-04-29</span><br><span class="line">365th day from base date= 1971-01-01</span><br><span class="line">100th day of 2014=2014-04-10</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">2. java.time.LocalTime：LocalTime是一个不可变的类，它的实例代表一个符合人类可读格式的时间，默认格式是hh:mm:ss.zzz。像LocalDate一样，该类也提供了时区支持，同时也可以传入小时、分钟和秒等输入参数创建实例，我们来看一个简单的程序，演示该类的使用方法： </span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">import java.time.LocalTime;</span><br><span class="line">import java.time.ZoneId;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * LocalTime Examples</span><br><span class="line"> * @author pankaj</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class LocalTimeExample &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        //Current Time</span><br><span class="line">        LocalTime time = LocalTime.now();</span><br><span class="line">        System.out.println(&quot;Current Time=&quot;+time);</span><br><span class="line"></span><br><span class="line">        //Creating LocalTime by providing input arguments</span><br><span class="line">        LocalTime specificTime = LocalTime.of(12,20,25,40);</span><br><span class="line">        System.out.println(&quot;Specific Time of Day=&quot;+specificTime);</span><br><span class="line"></span><br><span class="line">        //Try creating time by providing invalid inputs</span><br><span class="line">        //LocalTime invalidTime = LocalTime.of(25,20);</span><br><span class="line">        //Exception in thread &quot;main&quot; java.time.DateTimeException: </span><br><span class="line">        //Invalid value for HourOfDay (valid values 0 - 23): 25</span><br><span class="line"></span><br><span class="line">        //Current date in &quot;Asia/Kolkata&quot;, you can get it from ZoneId javadoc</span><br><span class="line">        LocalTime timeKolkata = LocalTime.now(ZoneId.of(&quot;Asia/Kolkata&quot;));</span><br><span class="line">        System.out.println(&quot;Current Time in IST=&quot;+timeKolkata);</span><br><span class="line"></span><br><span class="line">        //java.time.zone.ZoneRulesException: Unknown time-zone ID: IST</span><br><span class="line">        //LocalTime todayIST = LocalTime.now(ZoneId.of(&quot;IST&quot;));</span><br><span class="line"></span><br><span class="line">        //Getting date from the base date i.e 01/01/1970</span><br><span class="line">        LocalTime specificSecondTime = LocalTime.ofSecondOfDay(10000);</span><br><span class="line">        System.out.println(&quot;10000th second time= &quot;+specificSecondTime);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当运行以上程序时，可以看到如下输出： </p>
+<pre><code>Current Time=15:51:45.240
+Specific Time of Day=12:20:25.000000040
+Current Time in IST=04:21:45.276
+10000th second time= 02:46:40</code></pre><ol start="3">
+<li>java.time.LocalDateTime：LocalDateTime是一个不可变的日期-时间对象，它表示一组日期-时间，默认格式是yyyy-MM-dd-HH-mm-ss.zzz。它提供了一个工厂方法，接收LocalDate和LocalTime输入参数，创建LocalDateTime实例。我们来看一个简单的例子： </li>
+</ol>
+<pre><code>import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+
+public class LocalDateTimeExample {
+
+    public static void main(String[] args) {
+
+        //Current Date
+        LocalDateTime today = LocalDateTime.now();
+        System.out.println(&quot;Current DateTime=&quot;+today);
+
+        //Current Date using LocalDate and LocalTime
+        today = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+        System.out.println(&quot;Current DateTime=&quot;+today);
+
+        //Creating LocalDateTime by providing input arguments
+        LocalDateTime specificDate = LocalDateTime.of(2014, Month.JANUARY, 1, 10, 10, 30);
+        System.out.println(&quot;Specific Date=&quot;+specificDate);
+
+        //Try creating date by providing invalid inputs
+        //LocalDateTime feb29_2014 = LocalDateTime.of(2014, Month.FEBRUARY, 28, 25,1,1);
+        //Exception in thread &quot;main&quot; java.time.DateTimeException: 
+        //Invalid value for HourOfDay (valid values 0 - 23): 25
+
+        //Current date in &quot;Asia/Kolkata&quot;, you can get it from ZoneId javadoc
+        LocalDateTime todayKolkata = LocalDateTime.now(ZoneId.of(&quot;Asia/Kolkata&quot;));
+        System.out.println(&quot;Current Date in IST=&quot;+todayKolkata);
+
+        //java.time.zone.ZoneRulesException: Unknown time-zone ID: IST
+        //LocalDateTime todayIST = LocalDateTime.now(ZoneId.of(&quot;IST&quot;));
+
+        //Getting date from the base date i.e 01/01/1970
+        LocalDateTime dateFromBase = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
+        System.out.println(&quot;10000th second time from 01/01/1970= &quot;+dateFromBase);
+
+    }
+
+}</code></pre><p>在所有这三个例子中，我们已经看到如果我们提供了无效的参数去创建日期/时间，那么系统会抛出java.time.DateTimeException，这是一种运行时异常，我们并不需要显式地捕获它。<br>同时我们也看到，能够通过传入ZoneId得到日期/时间数据，你可以从它的Javadoc中得到支持的Zoneid的列表，当运行以上类时，可以得到以下输出： </p>
+<pre><code>Current DateTime=2014-04-28T16:00:49.455
+Current DateTime=2014-04-28T16:00:49.493
+Specific Date=2014-01-01T10:10:30
+Current Date in IST=2014-04-29T04:30:49.493
+10000th second time from 01/01/1970= 1970-01-01T02:46:40</code></pre><ol start="4">
+<li>java.time.Instant：Instant类是用在机器可读的时间格式上的，它以Unix时间戳的形式存储日期时间，我们来看一个简单的程序： </li>
+</ol>
+<pre><code>import java.time.Duration;
+import java.time.Instant;
+
+public class InstantExample {
+
+    public static void main(String[] args) {
+        //Current timestamp
+        Instant timestamp = Instant.now();
+        System.out.println(&quot;Current Timestamp = &quot;+timestamp);
+
+        //Instant from timestamp
+        Instant specificTime = Instant.ofEpochMilli(timestamp.toEpochMilli());
+        System.out.println(&quot;Specific Time = &quot;+specificTime);
+
+        //Duration example
+        Duration thirtyDay = Duration.ofDays(30);
+        System.out.println(thirtyDay);
+    }
+
+}</code></pre><pre><code>&lt;span style=&quot;font-family: Georgia, &apos;Times New Roman&apos;, &apos;Bitstream Charter&apos;, Times, serif; font-size: 13px; line-height: 19px;&quot;&gt;上述程序的输出是：&lt;/span&gt;</code></pre><pre><code>Current Timestamp = 2014-04-28T23:20:08.489Z
+Specific Time = 2014-04-28T23:20:08.489Z
+PT720H</code></pre><ol start="5">
+<li>日期API工具：我们早些时候提到过，大多数日期/时间API类都实现了一系列工具方法，如：加/减天数、周数、月份数，等等。还有其他的工具方法能够使用TemporalAdjuster调整日期，并计算两个日期间的周期： </li>
+</ol>
+<pre><code>import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.temporal.TemporalAdjusters;
+
+public class DateAPIUtilities {
+
+    public static void main(String[] args) {
+
+        LocalDate today = LocalDate.now();
+
+        //Get the Year, check if it&apos;s leap year
+        System.out.println(&quot;Year &quot;+today.getYear()+&quot; is Leap Year? &quot;+today.isLeapYear());
+
+        //Compare two LocalDate for before and after
+        System.out.println(&quot;Today is before 01/01/2015? &quot;+today.isBefore(LocalDate.of(2015,1,1)));
+
+        //Create LocalDateTime from LocalDate
+        System.out.println(&quot;Current Time=&quot;+today.atTime(LocalTime.now()));
+
+        //plus and minus operations
+        System.out.println(&quot;10 days after today will be &quot;+today.plusDays(10));
+        System.out.println(&quot;3 weeks after today will be &quot;+today.plusWeeks(3));
+        System.out.println(&quot;20 months after today will be &quot;+today.plusMonths(20));
+
+        System.out.println(&quot;10 days before today will be &quot;+today.minusDays(10));
+        System.out.println(&quot;3 weeks before today will be &quot;+today.minusWeeks(3));
+        System.out.println(&quot;20 months before today will be &quot;+today.minusMonths(20));
+
+        //Temporal adjusters for adjusting the dates
+        System.out.println(&quot;First date of this month= &quot;+today.with(TemporalAdjusters.firstDayOfMonth()));
+        LocalDate lastDayOfYear = today.with(TemporalAdjusters.lastDayOfYear());
+        System.out.println(&quot;Last date of this year= &quot;+lastDayOfYear);
+
+        Period period = today.until(lastDayOfYear);
+        System.out.println(&quot;Period Format= &quot;+period);
+        System.out.println(&quot;Months remaining in the year= &quot;+period.getMonths());        
+    }
+}</code></pre><p>上述程序的输出是：</p>
+<pre><code>Year 2014 is Leap Year? false
+Today is before 01/01/2015? true
+Current Time=2014-04-28T16:23:53.154
+10 days after today will be 2014-05-08
+3 weeks after today will be 2014-05-19
+20 months after today will be 2015-12-28
+10 days before today will be 2014-04-18
+3 weeks before today will be 2014-04-07
+20 months before today will be 2012-08-28
+First date of this month= 2014-04-01
+Last date of this year= 2014-12-31
+Period Format= P8M3D
+Months remaining in the year= 8</code></pre><ol start="6">
+<li>解析和格式化：将一个日期格式转换为不同的格式，之后再解析一个字符串，得到日期时间对象，这些都是很常见的。我们来看一下简单的例子： </li>
+</ol>
+<pre><code>import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateParseFormatExample {
+
+    public static void main(String[] args) {
+
+        //Format examples
+        LocalDate date = LocalDate.now();
+        //default format
+        System.out.println(&quot;Default format of LocalDate=&quot;+date);
+        //specific format
+        System.out.println(date.format(DateTimeFormatter.ofPattern(&quot;d::MMM::uuuu&quot;)));
+        System.out.println(date.format(DateTimeFormatter.BASIC_ISO_DATE));
+
+        LocalDateTime dateTime = LocalDateTime.now();
+        //default format
+        System.out.println(&quot;Default format of LocalDateTime=&quot;+dateTime);
+        //specific format
+        System.out.println(dateTime.format(DateTimeFormatter.ofPattern(&quot;d::MMM::uuuu HH::mm::ss&quot;)));
+        System.out.println(dateTime.format(DateTimeFormatter.BASIC_ISO_DATE));
+
+        Instant timestamp = Instant.now();
+        //default format
+        System.out.println(&quot;Default format of Instant=&quot;+timestamp);
+
+        //Parse examples
+        LocalDateTime dt = LocalDateTime.parse(&quot;27::Apr::2014 21::39::48&quot;,
+                DateTimeFormatter.ofPattern(&quot;d::MMM::uuuu HH::mm::ss&quot;));
+        System.out.println(&quot;Default format after parsing = &quot;+dt);
+    }
+
+}</code></pre><p>当运行以上程序时，可以看到如下输出： </p>
+<pre><code>Default format of LocalDate=2014-04-28
+28::Apr::2014
+20140428
+Default format of LocalDateTime=2014-04-28T16:25:49.341
+28::Apr::2014 16::25::49
+20140428
+Default format of Instant=2014-04-28T23:25:49.342Z
+Default format after parsing = 2014-04-27T21:39:48</code></pre><ol start="7">
+<li>旧的日期时间支持：旧的日期/时间类已经在几乎所有的应用程序中使用，因此做到向下兼容是必须的。这也是为什么会有若干工具方法帮助我们将旧的类转换为新的类，反之亦然。我们来看一下简单的例子： </li>
+</ol>
+<pre><code>import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+public class DateAPILegacySupport {
+
+    public static void main(String[] args) {
+
+        //Date to Instant
+        Instant timestamp = new Date().toInstant();
+        //Now we can convert Instant to LocalDateTime or other similar classes
+        LocalDateTime date = LocalDateTime.ofInstant(timestamp, 
+                        ZoneId.of(ZoneId.SHORT_IDS.get(&quot;PST&quot;)));
+        System.out.println(&quot;Date = &quot;+date);
+
+        //Calendar to Instant
+        Instant time = Calendar.getInstance().toInstant();
+        System.out.println(time);
+        //TimeZone to ZoneId
+        ZoneId defaultZone = TimeZone.getDefault().toZoneId();
+        System.out.println(defaultZone);
+
+        //ZonedDateTime from specific Calendar
+        ZonedDateTime gregorianCalendarDateTime = new GregorianCalendar().toZonedDateTime();
+        System.out.println(gregorianCalendarDateTime);
+
+        //Date API to Legacy classes
+        Date dt = Date.from(Instant.now());
+        System.out.println(dt);
+
+        TimeZone tz = TimeZone.getTimeZone(defaultZone);
+        System.out.println(tz);
+
+        GregorianCalendar gc = GregorianCalendar.from(gregorianCalendarDateTime);
+        System.out.println(gc);
+
+    }
+
+}</code></pre><p>当运行以上程序时，可以看到如下输出： </p>
+<pre><code>Date = 2014-04-28T16:28:54.340
+2014-04-28T23:28:54.395Z
+America/Los_Angeles
+2014-04-28T16:28:54.404-07:00[America/Los_Angeles]
+Mon Apr 28 16:28:54 PDT 2014
+sun.util.calendar.ZoneInfo[id=&quot;America/Los_Angeles&quot;,offset=-28800000,dstSavings=3600000,useDaylight=true,transitions=185,lastRule=java.util.SimpleTimeZone[id=America/Los_Angeles,offset=-28800000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=3,startMonth=2,startDay=8,startDayOfWeek=1,startTime=7200000,startTimeMode=0,endMode=3,endMonth=10,endDay=1,endDayOfWeek=1,endTime=7200000,endTimeMode=0]]
+java.util.GregorianCalendar[time=1398727734404,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id=&quot;America/Los_Angeles&quot;,offset=-28800000,dstSavings=3600000,useDaylight=true,transitions=185,lastRule=java.util.SimpleTimeZone[id=America/Los_Angeles,offset=-28800000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=3,startMonth=2,startDay=8,startDayOfWeek=1,startTime=7200000,startTimeMode=0,endMode=3,endMonth=10,endDay=1,endDayOfWeek=1,endTime=7200000,endTimeMode=0]],firstDayOfWeek=2,minimalDaysInFirstWeek=4,ERA=1,YEAR=2014,MONTH=3,WEEK_OF_YEAR=18,WEEK_OF_MONTH=5,DAY_OF_MONTH=28,DAY_OF_YEAR=118,DAY_OF_WEEK=2,DAY_OF_WEEK_IN_MONTH=4,AM_PM=1,HOUR=4,HOUR_OF_DAY=16,MINUTE=28,SECOND=54,MILLISECOND=404,ZONE_OFFSET=-28800000,DST_OFFSET=3600000]</code></pre><p>你可以看到，旧的TimeZone和GregorianCalendar类的toString()方法太啰嗦了，一点都不友好。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Date/" rel="tag"># Date</a>
+          
+            <a href="/tags/Time/" rel="tag"># Time</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/05/spring-2017-12-05-Spring-Validation-i18n/" rel="next" title="Spring 验证和国际化">
+                <i class="fa fa-chevron-left"></i> Spring 验证和国际化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/" rel="prev" title="Difference between Comparator and Comparable in Java">
+                Difference between Comparator and Comparable in Java <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/12/20/java-2017-12-20-Java8-Date-Time-API/';
+            this.page.identifier = '2017/12/20/java-2017-12-20-Java8-Date-Time-API/';
+            this.page.title = 'Java 8 日期/时间（Date Time）API指南';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/12/20/java-2017-12-20-Java8-Date-Time-API/';
+                this.page.identifier = '2017/12/20/java-2017-12-20-Java8-Date-Time-API/';
+                this.page.title = 'Java 8 日期/时间（Date Time）API指南';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/12/20/java-2017-12-20-Java8-Date-Time-API/';
+            this.page.identifier = '2017/12/20/java-2017-12-20-Java8-Date-Time-API/';
+            this.page.title = 'Java 8 日期/时间（Date Time）API指南';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么我们需要新的Java日期-时间API？"><span class="nav-number">1.</span> <span class="nav-text">为什么我们需要新的Java日期/时间API？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-8日期-时间API"><span class="nav-number">2.</span> <span class="nav-text">Java 8日期/时间API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java日期-时间API包"><span class="nav-number">3.</span> <span class="nav-text">Java日期/时间API包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java日期-时间API示例"><span class="nav-number">4.</span> <span class="nav-text">Java日期/时间API示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

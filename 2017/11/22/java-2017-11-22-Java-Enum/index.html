@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="enum,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="java enum(枚举)使用详解 + 总结   Enum、EnumMap、EnumSet的用法讲解     enum 的全称为 enumeration， 是 JDK 1.5  中引入的新特性，存放在 java.lang 包中。   原始的接口定义常量  语法（定义）  enum 对象的常用方法介绍  给 enum 自定义属性和方法  enum 的原理分析  enum 对象常用操作使用  Enu">
+<meta name="keywords" content="enum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Enum">
+<meta property="og:url" content="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Enum/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="java enum(枚举)使用详解 + 总结   Enum、EnumMap、EnumSet的用法讲解     enum 的全称为 enumeration， 是 JDK 1.5  中引入的新特性，存放在 java.lang 包中。   原始的接口定义常量  语法（定义）  enum 对象的常用方法介绍  给 enum 自定义属性和方法  enum 的原理分析  enum 对象常用操作使用  Enu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.717Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Enum">
+<meta name="twitter:description" content="java enum(枚举)使用详解 + 总结   Enum、EnumMap、EnumSet的用法讲解     enum 的全称为 enumeration， 是 JDK 1.5  中引入的新特性，存放在 java.lang 包中。   原始的接口定义常量  语法（定义）  enum 对象的常用方法介绍  给 enum 自定义属性和方法  enum 的原理分析  enum 对象常用操作使用  Enu">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Enum/">
+
+
+
+
+
+  <title>Java Enum | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">11月</div>
+			<div class="post-day">22</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Enum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java Enum</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T00:00:00+08:00">
+                2017-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="https://www.cnblogs.com/hemingwang0902/archive/2011/12/29/2306263.html" target="_blank" rel="noopener">java enum(枚举)使用详解 + 总结</a>  </p>
+<p><a href="http://blog.csdn.net/zknxx/article/details/51884536" target="_blank" rel="noopener">Enum、EnumMap、EnumSet的用法讲解</a>   </p>
+</blockquote>
+<p>enum 的全称为 enumeration， 是 JDK 1.5  中引入的新特性，存放在 java.lang 包中。 </p>
+<ol>
+<li><p>原始的接口定义常量</p>
+</li>
+<li><p>语法（定义）</p>
+</li>
+<li><p>enum 对象的常用方法介绍</p>
+</li>
+<li><p>给 enum 自定义属性和方法</p>
+</li>
+<li><p>enum 的原理分析</p>
+</li>
+<li><p>enum 对象常用操作使用</p>
+</li>
+<li><p>EnumSet，EnumMap 的应用 </p>
+</li>
+</ol>
+<a id="more"></a>
+
+<h3 id="原始的接口定义常量"><a href="#原始的接口定义常量" class="headerlink" title="原始的接口定义常量"></a>原始的接口定义常量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public interface IConstants &#123;</span><br><span class="line">    String MON = &quot;Mon&quot;;</span><br><span class="line">    String TUE = &quot;Tue&quot;;</span><br><span class="line">    String WED = &quot;Wed&quot;;</span><br><span class="line">    String THU = &quot;Thu&quot;;</span><br><span class="line">    String FRI = &quot;Fri&quot;;</span><br><span class="line">    String SAT = &quot;Sat&quot;;</span><br><span class="line">    String SUN = &quot;Sun&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法（定义）"><a href="#语法（定义）" class="headerlink" title="语法（定义）"></a>语法（定义）</h3><p>创建枚举类型要使用 enum 关键字，隐含了所创建的类型都是 java.lang.Enum 类的子类（java.lang.Enum 是一个抽象类）。枚举类型符合通用模式 Class Enum&lt;E extends Enum<e>&gt;，而 E 表示枚举类型的名称。枚举类型的每一个值都将映射到 protected Enum(String name, int ordinal) 构造函数中，在这里，每个值的名称都被转换成一个字符串，并且序数设置表示了此设置被创建的顺序。</e></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public enum EnumTest &#123;</span><br><span class="line">    MON, TUE, WED, THU, FRI, SAT, SUN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码实际上调用了7次 Enum(String name, int ordinal)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new Enum&lt;EnumTest&gt;(&quot;MON&quot;,0);</span><br><span class="line">new Enum&lt;EnumTest&gt;(&quot;TUE&quot;,1);</span><br><span class="line">new Enum&lt;EnumTest&gt;(&quot;WED&quot;,2);</span><br><span class="line">    ... ...</span><br></pre></td></tr></table></figure>
+
+<h3 id="enum-对象的常用方法介绍"><a href="#enum-对象的常用方法介绍" class="headerlink" title="enum 对象的常用方法介绍"></a>enum 对象的常用方法介绍</h3><p>int compareTo(E o)<br>比较此枚举对象与指定枚举对象的顺序。枚举默认实现了java.lang.Comparable接口,返回-1，表示此对象在指定枚举对象之前，返回0，表示两者位置相同，返回1，表示此枚举对象在指定枚举对象之后。</p>
+<p>Class<e> getDeclaringClass()<br>返回与此枚举对象的枚举类型相对应的 Class 对象。</e></p>
+<p>String name()<br>返回此枚举对象的名称，在其枚举声明中对其进行声明。</p>
+<p>int ordinal()<br>返回枚举对象的序数（它在枚举声明中的位置，其中初始常量序数为零）。</p>
+<p>String toString()<br>返回枚举对象的名称，它包含在声明中。</p>
+<p>&lt;T extends Enum<t>&gt; T[]  values()<br>values方法在 java.lang.Enum 中并不存在，它是编译器在编译枚举类的时候添加上去的。它返回所有枚举对象的一个数组。</t></p>
+<p>static &lt;T extends Enum<t>&gt; T valueOf(String name)<br>这个方法同样是编译在编译的时候添加到枚举类中去的。返回带指定名称的枚举对象。</t></p>
+<p>static &lt;T extends Enum<t>&gt; T valueOf(Class<t> enumType, String name)<br>返回带指定名称的指定枚举类型的枚举常量。</t></t></p>
+<h3 id="给-enum-自定义属性和方法"><a href="#给-enum-自定义属性和方法" class="headerlink" title="给 enum 自定义属性和方法"></a>给 enum 自定义属性和方法</h3><p>如果打算自定义自己的方法，那么必须在enum实例序列的最后添加一个分号。而且Java要求必须先定义enum实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line">public enum Week &#123;</span><br><span class="line"></span><br><span class="line">    // 枚举实例定义必须放在最前面</span><br><span class="line">    MON(&quot;星期一&quot;, 1) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    TUE(&quot;星期二&quot;, 2) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    WED(&quot;星期三&quot;, 3) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    THU(&quot;星期四&quot;, 4) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    FRI(&quot;星期五&quot;, 5) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    SAT(&quot;星期六&quot;, 6) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekend() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    SUN(&quot;星期天&quot;, 7) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekday() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        @Override</span><br><span class="line">        public boolean isWeekend() &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line">    private int ordinal;</span><br><span class="line"></span><br><span class="line">    Week(String name, int ordinal) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.ordinal = ordinal;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getOrdinal() &#123;</span><br><span class="line">        return ordinal;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 是否是周末</span><br><span class="line">     *</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public boolean isWeekend() &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 是否是工作日</span><br><span class="line">     *</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public abstract boolean isWeekday();</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 测试 switch 语句</span><br><span class="line">     *</span><br><span class="line">     * @param week</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static Week switchWeek(Week week) &#123;</span><br><span class="line">        switch (week) &#123;</span><br><span class="line">            case MON:</span><br><span class="line">                return Week.MON;</span><br><span class="line">            case TUE:</span><br><span class="line">                return Week.TUE;</span><br><span class="line">            case WED:</span><br><span class="line">                return Week.WED;</span><br><span class="line">            case THU:</span><br><span class="line">                return Week.THU;</span><br><span class="line">            case FRI:</span><br><span class="line">                return Week.FRI;</span><br><span class="line">            case SAT:</span><br><span class="line">                return Week.SAT;</span><br><span class="line">            case SUN:</span><br><span class="line">                return Week.SUN;</span><br><span class="line">            default:</span><br><span class="line">                return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 返回匹配自定义属性 name 值的枚举常量</span><br><span class="line">     *</span><br><span class="line">     * @param name</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static Week getWeek(String name) &#123;</span><br><span class="line">        for (Week week : Week.values()) &#123;</span><br><span class="line">            if (week.getName().equals(name)) &#123;</span><br><span class="line">                return week;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">给枚举加了 name 和 ordinal 两个字段，并且重载了构造方法。构造方法和其他方法必须放在枚举声明的枚举实例定义的后面。另外，Week.SAT 和 Week.SUN 两个枚举变量后面都加了匿名内部类。</span><br><span class="line"></span><br><span class="line">### enum 的原理 </span><br><span class="line">每个 enum 类都会集成 java.lang.enum 这个抽象类，而 enum 也是一个抽象类，所以我们可以在 enum 里面定义抽象方法 isWeekday 和 其他非抽象方法。</span><br><span class="line">每个 enum 里面的枚举常量都是 enum 的匿名内部类，所以它可以重写 enum 这个抽象类定义的抽象方法 isWeekday 和其他非抽象的方法。</span><br><span class="line">所以：</span><br><span class="line">``` </span><br><span class="line">SUN(&quot;星期天&quot;, 7) &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public boolean isWeekend() &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">就相当于： </span><br><span class="line">``` </span><br><span class="line">public static final Week SUN = new Week(&quot;星期天&quot;, 7) &#123;</span><br><span class="line">  @Override</span><br><span class="line">    public boolean isWeekend() &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以使用普通的 Java 类就可以实现枚举，参考 <a href="http://blog.csdn.net/xyang81/article/details/7185428" target="_blank" rel="noopener">Java枚举（用Java普通类模拟枚举的实现原理及JDK枚举API使用示例）</a>。</p>
+<h3 id="enum-对象常用操作使用"><a href="#enum-对象常用操作使用" class="headerlink" title="enum 对象常用操作使用"></a>enum 对象常用操作使用</h3><h4 id="compareTo"><a href="#compareTo" class="headerlink" title="compareTo"></a>compareTo</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Week mon = Week.MON;</span><br><span class="line">        Week tue = Week.valueOf(&quot;TUE&quot;);</span><br><span class="line"></span><br><span class="line">        switch (mon.compareTo(tue)) &#123;</span><br><span class="line">            case -1:</span><br><span class="line">                System.out.println(mon.getName() + &quot;的位置在&quot; + tue.getName() + &quot;前面&quot;);</span><br><span class="line">                break;</span><br><span class="line">            case 0:</span><br><span class="line">                System.out.println(mon.getName() + &quot;的位置与&quot; + tue.getName() + &quot;相同&quot;);</span><br><span class="line">                break;</span><br><span class="line">            case 1:</span><br><span class="line">                System.out.println(mon.getName() + &quot;的位置在&quot; + tue.getName() + &quot;后面&quot;);</span><br><span class="line">                break;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">星期一的位置在星期二前面</span><br></pre></td></tr></table></figure>
+
+<h4 id="values"><a href="#values" class="headerlink" title="values"></a>values</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (Week week : Week.values()) &#123;</span><br><span class="line">            System.out.println(&quot;name - ordinal : &quot; + week.name() + &quot; - &quot; + week.ordinal());</span><br><span class="line">            System.out.println(&quot;name - ordinal : &quot; + week.getName() + &quot; - &quot; + week.getOrdinal());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">name - ordinal : MON - 0</span><br><span class="line">name - ordinal : 星期一 - 1</span><br><span class="line">name - ordinal : TUE - 1</span><br><span class="line">name - ordinal : 星期二 - 2</span><br><span class="line">name - ordinal : WED - 2</span><br><span class="line">name - ordinal : 星期三 - 3</span><br><span class="line">name - ordinal : THU - 3</span><br><span class="line">name - ordinal : 星期四 - 4</span><br><span class="line">name - ordinal : FRI - 4</span><br><span class="line">name - ordinal : 星期五 - 5</span><br><span class="line">name - ordinal : SAT - 5</span><br><span class="line">name - ordinal : 星期六 - 6</span><br><span class="line">name - ordinal : SUN - 6</span><br><span class="line">name - ordinal : 星期天 - 7</span><br></pre></td></tr></table></figure>
+
+<p>自定义的属性并不会影响父类 Enum 类里面定义的属性，因为父类中的属性为私有的。</p>
+<h4 id="valueOf-NaN"><a href="#valueOf-NaN" class="headerlink" title="valueOf"></a>valueOf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Week mon = Week.MON;</span><br><span class="line">Week tue = Week.valueOf(&quot;TUE&quot;);</span><br><span class="line">Week wed = Week.valueOf(Week.class, &quot;WED&quot;);</span><br><span class="line">``` </span><br><span class="line">输出结果：</span><br><span class="line">``` </span><br><span class="line">mon : MON - 星期一</span><br><span class="line">tue : TUE - 星期二</span><br><span class="line">wed : WED - 星期三</span><br></pre></td></tr></table></figure>
+
+<h4 id="switch-语句"><a href="#switch-语句" class="headerlink" title="switch 语句"></a>switch 语句</h4><p>从 java1.6 之后，可以在switch语句的case中放入枚举元素。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Week mon = Week.MON;</span><br><span class="line">Week tue = Week.valueOf(&quot;TUE&quot;);</span><br><span class="line">Week wed = Week.valueOf(Week.class, &quot;WED&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(Week.switchWeek(mon).getName());</span><br><span class="line">System.out.println(Week.switchWeek(tue).getName());</span><br><span class="line">System.out.println(Week.switchWeek(wed).getName());</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">星期一</span><br><span class="line">星期二</span><br><span class="line">星期三</span><br></pre></td></tr></table></figure>
+
+<h4 id="根据自定义的属性返回枚举常量"><a href="#根据自定义的属性返回枚举常量" class="headerlink" title="根据自定义的属性返回枚举常量"></a>根据自定义的属性返回枚举常量</h4><pre><code>Week week = Week.getWeek(&quot;星期一&quot;);
+System.out.println(week.name());</code></pre><p>输出结果： </p>
+<pre><code>MON </code></pre><h3 id="EnumSet，EnumMap-的应用"><a href="#EnumSet，EnumMap-的应用" class="headerlink" title="EnumSet，EnumMap 的应用"></a>EnumSet，EnumMap 的应用</h3><p><a href="https://www.cnblogs.com/chenpi/p/5296330.html" target="_blank" rel="noopener">EnumMap</a> </p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzIxOTI1NTk5Nw==&mid=2650047360&idx=1&sn=129ffbc5b963b5d6a692aae595e2b402&chksm=8fde2652b8a9af446be044953353fc89ea69627e472969fc7b4e9f32d10565c80b584d785ff5&scene=21#wechat_redirect" target="_blank" rel="noopener">剖析EnumMap / 计算机程序的思维逻辑</a></p>
+<p><a href="https://www.cnblogs.com/swiftma/p/6044718.html" target="_blank" rel="noopener">计算机程序的思维逻辑 (51) - 剖析EnumSet</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/enum/" rel="tag"># enum</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/22/java-2017-11-22-Java-Inner-Class/" rel="next" title="Java 内部类">
+                <i class="fa fa-chevron-left"></i> Java 内部类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/22/java-2017-11-22-Java-Collections/" rel="prev" title="Java Collection">
+                Java Collection <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Enum/';
+            this.page.identifier = '2017/11/22/java-2017-11-22-Java-Enum/';
+            this.page.title = 'Java Enum';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Enum/';
+                this.page.identifier = '2017/11/22/java-2017-11-22-Java-Enum/';
+                this.page.title = 'Java Enum';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-Enum/';
+            this.page.identifier = '2017/11/22/java-2017-11-22-Java-Enum/';
+            this.page.title = 'Java Enum';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原始的接口定义常量"><span class="nav-number">1.</span> <span class="nav-text">原始的接口定义常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法（定义）"><span class="nav-number">2.</span> <span class="nav-text">语法（定义）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enum-对象的常用方法介绍"><span class="nav-number">3.</span> <span class="nav-text">enum 对象的常用方法介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给-enum-自定义属性和方法"><span class="nav-number">4.</span> <span class="nav-text">给 enum 自定义属性和方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enum-对象常用操作使用"><span class="nav-number">5.</span> <span class="nav-text">enum 对象常用操作使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#compareTo"><span class="nav-number">5.1.</span> <span class="nav-text">compareTo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#values"><span class="nav-number">5.2.</span> <span class="nav-text">values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#valueOf-NaN"><span class="nav-number">5.3.</span> <span class="nav-text">valueOf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#switch-语句"><span class="nav-number">5.4.</span> <span class="nav-text">switch 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#根据自定义的属性返回枚举常量"><span class="nav-number">5.5.</span> <span class="nav-text">根据自定义的属性返回枚举常量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EnumSet，EnumMap-的应用"><span class="nav-number">6.</span> <span class="nav-text">EnumSet，EnumMap 的应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

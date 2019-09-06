@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="2 装配 Bean2.1 Spring 配置的可选方案Spring 容器负责创建应用程序中的 Bean 并通过 DI 来协调这些对象之间的关系.但是,作为开发人员,你需要告诉 Sprng 要创建哪些 Bean 并且如何将其装配在一起.当描述 Bean 如何进行装配时,Spring 具有非常大的灵活性,它提供了三种主要的装配机制:   自动化装配 基于 Java 的显式配置 基于 XML 的显式配置">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 的学习和使用">
+<meta property="og:url" content="https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/index.html">
+<meta property="og:site_name" content="Keep Coding">
+<meta property="og:description" content="2 装配 Bean2.1 Spring 配置的可选方案Spring 容器负责创建应用程序中的 Bean 并通过 DI 来协调这些对象之间的关系.但是,作为开发人员,你需要告诉 Sprng 要创建哪些 Bean 并且如何将其装配在一起.当描述 Bean 如何进行装配时,Spring 具有非常大的灵活性,它提供了三种主要的装配机制:   自动化装配 基于 Java 的显式配置 基于 XML 的显式配置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-06T13:10:44.763Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 的学习和使用">
+<meta name="twitter:description" content="2 装配 Bean2.1 Spring 配置的可选方案Spring 容器负责创建应用程序中的 Bean 并通过 DI 来协调这些对象之间的关系.但是,作为开发人员,你需要告诉 Sprng 要创建哪些 Bean 并且如何将其装配在一起.当描述 Bean 如何进行装配时,Spring 具有非常大的灵活性,它提供了三种主要的装配机制:   自动化装配 基于 Java 的显式配置 基于 XML 的显式配置">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '8/10/2019 20:40:00',
+    onlineAPI: '',
+    site: {
+      title: 'Keep Coding',
+      subtitle: '',
+      author: 'wuchao'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/">
+
+
+
+
+
+  <title>Spring 的学习和使用 | Keep Coding</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/header-sagiri.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>K</span><span>e</span><span>e</span><span>p</span><span> </span><span>C</span><span>o</span><span>d</span><span>i</span><span>n</span><span>g</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">01月</div>
+			<div class="post-day">10</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Spring/" itemprop="url" rel="index">
+          <span itemprop="name">Spring</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring 的学习和使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-10T00:00:00+08:00">
+                2017-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="2-装配-Bean"><a href="#2-装配-Bean" class="headerlink" title="2 装配 Bean"></a>2 装配 Bean</h1><h2 id="2-1-Spring-配置的可选方案"><a href="#2-1-Spring-配置的可选方案" class="headerlink" title="2.1 Spring 配置的可选方案"></a>2.1 Spring 配置的可选方案</h2><p>Spring 容器负责创建应用程序中的 Bean 并通过 DI 来协调这些对象之间的关系.<br>但是,作为开发人员,你需要告诉 Sprng 要创建哪些 Bean 并且如何将其装配在一起.<br>当描述 Bean 如何进行装配时,Spring 具有非常大的灵活性,它提供了三种主要的装配机制: </p>
+<ul>
+<li>自动化装配</li>
+<li>基于 Java 的显式配置</li>
+<li>基于 XML 的显式配置</li>
+</ul>
+<h2 id="2-2-自动化装配-Bean"><a href="#2-2-自动化装配-Bean" class="headerlink" title="2.2 自动化装配 Bean"></a>2.2 自动化装配 Bean</h2><p>Spring 从两个角度来实现自动化装配: </p>
+<ul>
+<li>组建扫描(component scanning): Spring 会自动发现应用上下文中所创建的 Bean. </li>
+<li>自动装配(autowiring): Spring 自动满足 Bean 之间的依赖. </li>
+</ul>
+<h3 id="2-2-1-创建可被发现的-Bean"><a href="#2-2-1-创建可被发现的-Bean" class="headerlink" title="2.2.1 创建可被发现的 Bean"></a>2.2.1 创建可被发现的 Bean</h3><p>在类上添加 @Component 注解表明该类会作为组件类,并告知 Spring 要为这个类<br>创建 Bean.不过组件的扫描默认是不启用的.我们还需要显式配置一下 Spring,从而命令它去寻找带有<br> @Component 注解的类.Spring 中可以使用 @ComponentScan 注解启用组件扫描.<br>如果没有其他配置的话, @ComponentScan 默认会扫描与配置类所在包及该包下的所有子包,<br>寻找带有 @Component 注解的类,并且在 Spring 种为其创建一个 Bean.<br>如果使用 XML 来启用组件扫描的话,那么可以使用 Spring context 命名空间的<br><code>&lt;context:component-scan&gt;</code> 元素. </p>
+<a id="more"></a>
+
+<h3 id="2-2-2-为组件扫描的-Bean-命名"><a href="#2-2-2-为组件扫描的-Bean-命名" class="headerlink" title="2.2.2 为组件扫描的 Bean 命名"></a>2.2.2 为组件扫描的 Bean 命名</h3><p>Spring 应用上下文中所有的 Bean 都会给定一个 ID,如果没有显示指定,Spring<br>会根据类名为其指定一个 ID(将类名的第一个字母变为小写).<br>如果想要为这个 Bean 设置不同的 ID,你所要做的就是将期望的 ID 作为值传递给<br> @Component 注解:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line"> @Component(&quot;lonelyHeartsClub&quot;)</span><br><span class="line"> public class SgtPeppers implements CompactDisc &#123;</span><br><span class="line">    ...</span><br><span class="line"> &#125;</span><br><span class="line"> ``` </span><br><span class="line">还有另外一种为 Bean 命名的方式,这种方式不使用 @Component 注解,而是使用</span><br><span class="line">Java 依赖注入规范(Java Dependency Injection) 中所提供的 @Named 注解</span><br><span class="line">来为 Bean 设置 ID: </span><br><span class="line">``` </span><br><span class="line">package soundsystem; </span><br><span class="line">import javax.inject.Named;</span><br><span class="line"></span><br><span class="line">@Named(&quot;lonelyHeartsClub&quot;) </span><br><span class="line">public class SgtPeppers implements CompactDisc &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">Spring 支持将 @Named 作为 @Component 注解的替代方案,两者之间有一些细微的差异,</span><br><span class="line">但是在大多数场景中,它们是可以相互替换的. </span><br><span class="line"></span><br><span class="line">### 2.2.3 设置组件扫描的基础包 </span><br><span class="line">到现在为止,我们没有为 @ComponentScan 注解设置任何属性.这意味着,按照默认规则,</span><br><span class="line">它会以配置类所在的包作为基础包(base package)来扫描组件.但是,如果你想扫描不同的包,</span><br><span class="line">那该怎么办呢?或者,如果你想扫描多个基础包,那又该怎么办呢?   </span><br><span class="line"></span><br><span class="line">有一个原因会促使我们明确地设置基础包,那就是我们想要将配置类放在单独的包中,</span><br><span class="line">使其与其他应用代码区分开来.如果是这样的话,哪默认的基础包就不能满足要求了.  </span><br><span class="line"></span><br><span class="line">要满足这样的需求其实也完全没有问题!为了指定不同的基础包,你所需要做的就是在 @ComponentScan</span><br><span class="line">的 value 属性中指明包的名称: </span><br><span class="line">``` </span><br><span class="line">@Configuration  </span><br><span class="line">@ComponentScan(basePackages=&quot;soundsystem&quot;)</span><br><span class="line">public class CPPlayerConfig &#123;&#125; </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">如果你想更加清晰地表明你所设置的是基础包,那么你可以通过 basePackages 属性进行设置: </span><br><span class="line">``` </span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages=&quot;soundsystem&quot;)</span><br><span class="line">public class CDPlayerConfig &#123;&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">可能你已经注意到了 basePackages 属性使用的是复数形式.如果你揣测这是不是意味着可以设置多个基础包,</span><br><span class="line">那么恭喜你猜对了,如果想要这么做的话,只需要将 basePackages 属性设置为要扫描包的一个数组即可: </span><br><span class="line">``` </span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages&#123;&quot;soundsystem&quot;, &quot;video&quot;&#125;)</span><br><span class="line">public class CDPlayerconfig &#123;&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">在上面的例子中,所设置的基础包是以 String 类型表示的,我认为这是可以的,但这种方法是类型不安全的(not type-safe)</span><br><span class="line">的.如果你重构代码的话,那么所指定的基础包可能就会出现错误了.   </span><br><span class="line"></span><br><span class="line">除了将包设置为简单的 String 类型之外,@ComponentScan 还提供了另外一种方法,那就是将其指定为包中所</span><br><span class="line">包含的类或接口: </span><br><span class="line">``` </span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackageClasses=&#123;CDPlayer.class, DVDPlayer.class&#125;)</span><br><span class="line">public class CDPlayerConfig &#123;&#125; </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">可以看到,basePackages 属性被替换成了 basePackageClasses.同时,我们不是再使用 String 类型的</span><br><span class="line">名称来指定包,为 basePackageClasses 属性所设置的数组中包含了类.这些类所在的包将会作为组件扫描的基础包.   </span><br><span class="line"></span><br><span class="line">尽管在样例中,为 basePackageClasses 设置的是组件类,但是你可以考虑在包中创建一个用来进行扫描的</span><br><span class="line">空标记接口(marker interface).通过标记接口的方式,你依然能够保持对重构友好的接口引用,但是可以避免</span><br><span class="line">引用任何实际的应用程序代码卡.  </span><br><span class="line"></span><br><span class="line">在你的应用程序中,如果所有的对象都是独立的,彼此之间没有任何依赖,那么你所需要的可能就是组件扫描而已.</span><br><span class="line">但是,很多对象会依赖其他的对象才能完成任务.这样的话,我们就需要有一种方法能够将组件扫描得到的 bean </span><br><span class="line">和它们的依赖装配在一起.要完成这项任务,我们需要了解一下 Spring 自动装配的另外一方面内容 -- 自动装配.  </span><br><span class="line"></span><br><span class="line">### 2.2.4 通过为 Bean 添加注解实现自动装配  </span><br><span class="line">简单来说,自动装配就是让 Spring 自动满足 Bean 依赖的一种方法,在满足依赖的过程中,会在 Spring 应用上下文中</span><br><span class="line">寻找匹配某个 Bean 需求的其他 Bean.为了声明要进行自动装配,我们可以借助 Spring 的 @Autowired 注解. </span><br><span class="line"></span><br><span class="line">比方说,下面的 CDPlayer 类,它的构造上添加了 @Autowired 注解,这表明当 Spring 创建 CDPlayer Bean</span><br><span class="line">的时候,会通过这个构造器来进行实例化并且会传入一个可设置给 CompactDisc 类型的 Bean.   </span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"># 通过自动装配,将一个 CompactDisc 注入到 CDPlayer 之中     </span><br><span class="line">  </span><br><span class="line">package soundsystems;</span><br><span class="line"> </span><br><span class="line">import.org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"> </span><br><span class="line">@Component</span><br><span class="line">public class CDPlayer implements MediaPlayer &#123;</span><br><span class="line">    private CompactDisc cd;</span><br><span class="line">    </span><br><span class="line">    @Autowired</span><br><span class="line">    public CDPlayer(CompactDisc cd) &#123;</span><br><span class="line">        this.cd = cd; </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    public void play() &#123;</span><br><span class="line">        cd.play();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">@Autowired 注解不仅能够用在构造器上,还能用在属性的 Setter 方法上,比如说,CDPlayer 有一个 setCompactDisc() </span><br><span class="line">方法,那么可以采用如下的注解形式进行自动装配: </span><br><span class="line">``` </span><br><span class="line">@Autowired</span><br><span class="line">public void setCompactDisc(CompactDisc cd) &#123;</span><br><span class="line">    this.cd = cd;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">在 Spring 初始化 Bean 之后,它会尽可能的去满足 Bean 的依赖,在本例中,依赖是通过带有 @Autowired 注解</span><br><span class="line">的方法进行声明的,也就是 setCompactDisc() 方法.   </span><br><span class="line"></span><br><span class="line">实际上, Setter 方法并没有什么特殊之处,@Autowired 注解可以用在类的任何方法上.假设 CDPlayer 类有一个 </span><br><span class="line">insertDisc() 方法,那么 @Autowired 能够像在 setCompactDisc() 上那样,发挥完全相同的作用: </span><br><span class="line">``` </span><br><span class="line">@Autowired</span><br><span class="line">public void insertDisc(CompactDisc cd) &#123;</span><br><span class="line">    this.cd = cd;</span><br><span class="line">&#125;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">不管是构造器,Setter 方法还是其他的方法,Spring 都会尝试满足方法参数上所声明的依赖.假如有且只有一个 Bean </span><br><span class="line">匹配依赖需求的话,那么这个 Bean 将会被装配进来.   </span><br><span class="line"></span><br><span class="line">如果没有匹配的 Bean,那么在应用上下文创建的时候,Spring 会抛出一个异常.为避免异常的出现,你可以将 @Autowired </span><br><span class="line">的 required 属性设置为 false: </span><br><span class="line">``` </span><br><span class="line">@Autowired(required=false)</span><br><span class="line">public CDPlayer(CompactDisc cd) &#123;</span><br><span class="line">    this.cd = cd;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">&gt; Xml配置中的 Bean 要顺序定义.   </span><br><span class="line"></span><br><span class="line">将 required 属性设置为 false 时,Spring 会尝试执行自动装配,但是如果没有匹配的 Bean 的话,Spring </span><br><span class="line">将会让这个 Bean 处于未装配的状态.但是,把 required 属性设置为 false 时,你需要谨慎对待.如果在你的代码</span><br><span class="line">种没有进行 null 检查的话,这个处于未装配状态的属性有可能会出现 NullPointerException.    </span><br><span class="line"></span><br><span class="line">如果有多个 Bean 都能满足依赖关系的话,Spring 将会抛出一个异常,表明没有明确指定要选择哪个 Bean 进行自动装配.   </span><br><span class="line"></span><br><span class="line">@Autowired 注解是 Spring 特有的注解,如果你不愿意在代码中到处使用 Spring 的特定注解来完成自动装配</span><br><span class="line">任务的话,那么你可以考虑将其替换为 @Inject: </span><br><span class="line">``` </span><br><span class="line">package soundsystem;</span><br><span class="line"> </span><br><span class="line">import javax.inject.Inject;</span><br><span class="line">import javax.inject.Named;</span><br><span class="line"> </span><br><span class="line">@Named</span><br><span class="line">public class CDPlayer &#123;</span><br><span class="line">    ... </span><br><span class="line">    </span><br><span class="line">    @Inject</span><br><span class="line">    public CDPlayer(CompactDisc cd) &#123;</span><br><span class="line">        this.cd = cd;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">@Inject 注解来源于 Java 依赖注入规范,该规范同时还为我们定义了 @Named 注解.在自动装配中,Spring 同时支持 </span><br><span class="line">@Inject 和 @Autowired.尽管 @Inject 和 @Autowired 之间有着一些细微的差别,但是在大多数场景下,它们都是</span><br><span class="line">可以互相替换的.    </span><br><span class="line"></span><br><span class="line">### 2.2.5 验证自动装配    </span><br><span class="line">现在,我们已经在 CDPlayer 的构造器中添加了 @Autowired 注解,Spring 将把一个可分配给 CompactDisc 类型的 </span><br><span class="line">Bean 自动注入进来.    </span><br><span class="line"> </span><br><span class="line">## 2.3 通过 Java 代码装配 Bean    </span><br><span class="line">尽管在很多场景下通过组件扫描和自动装配实现 Spring 的自动化配置是更为推荐的方式,但有时候自动化配置的方案行不通,</span><br><span class="line">因此需要明确配置 Spring.比如说,你想要将第三方库中的组件装配到你的应用中,在这种情况下,是没有办法在它的类添加 </span><br><span class="line">@Component 和 @Autowired 注解的,因此就不能使用自动化装配的方案了.   </span><br><span class="line"></span><br><span class="line">在这种情况下,必须要采用显式装配的方式.在进行显式装配的时候,又两种可选方案: Java 和 XML.相比 XML 配置方式,</span><br><span class="line">JavaConfig 是更好的方案,因为它更为强大,类型安全并且对重构友好.因为它就是 Java 代码,就像应用程序中其他 Java </span><br><span class="line">代码一样.   </span><br><span class="line"></span><br><span class="line">同时,JavaConfig 与其他 Java 代码又有所区别.在概念上,它与应用程序中的业务逻辑和领域代码是不同的.尽管它与其他</span><br><span class="line">的组件一样都使用相同的语言进行表述,但 JavaConfig 是配置代码.这意味着它不应该包含任何业务逻辑,JavaConfig </span><br><span class="line">也不应该侵入到业务逻辑代码之中.尽管不是必须的,但通常会将 JavaConfig 放到单独的包中,使它与其他的应用程序逻辑</span><br><span class="line">分开来,这样对于它的意图就不会产生困惑了.   </span><br><span class="line"></span><br><span class="line">### 2.3.1 创建配置类   </span><br><span class="line">``` </span><br><span class="line">package soundsystems;</span><br><span class="line">import org.springframeword.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class CDPlayerConfig &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>创建 JavaConfig 类的关键在于为其添加 @Configuration 注解,@Configuration 注解表明这个类是一个配置类.   </p>
+<h3 id="2-3-2-声明简单的-Bean"><a href="#2-3-2-声明简单的-Bean" class="headerlink" title="2.3.2 声明简单的 Bean"></a>2.3.2 声明简单的 Bean</h3><p>要在 JavaConfig 中声明 Bean,我们需要编写一个方法,这个方法会创建所需类型的实例,然后给这个方法添加 @Bean<br>注解.比方说,下面的代码声明了 CompactDisc Bean: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Bean </span><br><span class="line">public CompactDisc sgtPeppers() &#123;</span><br><span class="line">    return new SgtPeppers();</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">@Bean 注解会告诉 Spring 这个方法将会返回一个对象,该对象要注册为 Spring 应用上下文中的 Bean.方法体中</span><br><span class="line">包含了最终产生 Bean 实例的逻辑.  </span><br><span class="line"></span><br><span class="line">默认情况下, Bean 的 ID 与带有 @Bean 注解的方法名是一样的.在本例中, Bean 的名字将会是 sgtPeppers.</span><br><span class="line">如果你想为其设置成一个不同的名字的话,那么可以重命名该方法,也可以通过 name 属性指定一个不同的名字: </span><br><span class="line">``` </span><br><span class="line">@Bean(name=&quot;lonelyHeartsClubBand&quot;) </span><br><span class="line">public CompactDisc sgtPeppers() &#123;</span><br><span class="line">    return new SgtPeppers();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不管你采用什么方法来为 Bean 命名,Bean 声明都是非常简单的.方法体返回了一个新的 SgtPeppers 实例.这里是使用<br>Java 来jinxing描述的,因此我们可以发挥 Java 提供的所有功能,只要最终生成一个 CompactDisc 实例即可.  </p>
+<h3 id="2-3-3-借助-JavaConfig-实现注入"><a href="#2-3-3-借助-JavaConfig-实现注入" class="headerlink" title="2.3.3 借助 JavaConfig 实现注入"></a>2.3.3 借助 JavaConfig 实现注入</h3><p>前面所声明的 CompactDisc Bean 是非常简单的,它自身没有其他的依赖.但现在,我们需要声明 CDPlayer Bean,<br>它依赖与 CompactDisc.在 JavaConfig 中,要如何将它们装配到一起呢?  </p>
+<p>在 JavaConfig 中装配 Bean 的最简单方式就是创建 Bean 的方法.例如,下面就是一种声明 CDPlayer 的可行方案: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public CDPlayer cdPlayer() &#123;</span><br><span class="line">    return new CDPlayer(sgtPeppers());</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">cdPlayer() 方法像 sgtPeppers() 方法一样,同样使用了 @Bean 注解,这表明这个方法会创建一个 Bean 实例并将其</span><br><span class="line">注册到 Spring 应用上下文中.所创建的 Bean ID 为 cdPlayer,与方法的名字相同.  </span><br><span class="line"></span><br><span class="line">cdPlayer() 的方法体与 sgtPeppers() 稍微有些区别.在这里并没有使用默认的构造器构建实例,而是调用了需要传入</span><br><span class="line">CompactDisc 对象的构造器来创建 CDPlayer 实例.   </span><br><span class="line"></span><br><span class="line">看起来,CompactDisc 是通过调用 sgtPeppers() 得到的,但情况并非完全如此,因为 sgtPeppers() 方法上</span><br><span class="line">添加了 @Bean 注解,Spring 将会拦截所有对它的调用,并确保直接返回该方法所创建的 Bean,而不是每次都对其</span><br><span class="line">进行实际的调用.  </span><br><span class="line"></span><br><span class="line">还有一种理解起来更为简单的方式: </span><br><span class="line">``` </span><br><span class="line">@Bean </span><br><span class="line">public CDPlayer cdPlayer(CompactDisc compactDisc) &#123;</span><br><span class="line">    return new CDPlayer(compactDisc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里,cdPlayer() 方法请求一个 CompactDisc 作为参数.当 Spring 调用 cdPlayer()  创建 CDPlayer bean<br>的时候,它会自动装配一个 CompactDisc 到配置中.然后,方法体就可以按照合适的方式来使用它.借助这种技术,cdPlayer()<br>方法也能够将 CompactDisc 注入到 CDPlayer 的构造器中,而且不用明确引用 Compact:Disc 的 @Bean 方法.   </p>
+<p>通过这种方式引用其他的 Bean 通常是最佳的选择,因为它不会要求将 compactDisc 声明到同一个配置类之中.在这里<br>甚至没有要求 CompactDisc 必须要在 JavaConfig 中声明,实际上它可以通过组件扫描功能自动发现或者通过 XML 来<br>进行配置..不管 CompactDisc 是采用什么方式创建出来的, Spring 都会将其注入到配置方法中.   </p>
+<h2 id="2-4-通过-XML-装配-Bean"><a href="#2-4-通过-XML-装配-Bean" class="headerlink" title="2.4 通过 XML 装配 Bean"></a>2.4 通过 XML 装配 Bean</h2><h2 id="2-5-导入和混合配置"><a href="#2-5-导入和混合配置" class="headerlink" title="2.5 导入和混合配置"></a>2.5 导入和混合配置</h2><h1 id="高级装配"><a href="#高级装配" class="headerlink" title="高级装配"></a>高级装配</h1><p>本章内容: </p>
+<ul>
+<li>Spring profile </li>
+<li>条件化的 Bean 声明 </li>
+<li>自动装配与歧义性 </li>
+<li>Bean 的作用域 </li>
+<li>Spring 表达式语言 </li>
+</ul>
+<h2 id="3-1-环境与-Profile"><a href="#3-1-环境与-Profile" class="headerlink" title="3.1 环境与 Profile"></a>3.1 环境与 Profile</h2><h3 id="3-1-1-配置-Profile-Bean"><a href="#3-1-1-配置-Profile-Bean" class="headerlink" title="3.1.1 配置 Profile Bean"></a>3.1.1 配置 Profile Bean</h3><p>Spring 为环境相关的 Bean 所提供的解决方案其实与构建时的方案没有太大差别.当然,在这个过程中需要根据环境决定该<br>创建哪个 Bean 和不创建哪个 Bean.不过 Spring 并不是在构建的时候做出这样的决策,而是等到运行时再来确定.这样的<br>结果就是同一个部署单元(可能会是 WAR 文件)能够适用于所有的环境,没有必要进行重新构建.   </p>
+<p>在 Java 配置中,可以使用 @Profile 注解指定某一个 Bean 或者方法属于哪一个 profile,例如,在配置类中,<br>嵌入数据库的 DataSource 可能会配置成如下所示: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@Profile(&quot;dev&quot;)</span><br><span class="line">public class DevelopmentProfileConfig &#123;</span><br><span class="line">    @Bean(destroyMethod=&quot;shutdown&quot;)</span><br><span class="line">    public DataSource dataSource() &#123;</span><br><span class="line">        return new EmbeddedDatabaseBuilder() &#123;&#125;</span><br><span class="line">                .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">                .addScript(&quot;classpath:schema.sql&quot;)</span><br><span class="line">                .addScript(&quot;classpath:test-data.sql&quot;)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它会告诉 Spring 这个类或者方法只有在 dev profile 激活时才会创建.如果 dev profile 没有激活的话,那么带有<br>@Bean 注解的方法都会被忽略掉.  </p>
+<p>在 Spring3.1 中,只能在类级别上使用 @Profile 注解.不过,从 Spring3.2 开始,你也可以在方法级别上使用 @Profile<br>注解,与 @Bean 注解一同使用.这样的话,就能将这两个 Bean 的声明放到同一个配置类之中:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class DataSourceConfig &#123;</span><br><span class="line">    @Bean(destroyMethod=&quot;shutdown&quot;)</span><br><span class="line">    @Profile(&quot;dev&quot;)</span><br><span class="line">    public DataSource embeddedDataSource() &#123;</span><br><span class="line">        return new EmbeddedDatabaseBuilder() &#123;&#125;</span><br><span class="line">                        .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">                        .addScript(&quot;classpath:schema.sql&quot;)</span><br><span class="line">                        .addScript(&quot;classpath:test-data.sql&quot;)</span><br><span class="line">                        .build();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Bean</span><br><span class="line">    @Profile(&quot;prod&quot;)</span><br><span class="line">    public DataSource jndiDataSource() &#123;</span><br><span class="line">        JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();</span><br><span class="line">        jndiObjectFactoryBean.setJndiName(&quot;jdbc/myDS&quot;);</span><br><span class="line">        jndiObjectFactoryBean.setResourceRef(true);</span><br><span class="line">        jndiObjectFactoryBean.setProxyInterface(javax.sql.DataSource.class);</span><br><span class="line">        return (DataSource)jndiObjectFactoryBean.getObject();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有个问题需要注意,尽管每个 DataSource Bean 都被声明在一个 profile 中,并且只有当规定的 profile<br>激活时,相应的 Bean 才会被创建,但是可能会有其他的 Bean 并没有声明在一个给定的 profile 范围内.没有指定<br>profile 的 Bean 始终都会被创建,与激活哪个 profile 没有关系.   </p>
+<h3 id="3-1-2-在-XML-中配置-profile"><a href="#3-1-2-在-XML-中配置-profile" class="headerlink" title="3.1.2 在 XML 中配置 profile"></a>3.1.2 在 XML 中配置 profile</h3><h3 id="3-1-3-激活-profile"><a href="#3-1-3-激活-profile" class="headerlink" title="3.1.3 激活 profile"></a>3.1.3 激活 profile</h3><p>Spring 在确定哪个 profile 处于激活状态时,需要依赖两个独立的属性: </p>
+<ul>
+<li>spring.profiles.active</li>
+<li>spring.profiles.default<br>如果设置了 spring.profiles.active 属性的话,那么它的值就会用来确定哪个 profile 是激活的.但如果没有<br>设置 spring.profiles.active 属性的话,那 Spring 将会查找 spring.profiles.default 的值.如果都<br>没有设置的话,那就没有激活的 profile,因此只会创建那些没有定义在 profile 中的 Bean.  </li>
+</ul>
+<h2 id="3-2-条件化的-Bean"><a href="#3-2-条件化的-Bean" class="headerlink" title="3.2 条件化的 Bean"></a>3.2 条件化的 Bean</h2><h2 id="3-3-处理自动装配的歧义性"><a href="#3-3-处理自动装配的歧义性" class="headerlink" title="3.3 处理自动装配的歧义性"></a>3.3 处理自动装配的歧义性</h2><p>在第二章中,我们已经看到如何使用自动装配让 Spring 完全负责将 bean 引用注入到构造参数<br>和属性中.自动装配能够提供很大的帮助,因为它会减少应用程序组件时所需要的显示配置的数量.   </p>
+<p>不过,仅有一个 bean 匹配所需的结果时,自动装配才是有效的.如果不仅有一个 bean 能够匹配<br>结果的话,这种歧义性会阻碍 Spring 自动装配属性/构造器参数或方法参数.   </p>
+<p>以 @Component 注解为例,当多个类都实现了同一个类,并且都使用了 @Component 注解,在自动<br>装配时,Spring 无法做出选择,此时会抛出 NoUniqueBeanDefinitionExeption.   </p>
+<p>Spring 提供了多种可选方案来解决歧义性问题.你可以将可选 bean 中的某一个设为首选(primary)<br>的 bean,或者使用限定符(qualifier)来帮助 Spring 将可选的 bean 的范围缩小到只有一个 bean.   </p>
+<h3 id="3-3-1-标示首选的-Bean"><a href="#3-3-1-标示首选的-Bean" class="headerlink" title="3.3.1 标示首选的 Bean"></a>3.3.1 标示首选的 Bean</h3><p>在声明 bean 的时候,通过将其中一个可选的 bean 设置为首选(primary)bean 能够避免自动装配<br>时的歧义性.当遇到歧义性的时候,Spring 将会使用首选的 bean,而不是其他可选的 bean.实际上,<br>你所声明就是”最喜欢”的 bean.  </p>
+<p>假设冰激凌就是你最喜欢的甜点.在 Spring 中,可以通过 @Primary 来表达最喜欢的方案.<br>@Primary 能够与 @Component 组合用在组件扫描的 bean 上,也可以与 @Bean 组合用在<br>Java 配置的 bean 声明中.比如,下面的代码展现了如何将 @Component 注解的 IceCream<br>bean 声明为首选的 bean:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Primary</span><br><span class="line">public class IceCream implements Dessert &#123;...&#125; </span><br><span class="line">``` </span><br><span class="line">或者,如果你通过 Java 配置显式地声明 IceCream,那么 @Bean 方法应该如下所示: </span><br><span class="line">```  </span><br><span class="line">@Bean </span><br><span class="line">@Primary</span><br><span class="line">public Dessert iceCream() &#123;</span><br><span class="line">    return new IceCream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你使用 XML 配置 bean 的话,同样可以实现这样的功能.<bean> 元素有一个 primary 属性<br>用来指定首选的 bean: </bean></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;iceCream&quot;</span><br><span class="line">      class=&quot;&quot; </span><br><span class="line">      primary=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不管你采用什么方式来标示首选 bean,效果都是一样的,都是告诉 Spring 在遇到<br>歧义性的时候要选择首选的 bean.    </p>
+<p>就像 Spring 无法从多个可选的 bean 中做出选择一样,它也无法从多个首选的 bean 中<br>做出选择.显示,如果不止一个 bean 被设置成了首选 bean,那实际上也就是没有首选 bean 了.  </p>
+<h3 id="3-3-2-限定自动装配的-bean"><a href="#3-3-2-限定自动装配的-bean" class="headerlink" title="3.3.2 限定自动装配的 bean"></a>3.3.2 限定自动装配的 bean</h3><p>设置首选 bean 的局限性在于 @Primary 无法将可选方案的范围限定到唯一一个无歧义性的选项中.<br>它只能标示一个优先的可选方案.当首选 bean 的数量超过一个时,我们并没有其他的进一步缩小可选范围.  </p>
+<p>与之相反,Spring 的限定符能够在所有可选的 bean 上进行缩小范围的操作,最终能够达到只有一个 bean<br>满足所规定的限制条件.如果将所有的限定符都用上后依然存在歧义性,那么你可以继续使用更多的限定符来缩小选择范围.   </p>
+<p>@Qualifier 注解是使用限定符的主要方式.它可以与 <code>@Autowired</code> 和 <code>@Inject</code> 协同使用,在注入的时候指定想<br>要注入进去的是哪个 bean.例如,我们想要确保要将 IceCream 注入到 setDessert() 之中: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">@Qulifier(&quot;iceCream&quot;)</span><br><span class="line">public void setDessert(Dessert dessert) &#123;</span><br><span class="line">    this.dessert = dessert;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是使用限定符的最简单的例子.为 @Qualifier 注解所设置的参数就是想要注入的 bean 的 ID.所有使用 @Component<br>注解声明的类都会创建为 bean,并且 bean 的 ID 为首字母变为小写的类名.因此,@Qualifier(“iceCream”) 指向的是<br>组件扫描时所创建的 bean,并且这个 bean 是 IceCream 类的实例.   </p>
+<p>实际上,还有一点需要补充一下.更准确地讲,@Qualifier(“iceCream”) 所引用的 bean 要具有 String 类型的 “iceCream”<br>作为限定符.如果没有指定其他的限定符的话,所有的 bean 都会给定一个默认的限定符,这个限定符与 bean 的 ID 相同.因此,<br>框架会将具有 “iceCream” 限定符的 bean 注入到 setDessert() 方法中.这恰巧就是 ID 为 iceCream 的 bean,他是<br>IceCream 类在组件扫描的时候创建的.   </p>
+<p>基于默认的 bean ID 作为限定符是非常简单,但这有可能会引入一些问题.如果你重构了 IceCream 类,将其重命名为 Gelato 的话,<br>那此时会发生什么情况呢?如果这样的话,bean 的 ID 和默认的限定符会变为 gelato,这就无法匹配 setDessert() 方法中的限定符.<br>自动装配会失败.   </p>
+<p>这里的问题在于 setDessert() 方法上所指定的限定符与要注入的 bean 的名称是紧耦合的,对类名的任意改动都会导致限定符失效. </p>
+<p>创建自定义的限定符    </p>
+<p>我们可以为 bean 设置自己的限定符,而不是依赖于将 bean ID 作为限定符.在这里所需要做的就是在 bean 声明上添加 @Qulifier<br>注解.例如,它可以与 @Component 组合使用,如下所示: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Qualifier(&quot;cold&quot;)</span><br><span class="line">public class IceCream implements Dessert &#123;...&#125;</span><br><span class="line">``` </span><br><span class="line">在这种情况下,cold 限定符分配给了 IceCream.因为它没有耦合类名,因此你可以随意重构 IceCream 的类名,而不必担心会破坏自动装配.</span><br><span class="line">在注入的地方,只要引用 cold 限定符就可以了: </span><br><span class="line">``` </span><br><span class="line">@Autowired</span><br><span class="line">@Qualifier(&quot;cold&quot;)</span><br><span class="line">public void setDessert(Dessert dessert) &#123;</span><br><span class="line">    this.dessert = dessert;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>值得一提的是,当通过 Java 显示定义 bean 的时候,@Qualifier 也可以与 @Bean 注解一起使用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">@Qualifier(&quot;cold&quot;)</span><br><span class="line">public Dessert iceCream() &#123;</span><br><span class="line">    return new IceCream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当使用自定义的 @Qualifier 值时,最佳实践是为 bean 选择特征性或描述性的术语,而不是使用随意的名字.在本例中,我将 IceCream<br>bean 描述为 “cold” bean.在注入的时候,可以将这个需求理解为”给我一个凉的甜点”,这其实就是描述的 IceCream.类似地,我可以将<br>Cake 描述为”soft”,将 Cookie 描述为 “crispy”.   </p>
+<p>使用自定义的限定符注解   </p>
+<p>面向特征的限定符要比基于 bean ID 的限定符要好一些.但是,如果多个 bean 都具备相同特征的话,这种做法也会出现问题.例如,<br>如果引入了这个新的 Dessert bean,会发生什么情况呢:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Qualifier</span><br><span class="line">public class Popsicle implements Dessert &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们有了两个 “cold” 限定符的甜点.在自动装配 Dessert bean 的时候,我们再次遇到了歧义性的问题,需要使用更多的限定符符<br>来将可选范围限定到只有一个 bean.  </p>
+<p>可能想到的解决方案就是在注入点和 bean 定义的地方同时在添加另外一个 @Qualifier 注解.IceCream 类大致就会如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Qualifier(&quot;cold&quot;)</span><br><span class="line">@Qualifier(&quot;creamy&quot;)</span><br><span class="line">public class IceCream implements Dessert &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Popsicle 类同样也可能再添加另外一个 @Qualifier 注解:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Qualifier(&quot;cold&quot;)</span><br><span class="line">@Qualifier(&quot;fruity&quot;)</span><br><span class="line">public class Popsicle implements Dessert &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在注入点中,我们可能会使用这样的方式来将范围缩小到 IceCream:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">@Qualifier(&quot;cold&quot;)</span><br><span class="line">@Qualifier(&quot;creamy&quot;)</span><br><span class="line">public void setDessert(Dessert dessert) &#123;</span><br><span class="line">    this.dessert = dessert;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里只有一个小问题:Java 不允许在同一个条目上重复出现相同类型的多个注解.如果你试图这样做的话,编译器会提示错误.在这里,<br>使用 @Qualifier 注解并没有办法(至少没有直接的办法)将自动装配的可选 bean 缩小范围至仅有一个可选的 bean.    </p>
+<p>但是,我们可以创建自定义的限定符注解,借助这样的注解来表达 bean 所希望限定的特性.这里所需要做的就是创建一个注解,<br>它本身要使用 @Qualifier 注解来标注.这样我们将不再使用 @Qualifier(“cold”),而是使用自定义的 @Cold 注解,<br>该注解的定义如下所示: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Target(&#123;ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Qualifier</span><br><span class="line">public @interface Cold &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样,你可以创建一个新的 @Creamy 注解来代替 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Target(&#123;ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Qualifier</span><br><span class="line">public @interface Creamy &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当你不想用 @Qualifier 注解的时候,可以类似地创建 @Soft, @Crispy 和 @Fruity.通过在定义时添加 @Qualifier<br>注解,它们就具有了 @Qualifier 注解的特性.它们本身实际上就成为了限定符注解.    </p>
+<p>现在,我们可以重新看一下 IceCream,并为其添加 @Cold 和 @Creamy 注解,如下所示: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Cold</span><br><span class="line">@Creamy</span><br><span class="line">public class IceCream implements Dessert &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似地,Popsicle 类可以添加 @Cold 和 @Fruity 注解:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Cold</span><br><span class="line">@Fruity</span><br><span class="line">public class Popsicle implements Dessert &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终,在注入点,我们使用必要的限定符进行任意组合,从而将可选范围缩小到只有一个 bean 满嘴需求.为了得到 IceCream bean,<br>setDessert() 方法可以这样使用注解:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">@Cold</span><br><span class="line">@Creamy</span><br><span class="line">public void setDessert(Dessert dessert) &#123;</span><br><span class="line">    this.dessert = dessert;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过声明自定义的限定符注解,我们可以同时使用多个限定符,不会亏再有 Java 编译器的限制或错误.<br>与此同时,相对于使用原始的 @Qualifier 并借助 String 类型来指定限定符,自定义的注解也更为类型安全.   </p>
+<p>让我们近距离观察一下 setDessert() 方法以及它的注解,这里并没有在任何地方明确指定要将 IceCream 自动装配到该方法中.<br>相反,我们使用所需 bean 的特性来进行指定,即 @Cold 和 @Creamy.因此,setDessert() 方法依然能够与特定的 Dessert<br>实现保持解藕.任意满足这些特征的 bean 都是可以的.在当前选择 Dessert 实现时,恰好如此,IceCream 是唯一能够与之匹配的 bean.   </p>
+<h2 id="3-4-Bean-的作用域"><a href="#3-4-Bean-的作用域" class="headerlink" title="3.4 Bean 的作用域"></a>3.4 Bean 的作用域</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赞赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="wuchao 微信扫一扫，向我赞赏">
+        <p>微信扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="wuchao 支付宝扫一扫，向我赞赏">
+        <p>支付宝扫一扫，向我赞赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/04/java-2017-01-04-Java动态代理/" rel="next" title="Java 动态代理">
+                <i class="fa fa-chevron-left"></i> Java 动态代理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/10/hibernate-2017-01-10-Hibernate的学习和使用/" rel="prev" title="Hibernate 的学习和使用">
+                Hibernate 的学习和使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <div class="disqus-loading">
+          <strong>Disqus 加载中...</strong>
+          <p>如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理</p>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+    
+      <script type="text/javascript">
+        if (disqus_config) {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/';
+            this.page.identifier = '2017/01/10/spring-2017-01-10-Spring/';
+            this.page.title = 'Spring 的学习和使用';
+          };
+          if (window.DISQUS) {
+            $('.disqus-loading').remove();
+            window.DISQUS.reset({
+              reload: true,
+              config: function () {
+                this.page.url = 'https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/';
+                this.page.identifier = '2017/01/10/spring-2017-01-10-Spring/';
+                this.page.title = 'Spring 的学习和使用';
+              }
+            });
+          }
+        }
+        else {
+          var disqus_config = function () {
+            this.page.url = 'https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/';
+            this.page.identifier = '2017/01/10/spring-2017-01-10-Spring/';
+            this.page.title = 'Spring 的学习和使用';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://diygod-me.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+        }
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/card.jpg" alt="wuchao">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wuchao" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="wu94726@gmail.com" target="_blank" title="邮箱" data-balloon="邮箱" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-email"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.png" alt="Creative Commons">
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-装配-Bean"><span class="nav-number">1.</span> <span class="nav-text">2 装配 Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Spring-配置的可选方案"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 Spring 配置的可选方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-自动化装配-Bean"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 自动化装配 Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-创建可被发现的-Bean"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 创建可被发现的 Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-为组件扫描的-Bean-命名"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 为组件扫描的 Bean 命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-声明简单的-Bean"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3.2 声明简单的 Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-借助-JavaConfig-实现注入"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.3.3 借助 JavaConfig 实现注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-通过-XML-装配-Bean"><span class="nav-number">1.3.</span> <span class="nav-text">2.4 通过 XML 装配 Bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-导入和混合配置"><span class="nav-number">1.4.</span> <span class="nav-text">2.5 导入和混合配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级装配"><span class="nav-number">2.</span> <span class="nav-text">高级装配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-环境与-Profile"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 环境与 Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-配置-Profile-Bean"><span class="nav-number">2.1.1.</span> <span class="nav-text">3.1.1 配置 Profile Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-在-XML-中配置-profile"><span class="nav-number">2.1.2.</span> <span class="nav-text">3.1.2 在 XML 中配置 profile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-激活-profile"><span class="nav-number">2.1.3.</span> <span class="nav-text">3.1.3 激活 profile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-条件化的-Bean"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 条件化的 Bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-处理自动装配的歧义性"><span class="nav-number">2.3.</span> <span class="nav-text">3.3 处理自动装配的歧义性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-标示首选的-Bean"><span class="nav-number">2.3.1.</span> <span class="nav-text">3.3.1 标示首选的 Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-限定自动装配的-bean"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.3.2 限定自动装配的 bean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Bean-的作用域"><span class="nav-number">2.4.</span> <span class="nav-text">3.4 Bean 的作用域</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">wuchao</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou" style="display:none;"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d" style="display:none;"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
