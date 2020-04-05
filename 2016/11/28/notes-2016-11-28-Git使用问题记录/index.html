@@ -113,18 +113,18 @@
 
 
 
-<meta name="description" content="Already up-to-date   在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 Already up-to-date。 参考 StackOverflow 上面的解答：  https://stackoverflow.com/questions/634546/git-merge-">
+<meta name="description" content="在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 Already up-to-date。 参考 StackOverflow 上面的解答：  https://stackoverflow.com/questions/634546/git-merge-reports-already-up-to-">
 <meta name="keywords" content="Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git 使用问题记录">
 <meta property="og:url" content="https://wuchao.github.io/2016/11/28/notes-2016-11-28-Git使用问题记录/index.html">
 <meta property="og:site_name" content="Keep Coding">
-<meta property="og:description" content="Already up-to-date   在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 Already up-to-date。 参考 StackOverflow 上面的解答：  https://stackoverflow.com/questions/634546/git-merge-">
+<meta property="og:description" content="在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 Already up-to-date。 参考 StackOverflow 上面的解答：  https://stackoverflow.com/questions/634546/git-merge-reports-already-up-to-">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-06T13:10:44.743Z">
+<meta property="og:updated_time" content="2020-02-14T05:07:33.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 使用问题记录">
-<meta name="twitter:description" content="Already up-to-date   在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 Already up-to-date。 参考 StackOverflow 上面的解答：  https://stackoverflow.com/questions/634546/git-merge-">
+<meta name="twitter:description" content="在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 Already up-to-date。 参考 StackOverflow 上面的解答：  https://stackoverflow.com/questions/634546/git-merge-reports-already-up-to-">
 
 
 
@@ -436,28 +436,23 @@
       
 
       
-        <ol>
-<li>Already up-to-date </li>
-</ol>
-<p>在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 <code>Already up-to-date</code>。</p>
+        <p>在使用 git 的过程中由于误操作，导致从本地 master 分支 merge 代码到当前分支失败，虽然当前分支和 master 分支代码不同步，但是仍然提示 <code>Already up-to-date</code>。</p>
 <p>参考 StackOverflow 上面的解答：</p>
 <blockquote>
 <p><a href="https://stackoverflow.com/questions/634546/git-merge-reports-already-up-to-date-though-there-is-a-difference" target="_blank" rel="noopener">https://stackoverflow.com/questions/634546/git-merge-reports-already-up-to-date-though-there-is-a-difference</a></p>
 </blockquote>
-<a id="more"></a>
-
 <p>大体意思是说当前分支已经同本地 master 分支代码合并过了，并且本地 master 分支代码已经是最新的了。  </p>
-<p>这时可以使用 <code>git reset --hard</code> 命令将本地防止代码回滚到以前某一个正确的版本，再配合 <code>git push --force</code> 命令将本地分支的修改强制同步到服务器上，不然服务器上的分支又会和回滚后的分支冲突：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;version&gt;</span><br><span class="line">git push origin &lt;branch&gt; --force</span><br></pre></td></tr></table></figure>
+<p>这时可以使用 <code>git reset --hard</code> 命令将本地分支的代码回滚到以前某一个正确的版本，再配合 <code>git push --force</code> 命令将本地分支的修改强制同步到服务器上，不然服务器上的分支又会和回滚后的分支冲突：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;commit_id&gt;</span><br><span class="line">git push origin &lt;branch&gt; --force</span><br></pre></td></tr></table></figure>
 
-<p><code>&lt;version&gt;</code> ：表示将要回滚到的当前分支的历史版本号。<br><code>&lt;branch&gt;</code> ：表示当前的本地分支名称。</p>
-<ol start="2">
-<li>Revision not found in </li>
-</ol>
-<p>从 master 分支上切分支,提示: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Couldn&apos;t checkout feature-xx  </span><br><span class="line">Revision not found in 项目名称</span><br></pre></td></tr></table></figure>
-
-<!--more-->
+<p><code>&lt;commit_id&gt;</code> ：表示将要回滚到的当前分支的历史版本号。<br><code>&lt;branch&gt;</code> ：表示当前的本地分支名称。</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/helian123/p/8405114.html" target="_blank" rel="noopener">git reset 时，–soft、–mixed、–hard 的区别：</a></p>
+<p>git reset –soft：回退版本库中的信息，不会回退暂存区和工作区中的信息，如果想要重新提交，直接 commit 即可。</p>
+<p>git reset –mixed：回退版本库和暂存区中的信息，不会回退工作区中的信息，如果想要重新提交，需要先 add 进暂存区，再 commit。</p>
+<p>git reset –hard：同时回退版本库、暂存区、工作区中的信息。</p>
+</blockquote>
+<a id="more"></a>
       
     </div>
     
@@ -694,7 +689,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -749,7 +744,7 @@
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

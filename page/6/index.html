@@ -327,6 +327,883 @@
   
   
   <div class="post-date">
+			<div class="post-month">11月</div>
+			<div class="post-day">22</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/11/22/java-2017-11-22-Java-hashCode-and-equals-methods/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/22/java-2017-11-22-Java-hashCode-and-equals-methods/" itemprop="url">Java 类的 hashCode 方法和 equals 方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T00:00:00+08:00">
+                2017-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>The contract between equals() and hashCode() is:</p>
+<p>1) If two objects are equal, then they must have the same hash code.<br>2) If two objects have the same hash code, they may or may not be equal. </p>
+<p>如果两个对象相同，则它们必须要有相同的 hash code，所以重写 equals 方法时，一定也要重写 hashCode 方法。<br>否则会出现不可预见的错误，例如下面的代码：</p>
+<pre><code>import java.util.HashMap;
+
+public class Apple {
+    private String color;
+
+    public Apple(String color) {
+        this.color = color;
+    }
+
+    public boolean equals(Object obj) {
+        if(obj==null) return false;
+        if (!(obj instanceof Apple))
+            return false;    
+        if (obj == this)
+            return true;
+        return this.color.equals(((Apple) obj).color);
+    }
+
+    public static void main(String[] args) {
+        Apple a1 = new Apple(&quot;green&quot;);
+        Apple a2 = new Apple(&quot;red&quot;);
+
+        //hashMap stores apple type and its quantity
+        HashMap&lt;Apple, Integer&gt; m = new HashMap&lt;Apple, Integer&gt;();
+        m.put(a1, 10);
+        m.put(a2, 20);
+        System.out.println(m.get(new Apple(&quot;green&quot;)));
+    }
+}</code></pre><p>打印结果输出 null。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/22/java-2017-11-22-Java-hashCode-and-equals-methods/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">11月</div>
+			<div class="post-day">14</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Liquibase/" itemprop="url" rel="index">
+          <span itemprop="name">Liquibase</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/11/14/notes-2017-11-14-Liquibase-Could-not-acquire-change-log-lock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/notes-2017-11-14-Liquibase-Could-not-acquire-change-log-lock/" itemprop="url">Liquibase "Could not acquire change log lock."</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T00:00:00+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Liquibase/" itemprop="url" rel="index">
+                    <span itemprop="name">Liquibase</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Problem: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;liquibase&apos; defined in class path resource [stash-context.xml]: Invocation of init method failed; nested exception is liquibase.exception.LockException: Could not acquire change log lock.  Currently locked by fe80:0:0:0:a00:27ff:fe6a:c787%2 (fe80:0:0:0:a00:27ff:fe6a:c787%2) since 12/6/12 2:08 PM</span><br></pre></td></tr></table></figure>
+
+<p>Cause<br>The DATABASECHANGELOGLOCK table has not been updated with the release lock information.<br>The likely cause of this is that the Stash instance was forced to quit while it was trying to migrate the database schema after an upgrade, with the consequence that the lock was not released. You should always wait for Stash to start up sufficiently for it to provide error messages if there are schema migration problems – never assume that it has hung and kill the process.<br>Another possible cause of not releasing the lock is that Stash was forced to quit while performing automatic application setup.</p>
+<p>Resolution</p>
+<blockquote>
+<p>Stash needs an exclusive lock on the DATABASECHANGELOGLOCK table in order to start so take care to disconnect / close the tool used to update the database. If you do not do this you may experience Stash hanging on start up with no errors in the logs and no response from the web server. </p>
+</blockquote>
+<p> MySQL, SQL Server and Oracle: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE DATABASECHANGELOGLOCK SET LOCKED=0, LOCKGRANTED=null, LOCKEDBY=null where ID=1;</span><br></pre></td></tr></table></figure>
+
+<p>PostgreSQL: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE DATABASECHANGELOGLOCK SET LOCKED=0, LOCKGRANTED=null, LOCKEDBY=null where ID=1;</span><br></pre></td></tr></table></figure>
+
+<p>HSQLDB: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1- Shutdown Stash</span><br><span class="line">2- Open your &lt;STASH_HOME&gt;/data/db.script and look for a string like:</span><br><span class="line">INSERT INTO DATABASECHANGELOGLOCK VALUES(1,TRUE,&apos;2012-06-12 14:08:00.982000&apos;,&apos;fe80:0:0:0:a00:27ff:fe6a:c787%2 (fe80:0:0:0:a00:27ff:fe6a:c787%2)&apos;)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/notes-2017-11-14-Liquibase-Could-not-acquire-change-log-lock/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">10月</div>
+			<div class="post-day">26</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/10/26/java-2017-10-26-difference-between-path-and-classpath/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/26/java-2017-10-26-difference-between-path-and-classpath/" itemprop="url">Difference between path and classpath in Java</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T00:00:00+08:00">
+                2017-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="https://www.sitesbay.com/java/difference-between-path-and-classpath" target="_blank" rel="noopener">Difference between path and classpath in Java</a></p>
+</blockquote>
+<h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p><code>path</code> variable is set for providing path for all Java tools like java, javac, javap, javah, jar, appletviewer. In Java to run any program we use java tool and for compile Java code use javac tool. All these tools are available in bin folder so we set path upto bin folder.</p>
+<h3 id="classpath"><a href="#classpath" class="headerlink" title="classpath"></a>classpath</h3><p><code>classpath</code> variable is set for providing path of all Java classes which is used in our application. All classes are available in lib/rt.jar so we set classpath upto lib/rt.jar.</p>
+<h3 id="Difference-between-path-and-classPath"><a href="#Difference-between-path-and-classPath" class="headerlink" title="Difference between path and classPath"></a>Difference between path and classPath</h3><p>path variable is set for providing path for all java tools like java, javac, javap, javah, jar, appletviewer    </p>
+<p>classpath variable is set for provide path of all java classes which is used in our application.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/26/java-2017-10-26-difference-between-path-and-classpath/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">10月</div>
+			<div class="post-day">08</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/问题记录/" itemprop="url" rel="index">
+          <span itemprop="name">问题记录</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/10/08/notes-2017-10-08-Aliyun-OSS-upload-blob-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/08/notes-2017-10-08-Aliyun-OSS-upload-blob-file/" itemprop="url">aliyun OSS 上传 blob 文件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T00:00:00+08:00">
+                2017-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/问题记录/" itemprop="url" rel="index">
+                    <span itemprop="name">问题记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>使用 cropper 图片裁剪插件上传时，前段将裁剪后图片转成了 blob 文件。现在要将该 blob 文件上传到阿里云的 OSS 上。  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/08/notes-2017-10-08-Aliyun-OSS-upload-blob-file/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">09月</div>
+			<div class="post-day">07</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Java/" itemprop="url" rel="index">
+          <span itemprop="name">Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/09/07/java-2017-09-07-Java8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/java-2017-09-07-Java8/" itemprop="url">Java 8</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h2><blockquote>
+<p><a href="https://www.cnblogs.com/heimianshusheng/p/5672641.html" target="_blank" rel="noopener">https://www.cnblogs.com/heimianshusheng/p/5672641.html</a><br><a href="http://lucida.me/blog/java-8-lambdas-insideout-language-features" target="_blank" rel="noopener">http://lucida.me/blog/java-8-lambdas-insideout-language-features</a><br><a href="https://www.cnblogs.com/jianwei-dai/p/5819479.html" target="_blank" rel="noopener">https://www.cnblogs.com/jianwei-dai/p/5819479.html</a> </p>
+</blockquote>
+<p>函数式接口，简单的说就是指仅含有一个抽象方法的接口，以 <code>@Functionalnterface</code> 标注，注意，这里的抽象方法指的是该接口自己特有的抽象方法，而不包含它从其上级继承过来的抽象方法。<br>如 <code>java.lang.Comparable</code>，之前被称为 SAM 类型，即单抽象方法(Single Abstract Method)。我们并不需要声明一个接口是函数式接口，编译器会根据接口的结构自行判断，但是也可以用<br><code>@FunctionalInterface</code> 来显式指定一个接口是函数式接口，加上这个注解之后，编译器就会验证该接口是否满足函数式接口的要求</p>
+<blockquote>
+<p>Java8 的接口还可以定义一个 default 的方法，default 方法使用 <code>default</code> 关键字修饰，它是对象方法，需要使用对象来进行访问。</p>
+</blockquote>
+<blockquote>
+<p><a href="https://blog.csdn.net/zixiao217/article/details/70197520" target="_blank" rel="noopener">JAVA8接口中的default、static方法使用注意事项</a></p>
+</blockquote>
+<h3 id="Java8-中常用的全新的接口"><a href="#Java8-中常用的全新的接口" class="headerlink" title="Java8 中常用的全新的接口"></a>Java8 中常用的全新的接口</h3><p>Java7 中已经存在的函数式接口： </p>
+<ul>
+<li>java.lang.Runnable </li>
+<li>java.util.concurrent.Callable </li>
+<li>java.security.PrivilegedAction</li>
+<li>java.util.Comparator</li>
+<li>java.io.FileFilter</li>
+<li>java.beans.PropertyChangeListener </li>
+</ul>
+<p>除此之外，Java8 中增加了一个新的包：<code>java.util.function</code>，它里面包含了常用的函数式接口，例如： </p>
+<ul>
+<li>Predicate<t>：接收 T 并返回 boolean</t></li>
+<li>Consumer<t>：接收 T，不返回值</t></li>
+<li>Supplier<t>：提供 T 对象（例如工厂），不接收值</t></li>
+<li>Function&lt;T, R&gt;：接收 T，返回 R</li>
+<li>UnaryOperator<t>：接收 T 对象，返回 T</t></li>
+<li>BinaryOperator<t>：接收两个 T，返回 T  </t></li>
+</ul>
+<blockquote>
+<p>Java 中的 lambda 无法单独出现，它需要一个函数式接口来盛放，lambda 表达式方法体其实就是函数接口的实现。</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/07/java-2017-09-07-Java8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
 			<div class="post-month">08月</div>
 			<div class="post-day">16</div>
 	</div>
@@ -1125,836 +2002,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">03月</div>
-			<div class="post-day">01</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Quartz/" itemprop="url" rel="index">
-          <span itemprop="name">Quartz</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/03/01/notes-2017-03-01-Quartz的学习和使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/01/notes-2017-03-01-Quartz的学习和使用/" itemprop="url">Quartz 的学习和使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-01T00:00:00+08:00">
-                2017-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Quartz/" itemprop="url" rel="index">
-                    <span itemprop="name">Quartz</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="分布式-Quartz-的配置与-Spring-的集成使用。"><a href="#分布式-Quartz-的配置与-Spring-的集成使用。" class="headerlink" title="分布式 Quartz 的配置与 Spring 的集成使用。"></a>分布式 Quartz 的配置与 Spring 的集成使用。</h1><h2 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h2><blockquote>
-<p>运行下面的（mysql）数据库脚本，创建数据库表（先参照 quartz.properties 文件中 <code>org.quartz.dataSource.myDS.URL</code>属性配置的数据库名称创建数据库，这里我的数据库名称即为 quartz_scheduler）</p>
-<p>其他数据库脚本见官网源代码（<a href="http://www.quartz-scheduler.org/downloads/）中" target="_blank" rel="noopener">http://www.quartz-scheduler.org/downloads/）中</a> quartz-xxx-distribution\quartz-xxx\docs\dbTables 文件夹。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/01/notes-2017-03-01-Quartz的学习和使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">02月</div>
-			<div class="post-day">25</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Liquibase/" itemprop="url" rel="index">
-          <span itemprop="name">Liquibase</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/02/25/notes-2017-02-25-Liquibase的学习和使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/25/notes-2017-02-25-Liquibase的学习和使用/" itemprop="url">Liquibase 的学习和使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-25T00:00:00+08:00">
-                2017-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Liquibase/" itemprop="url" rel="index">
-                    <span itemprop="name">Liquibase</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p><a href="http://www.liquibase.org/documentation/index.html" target="_blank" rel="noopener">官网</a> </p>
-<p><a href="http://www.tuicool.com/articles/B7ziIrv" target="_blank" rel="noopener">使用 LiquiBase 管理数据库的迁移 - 推酷</a></p>
-<p><a href="http://blog.csdn.net/jianyi7659/article/details/7804144" target="_blank" rel="noopener">在 Web 项目中使用 LiquiBase 实现数据库自动更新</a></p>
-<p><a href="https://www.ibm.com/developerworks/cn/java/j-ap08058/index.html" target="_blank" rel="noopener">让开发自动化: 实现自动化数据库迁移</a></p>
-</blockquote>
-<h2 id="引入依赖（其他依赖根据需要引入）"><a href="#引入依赖（其他依赖根据需要引入）" class="headerlink" title="引入依赖（其他依赖根据需要引入）"></a>引入依赖（其他依赖根据需要引入）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.liquibase&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;liquibase-core&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/25/notes-2017-02-25-Liquibase的学习和使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">01月</div>
-			<div class="post-day">20</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Spring/" itemprop="url" rel="index">
-          <span itemprop="name">Spring</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/01/20/spring-2017-01-20-Spring-Security/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/20/spring-2017-01-20-Spring-Security/" itemprop="url">Spring Security 的学习和使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-20T00:00:00+08:00">
-                2017-01-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Spring-Security-的学习和使用"><a href="#Spring-Security-的学习和使用" class="headerlink" title="Spring Security 的学习和使用"></a>Spring Security 的学习和使用</h1><hr>
-<blockquote>
-<p><a href="http://elim.iteye.com/category/182468" target="_blank" rel="noopener">Elim 的博客</a></p>
-<p><a href="http://docs.spring.io/spring-security/site/docs/current/reference/html/" target="_blank" rel="noopener">Spring Security Reference</a></p>
-<p><a href="http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/" target="_blank" rel="noopener">mkyong.com - Spring Security Tutorial</a></p>
-<p><a href="http://blog.sina.com.cn/s/blog_6fda308501016wjh.html" target="_blank" rel="noopener">spring security 只要熟悉每个 filter 的作用和顺序 </a></p>
-</blockquote>
-<p>Spring 是一个非常流行和成功的 Java 应用开发框架。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。一般来说，Web 应用的安全性包括用户认证（Authentication）和用户授权（Authorization）两个部分。用户认证指的是验证某个用户是否为系统中的合法主体，也就是说用户能否访问该系统。用户认证一般要求用户提供用户名和密码。系统通过校验用户名和密码来完成认证过程。用户授权指的是验证某个用户是否有权限执行某个操作。在一个系统中，不同用户所具有的权限是不同的。比如对一个文件来说，有的用户只能进行读取，而有的用户可以进行修改。一般来说，系统会为不同的用户分配不同的角色，而每个角色则对应一系列的权限。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/20/spring-2017-01-20-Spring-Security/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">01月</div>
-			<div class="post-day">10</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Hibernate/" itemprop="url" rel="index">
-          <span itemprop="name">Hibernate</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/01/10/hibernate-2017-01-10-Hibernate的学习和使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/10/hibernate-2017-01-10-Hibernate的学习和使用/" itemprop="url">Hibernate 的学习和使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-10T00:00:00+08:00">
-                2017-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hibernate/" itemprop="url" rel="index">
-                    <span itemprop="name">Hibernate</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p><a href="https://www.cnblogs.com/redcoatjk/p/4236445.html" target="_blank" rel="noopener">Hibernate之mappedBy</a> </p>
-</blockquote>
-
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/01/10/hibernate-2017-01-10-Hibernate的学习和使用/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">01月</div>
-			<div class="post-day">10</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Spring/" itemprop="url" rel="index">
-          <span itemprop="name">Spring</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2017/01/10/spring-2017-01-10-Spring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/10/spring-2017-01-10-Spring/" itemprop="url">Spring 的学习和使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-10T00:00:00+08:00">
-                2017-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="2-装配-Bean"><a href="#2-装配-Bean" class="headerlink" title="2 装配 Bean"></a>2 装配 Bean</h1><h2 id="2-1-Spring-配置的可选方案"><a href="#2-1-Spring-配置的可选方案" class="headerlink" title="2.1 Spring 配置的可选方案"></a>2.1 Spring 配置的可选方案</h2><p>Spring 容器负责创建应用程序中的 Bean 并通过 DI 来协调这些对象之间的关系.<br>但是,作为开发人员,你需要告诉 Sprng 要创建哪些 Bean 并且如何将其装配在一起.<br>当描述 Bean 如何进行装配时,Spring 具有非常大的灵活性,它提供了三种主要的装配机制: </p>
-<ul>
-<li>自动化装配</li>
-<li>基于 Java 的显式配置</li>
-<li>基于 XML 的显式配置</li>
-</ul>
-<h2 id="2-2-自动化装配-Bean"><a href="#2-2-自动化装配-Bean" class="headerlink" title="2.2 自动化装配 Bean"></a>2.2 自动化装配 Bean</h2><p>Spring 从两个角度来实现自动化装配: </p>
-<ul>
-<li>组建扫描(component scanning): Spring 会自动发现应用上下文中所创建的 Bean. </li>
-<li>自动装配(autowiring): Spring 自动满足 Bean 之间的依赖. </li>
-</ul>
-<h3 id="2-2-1-创建可被发现的-Bean"><a href="#2-2-1-创建可被发现的-Bean" class="headerlink" title="2.2.1 创建可被发现的 Bean"></a>2.2.1 创建可被发现的 Bean</h3><p>在类上添加 @Component 注解表明该类会作为组件类,并告知 Spring 要为这个类<br>创建 Bean.不过组件的扫描默认是不启用的.我们还需要显式配置一下 Spring,从而命令它去寻找带有<br> @Component 注解的类.Spring 中可以使用 @ComponentScan 注解启用组件扫描.<br>如果没有其他配置的话, @ComponentScan 默认会扫描与配置类所在包及该包下的所有子包,<br>寻找带有 @Component 注解的类,并且在 Spring 种为其创建一个 Bean.<br>如果使用 XML 来启用组件扫描的话,那么可以使用 Spring context 命名空间的<br><code>&lt;context:component-scan&gt;</code> 元素. </p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/10/spring-2017-01-10-Spring/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2055,7 +2107,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2110,7 +2162,7 @@
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

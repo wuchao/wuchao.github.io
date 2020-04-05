@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Keep Coding">
 <meta property="og:description" content="一般来说，Comparable 是为了对某个类的集合进行排序，所以此时一般都是这个需要排序的类本身去实现 Comparable 接口。换句话说，如果某个类实现了 Comparable 接口，那么这个类的数组或者说 List 就可以进行排序了。很多时候我们无法对类进行修改，或者说此类修改的成本太高，但是又希望对其进行排序。那怎么办？这个时候 Comparator 接口就排上了用场。 例如： 1234">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-06T13:10:44.728Z">
+<meta property="og:updated_time" content="2020-02-14T05:07:33.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8 Comparator">
 <meta name="twitter:description" content="一般来说，Comparable 是为了对某个类的集合进行排序，所以此时一般都是这个需要排序的类本身去实现 Comparable 接口。换句话说，如果某个类实现了 Comparable 接口，那么这个类的数组或者说 List 就可以进行排序了。很多时候我们无法对类进行修改，或者说此类修改的成本太高，但是又希望对其进行排序。那怎么办？这个时候 Comparator 接口就排上了用场。 例如： 1234">
@@ -443,16 +443,17 @@
 <p>Employee 类没有实现 Comparable 接口，并且加上了 final 关键字，但是还是需要对其排序，怎么办？</p>
 <a id="more"></a>
 
-<p>如果在 jdk8 之前，使用匿名内部类的方式：</p>
+<p>如果在 JDK8 之前，使用匿名内部类的方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static void test() &#123;</span><br><span class="line">    List&lt;Employee&gt; list = genList();</span><br><span class="line">    Collections.sort(list, new Comparator&lt;Employee&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public int compare(Employee o1, Employee o2) &#123;</span><br><span class="line">            return o1.getSalary() - o2.getSalary();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    System.out.println(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在 jdk8 之后，可以使用 lambda 表达式：</p>
+<p>在 JDK8 之后，可以使用 lambda 表达式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static void test() &#123;</span><br><span class="line">    List&lt;Employee&gt; list = genList();</span><br><span class="line">    Comparator&lt;Employee&gt; comparator = (Employee e1, Employee e2) -&gt; e1.getSalary() - e2.getSalary();</span><br><span class="line">    list.sort(comparator);</span><br><span class="line">    System.out.println(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如果将此方法 run 起来，输出如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[name is: ccc, salary is: 80, name is: aaa, salary is: 100, name is: bbb, salary is: 150]</span><br></pre></td></tr></table></figure>
 
-<p>Comparable 接口中只有一个 compareTo 方法要实现，而 Comparator 有两个方法，但是我们只实现了一个方法，那么另外一个方法呢？<br>其实很简单，因为另外一个方法是 equals 方法。所有的类都继承了 Object 类，而 Object 类中实现了 equals方法，所以我们这里不实现 equals 方法也无所谓。</p>
+<p>Comparable 接口中只有一个 compareTo 方法要实现，而 Comparator 有两个方法，但是我们只实现了一个方法，那么另外一个方法呢？</p>
+<p>其实很简单，因为另外一个方法是 equals 方法。所有的类都继承了 Object 类，而 Object 类中实现了 equals 方法，所以我们这里不实现 equals 方法也无所谓。</p>
 <h3 id="Comparator-中的各种实现方式比较"><a href="#Comparator-中的各种实现方式比较" class="headerlink" title="Comparator 中的各种实现方式比较"></a>Comparator 中的各种实现方式比较</h3><h4 id="1-传统的匿名内部类"><a href="#1-传统的匿名内部类" class="headerlink" title="1. 传统的匿名内部类"></a>1. 传统的匿名内部类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(list, new Comparator&lt;Employee&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Employee o1, Employee o2) &#123;</span><br><span class="line">        return o1.getSalary() - o2.getSalary();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-lambda-表达式"><a href="#2-lambda-表达式" class="headerlink" title="2. lambda 表达式"></a>2. lambda 表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.sort((Employee e1, Employee e2) -&gt; e1.getSalary() - e2.getSalary());</span><br></pre></td></tr></table></figure>
@@ -462,7 +463,7 @@
 <h5 id="2-2-使用-Comparator-comparing-的方式："><a href="#2-2-使用-Comparator-comparing-的方式：" class="headerlink" title="2.2 使用 Comparator.comparing 的方式："></a>2.2 使用 Comparator.comparing 的方式：</h5><p>我们使用上述 lambda 表达式的时候，IDE 会提示我们：<code>can be replaced with comparator.comparing Int</code>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.sort(Comparator.comparing(employee -&gt; employee.getSalary()));</span><br></pre></td></tr></table></figure>
 
-<h5 id="2-3-使用静态方法的引用"><a href="#2-3-使用静态方法的引用" class="headerlink" title="2.3 使用静态方法的引用"></a>2.3 使用静态方法的引用</h5><p><code>::</code> 是 JDK8 里引入 lambda 后的一种用法，表示方法引用，比如静态方法的引用 String::valueOf，比如构造器的引用 ArrayList::new。</p>
+<h5 id="2-3-使用静态方法的引用"><a href="#2-3-使用静态方法的引用" class="headerlink" title="2.3 使用静态方法的引用"></a>2.3 使用静态方法的引用</h5><p><code>::</code> 是 JDK8 里引入 lambda 后的一种用法，表示方法引用，比如静态方法的引用 <code>String::valueOf</code>，比如构造器的引用 <code>ArrayList::new</code>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.sort(Comparator.comparing(Employee::getSalary));</span><br></pre></td></tr></table></figure>
 
 <h5 id="2-4-排序反转（逆序）"><a href="#2-4-排序反转（逆序）" class="headerlink" title="2.4 排序反转（逆序）"></a>2.4 排序反转（逆序）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.sort(Comparator.comparing(Employee::getSalary).reversed());</span><br></pre></td></tr></table></figure>
@@ -723,7 +724,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -794,7 +795,7 @@
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

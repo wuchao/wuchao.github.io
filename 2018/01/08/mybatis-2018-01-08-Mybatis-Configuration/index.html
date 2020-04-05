@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Keep Coding">
 <meta property="og:description" content="使用 XML 配置 MyBatis构建 SqlSessionFactory 最常见的方式是基于 XML 配置（的构造方式）。下面的 mybatis-config.xml 展示了一个典型的 MyBatis 配置文件的样子：  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;   &amp;lt;!DOCTYPE configur">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-06T13:10:44.738Z">
+<meta property="og:updated_time" content="2020-02-14T05:07:33.908Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis 的配置">
 <meta name="twitter:description" content="使用 XML 配置 MyBatis构建 SqlSessionFactory 最常见的方式是基于 XML 配置（的构造方式）。下面的 mybatis-config.xml 展示了一个典型的 MyBatis 配置文件的样子：  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;   &amp;lt;!DOCTYPE configur">
@@ -777,7 +777,7 @@ Environment environment = new Environment(&quot;development&quot;, txnFactory, d
 <pre><code>configuration.getTypeAliasRegistry().registerAliases(&quot;com.mybatis3.domain&quot;, Identifiable.class); </code></pre><h3 id="类型处理器-typeHandlers-1"><a href="#类型处理器-typeHandlers-1" class="headerlink" title="类型处理器 typeHandlers"></a>类型处理器 typeHandlers</h3><p>MyBatis 提供了一系列使用 Configuration 对象注册类型处理器（type handler）的方法。我们可以通过以下方式注册自定义的类处理器： </p>
 <p>为某个特定的类注册类处理器: </p>
 <pre><code>configuration.getTypeHandlerRegistry().register(PhoneNumber.class, PhoneTypeHandler.class);  </code></pre><p>注册一个类处理器: </p>
-<pre><code>configuration.getTypeHandlerRegistry().register(PhoneTypeHandler.class); </code></pre><p>注册 com.mybatis3.typehandlers 包中的所有类型处理器： </p>
+<pre><code>configuration.getTypeHandlerRegistry().register(PhoneTypeHandler.class); </code></pre><p>注册 <code>com.mybatis3.typehandlers</code> 包中的所有类型处理器： </p>
 <pre><code>configuration.getTypeHandlerRegistry().register(&quot;com.mybatis3.typehandlers&quot;); </code></pre><h3 id="全局参数设置-Settings-1"><a href="#全局参数设置-Settings-1" class="headerlink" title="全局参数设置 Settings"></a>全局参数设置 Settings</h3><p>MyBatis 提供了一组默认的，能够很好地适用大部分的应用的全局参数设置。然而，你可以稍微调整这些参数，让它更好地满足你应用的需要。你可以使用下列方法将全局参数设置成想要的值： </p>
 <pre><code>configuration.setCacheEnabled(true);  
 configuration.setLazyLoadingEnabled(false);  
@@ -799,8 +799,8 @@ lazyLoadTriggerMethods.add(&quot;hashCode&quot;);
 lazyLoadTriggerMethods.add(&quot;toString&quot;);  
 configuration.setLazyLoadTriggerMethods(lazyLoadTriggerMethods );  </code></pre><h3 id="Mappers"><a href="#Mappers" class="headerlink" title="Mappers"></a>Mappers</h3><p>MyBatis提供了一些使用 Configuration 对象注册 Mapper XML 文件和 Mapper 接口的方法。 </p>
 <p>添加一个 Mapper 接口，可使用以下代码: </p>
-<pre><code>configuration.addMapper(StudentMapper.class);  </code></pre><p>添加 com.mybatis3.mappers 包中的所有 Mapper XML 文件或者 Mapper 接口，可使用以下代码： </p>
-<pre><code>configuration.addMappers(&quot;com.mybatis3.mappers&quot;);  </code></pre><p>添加所有 com.mybatis3.mappers 包中的拓展了特定 Mapper 接口的 Mapper 接口，如 aseMapper，可使用如下代码： </p>
+<pre><code>configuration.addMapper(StudentMapper.class);  </code></pre><p>添加 <code>com.mybatis3.mappers</code> 包中的所有 Mapper XML 文件或者 Mapper 接口，可使用以下代码： </p>
+<pre><code>configuration.addMappers(&quot;com.mybatis3.mappers&quot;);  </code></pre><p>添加所有 <code>com.mybatis3.mappers</code> 包中的拓展了特定 Mapper 接口的 Mapper 接口，如 aseMapper，可使用如下代码： </p>
 <pre><code>configuration.addMappers(&quot;com.mybatis3.mappers&quot;, BaseMapper.class);  </code></pre><h2 id="自定义-MyBatis-日志"><a href="#自定义-MyBatis-日志" class="headerlink" title="自定义 MyBatis 日志"></a>自定义 MyBatis 日志</h2><p>MyBatis 使用其内部 LoggerFactory 作为真正的日志类库使用的门面。其内部的 LoggerFactory 会将日志记录任务委托给如下的所示某一个日志实现，日志记录优先级由上到下顺序递减： </p>
 <pre><code>- SLF4J
 - ApacheCommons Logging
@@ -882,8 +882,8 @@ configuration.setLazyLoadTriggerMethods(lazyLoadTriggerMethods );  </code></pre>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/08/mybatis-2018-01-08-Mybatis-使用XML配置SQL映射器/" rel="next" title="Mybatis - 使用 XML 配置 SQL 映射器">
-                <i class="fa fa-chevron-left"></i> Mybatis - 使用 XML 配置 SQL 映射器
+              <a href="/2018/01/05/java-2018-01-05-Difference-between-Comparator-and-Comparable-in-Java/" rel="next" title="Difference between Comparator and Comparable in Java">
+                <i class="fa fa-chevron-left"></i> Difference between Comparator and Comparable in Java
               </a>
             
           </div>
@@ -892,8 +892,8 @@ configuration.setLazyLoadTriggerMethods(lazyLoadTriggerMethods );  </code></pre>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/17/js-2018-01-17-js-map/" rel="prev" title="JS 中的 map">
-                JS 中的 map <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/08/mybatis-2018-01-08-Mybatis-使用XML配置SQL映射器/" rel="prev" title="Mybatis - 使用 XML 配置 SQL 映射器">
+                Mybatis - 使用 XML 配置 SQL 映射器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1065,7 +1065,7 @@ configuration.setLazyLoadTriggerMethods(lazyLoadTriggerMethods );  </code></pre>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1136,7 +1136,7 @@ configuration.setLazyLoadTriggerMethods(lazyLoadTriggerMethods );  </code></pre>
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

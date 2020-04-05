@@ -121,12 +121,10 @@
 <meta property="og:site_name" content="Keep Coding">
 <meta property="og:description" content="代理模式 参考：《JAVA 程序性能优化》  将代理类用于实现延迟加载，可以有效地提升系统的启动速度。 延迟加载的核心思想是：如果当前并没有使用这个组件，则不需要真正地初始化它，使用一个代理对象替代它的原有位置，只要在真正需要使用的时候，才对它进行加载。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wuchao.github.io/images/2017-01-04-InvocationHandler-invoke.png">
-<meta property="og:updated_time" content="2019-09-06T13:10:44.713Z">
+<meta property="og:updated_time" content="2020-02-14T05:07:33.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 动态代理">
 <meta name="twitter:description" content="代理模式 参考：《JAVA 程序性能优化》  将代理类用于实现延迟加载，可以有效地提升系统的启动速度。 延迟加载的核心思想是：如果当前并没有使用这个组件，则不需要真正地初始化它，使用一个代理对象替代它的原有位置，只要在真正需要使用的时候，才对它进行加载。">
-<meta name="twitter:image" content="https://wuchao.github.io/images/2017-01-04-InvocationHandler-invoke.png">
 
 
 
@@ -456,46 +454,32 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class DBQueryProxy implements IDBQuery &#123;</span><br><span class="line">  private DBQuery real = null;</span><br><span class="line">  </span><br><span class="line">  @Override</span><br><span class="line">  public String request() &#123;</span><br><span class="line">    if (real == null) &#123;</span><br><span class="line">      real = new DBQuery();</span><br><span class="line">    &#125;</span><br><span class="line">    return real.request();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>最后，主函数如下，它引用 IDBQuery 接口，并使用代理类工作：</p>
-<pre><code>public class Main {
-  public static void main(String args[]) {
-    IDBQuery q = new DBQueryProxy();
-    q.request();
-  }
-}</code></pre><p>上面所说的静态代理模式，在实际开发中其实应用不大，因为他需要事先知道被代理对象是谁，而且被代理对象和代理对象实现了公共的接口。实际情况往往并不能满足这些条件，我们往往在写代理模式的时候并不知道到时候被代理的对象是谁。解决办法就是——动态代理。</p>
-<h2 id="JDK-动态代理"><a href="#JDK-动态代理" class="headerlink" title="JDK 动态代理"></a>JDK 动态代理</h2><blockquote>
-<p>参考：</p>
-<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/index.html" target="_blank" rel="noopener">Java 动态代理机制分析及扩展</a></p>
-<p><a href="https://www.cnblogs.com/fengmingyue/p/6092151.html" target="_blank" rel="noopener">动态代理详解</a></p>
-</blockquote>
-<pre><code>Class[] cs = {MyInterface.class};
-MyInterface mi = (MyInterface)Proxy.newProxyInstance(loader, cs, h);</code></pre><p>上面代码中，Proxy类的静态方法newProxyInstance()方法生成了一个对象，这个对象实现了cs数组中指定的接口。没错，返回值mi是MyInterface接口的实现类。你不要问这个类是哪个类，你只需要知道mi是MyInterface接口的实现类就可以了。你现在也不用去管loader和h这两个参数是什么，你只需要知道，Proxy类的静态方法newProxyInstance()方法返回的方法是实现了指定接口的实现类对象，甚至你都没有看见实现类的代码。<br>动态代理就是在运行时生成一个类，这个类会实现你指定的一组接口，而这个类没有.java文件，是在运行时生成的，你也不用去关心它是什么类型的，你只需要知道它实现了哪些接口即可。</p>
-<h3 id="Proxy类的newProxyInstance-方法"><a href="#Proxy类的newProxyInstance-方法" class="headerlink" title="Proxy类的newProxyInstance()方法"></a>Proxy类的newProxyInstance()方法</h3><p>Proxy类的newInstance()方法有三个参数：</p>
-<ul>
-<li>ClassLoader loader： 它是类加载器类型，你不用去理睬它，你只需要知道怎么可以获得它就可以了：MyInterface.class.getClassLoader()就可以获取到ClassLoader对象，没错，只要你有一个Class对象就可以获取到ClassLoader对象；</li>
-<li>Class[] interfaces： 指定newProxyInstance()方法返回的对象要实现哪些接口，没错，可以指定多个接口，例如上面例子我们只指定了一个接口：Class[] cs = {MyInterface.class};</li>
-<li>InvocationHandler h： 它是最重要的一个参数！它是一个接口！它的名字叫调用处理器！你想一想，上面例子中mi对象是MyInterface接口的实现类对象，那么它一定是可以调用fun1()和fun2()方法了，难道你不想调用一下fun1()和fun2()方法么，它会执行些什么东东呢？其实无论你调用代理对象的什么方法，它都是在调用InvocationHandler的invoke()方法！</li>
-</ul>
-<p><img src="/images/2017-01-04-InvocationHandler-invoke.png" alt> </p>
-<pre><code>public static void main(String[] args) {
-　　Class[] cs = {MyInterface.class};
-　　ClassLoader loader = MyInterface.class.getClassLoader();
-　　InvocationHandler h = new InvocationHandler() {
-　　　　public Object invoke(Object proxy, Method method, Object[] args)throws Throwable {
-　　　　　　System.out.println(&quot;无论你调用代理对象的什么方法，其实都是在调用invoke()...&quot;);
-　　　　　　return null;
-　　　　}
-　　};
-　　MyInterface mi = (MyInterface)Proxy.newProxyInstance(loader, cs, h);
-　　mi.fun1();
-　　mi.fun2();
-}</code></pre><p>InvocationHandler接口只有一个方法，即invoke()方法！它是对代理对象所有方法的唯一实现。也就是说，无论你调用代理对象上的哪个方法，其实都是在调用InvocationHandler的invoke()方法。 </p>
-<h3 id="InvocationHandler的invoke-方法"><a href="#InvocationHandler的invoke-方法" class="headerlink" title="InvocationHandler的invoke()方法"></a>InvocationHandler的invoke()方法</h3><p>InvocationHandler的invoke()方法的参数有三个：</p>
-<ul>
-<li>Object proxy： 代理对象，也就是Proxy.newProxyInstance()方法返回的对象，通常我们用不上它；</li>
-<li>Method method： 表示当前被调用方法的反射对象，例如mi.fun1()，那么method就是fun1()方法的反射对象；</li>
-<li>Object[] args： 表示当前被调用方法的参数，当然mi.fun1()这个调用是没有参数的，所以args是一个零长数组。<br>最后要说的是invoke()方法的返回值为Object类型，它表示当前被调用的方法的返回值，当然mi.fun1()方法是没有返回值的，所以invoke()返回的就必须是null了。</li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">  public static void main(String args[]) &#123;</span><br><span class="line">    IDBQuery q = new DBQueryProxy();</span><br><span class="line">    q.request();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">上面所说的静态代理模式，在实际开发中其实应用不大，因为他需要事先知道被代理对象是谁，而且被代理对象和代理对象实现了公共的接口。实际情况往往并不能满足这些条件，我们往往在写代理模式的时候并不知道到时候被代理的对象是谁。解决办法就是——动态代理。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## JDK 动态代理</span><br><span class="line"></span><br><span class="line">&gt; 参考：</span><br><span class="line">&gt;</span><br><span class="line">&gt; [Java 动态代理机制分析及扩展](https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/index.html)</span><br><span class="line">&gt; </span><br><span class="line">&gt; [动态代理详解](https://www.cnblogs.com/fengqueryProxyngyue/p/6092151.html)</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">IDBQuery query = new DBQuery();</span><br><span class="line">Class[] cs = &#123;IDBQuery.class&#125;;</span><br><span class="line">InvocationHandler h = new DBQueryInvocationHandler(query);</span><br><span class="line"></span><br><span class="line">IDBQuery queryProxy = (IDBQuery) Proxy.newProxyInstance(IDBQuery.class.getClassLoader(), cs, h);</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">上面代码中，Proxy 类的静态方法 newProxyInstance() 方法生成了一个对象，这个对象实现了 cs 数组中指定的接口。没错，返回值 queryProxy 是 IDBQuery 接口的实现类。你不要问这个类是哪个类，你只需要知道 queryProxy 是 IDBQuery 接口的实现类就可以了。你现在也不用去管 loader 和 h 这两个参数是什么，你只需要知道，Proxy 类的静态方法 newProxyInstance() 方法返回的方法是实现了指定接口的实现类对象，甚至你都没有看见实现类的代码。</span><br><span class="line">动态代理就是在运行时生成一个类，这个类会实现你指定的一组接口，而这个类没有 .java 文件，是在运行时生成的，你也不用去关心它是什么类型的，你只需要知道它实现了哪些接口即可。</span><br><span class="line"></span><br><span class="line">### Proxy 类的 newProxyInstance() 方法 </span><br><span class="line">Proxy 类的 newInstance() 方法有三个参数：</span><br><span class="line"></span><br><span class="line">- ClassLoader loader：它是类加载器类型，你不用去理睬它，你只需要知道怎么可以获得它就可以了：IDBQuery.class.getClassLoader() 就可以获取到 ClassLoader 对象，没错，只要你有一个 Class 对象就可以获取到 ClassLoader 对象。</span><br><span class="line"></span><br><span class="line">- Class[] interfaces：指定 newProxyInstance() 方法返回的对象要实现哪些接口，没错，可以指定多个接口，例如上面例子我们只指定了一个接口：Class[] cs = &#123;IDBQuery.class&#125;。</span><br><span class="line"></span><br><span class="line">- InvocationHandler h：它是最重要的一个参数，它是一个接口，它的名字叫调用处理器，无论你调用代理对象的什么方法，它都是在调用 InvocationHandler 的 invoke() 方法。</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">public class MyInvocationHandler implements InvocationHandler &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 将要被代理的对象</span><br><span class="line">     */</span><br><span class="line">    private Object target;</span><br><span class="line"></span><br><span class="line">    public MyInvocationHandler(Object target) &#123;</span><br><span class="line">        this.target = target;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @param proxy  Proxy.newProxyInstance() 方法返回的代理对象</span><br><span class="line">     * @param method</span><br><span class="line">     * @param args</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Throwable</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        System.out.println(&quot;proxy class name: &quot; + proxy.getClass().getName());</span><br><span class="line">        System.out.println(&quot;proxy class simple name: &quot; + proxy.getClass().getSimpleName());</span><br><span class="line"></span><br><span class="line">        long startTime = System.currentTimequeryProxyllis();</span><br><span class="line">        Object o = method.invoke(target, args);</span><br><span class="line">        System.out.println(&quot;请求用时：&quot; + (System.currentTimequeryProxyllis() - startTime) / 1000);</span><br><span class="line">        return o;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<pre><code>public static void main(String[] args) {
+   IDBQuery query = new DBQuery();
+   Class[] cs = {IDBQuery.class};
+   InvocationHandler h = new DBQueryInvocationHandler(query);
+
+   // JDK 动态代理，JDK 动态代理的类必须实现一个接口，而且生成的代理类是其接口的实现类，也就是被代理的类的兄弟类，由 JDK 内部实现
+   IDBQuery queryProxy = (IDBQuery) Proxy.newProxyInstance(IDBQuery.class.getClassLoader(), cs, h);
+
+   System.out.println(&quot;proxy class name: &quot; + queryProxy.getClass().getName());
+   System.out.println(&quot;proxy class simple name: &quot; + queryProxy.getClass().getSimpleName());
+   System.out.println(queryProxy.request());
+}</code></pre><p>InvocationHandler 接口只有一个方法，即 invoke() 方法！它是对代理对象所有方法的唯一实现。也就是说，无论你调用代理对象上的哪个方法，其实都是在调用 InvocationHandler 的 invoke() 方法。 </p>
+<h3 id="InvocationHandler-的-invoke-方法"><a href="#InvocationHandler-的-invoke-方法" class="headerlink" title="InvocationHandler 的 invoke() 方法"></a>InvocationHandler 的 invoke() 方法</h3><p>InvocationHandler 的 invoke() 方法的参数有三个：</p>
+<ul>
+<li><p>Object proxy：代理对象，也就是 Proxy.newProxyInstance() 方法返回的对象，通常我们用不上它。</p>
+<p>  具体查看：<br>  <a href="https://stackoverflow.com/questions/22930195/understanding-proxy-arguments-of-the-invoke-method-of-java-lang-reflect-invoca" target="_blank" rel="noopener">Understanding “proxy” arguments of the invoke method of java.lang.reflect.InvocationHandler</a> </p>
+</li>
+<li><p>Method method：表示当前被调用方法的反射对象，例如 queryProxy.request()，那么 method 就是 request() 方法的反射对象。</p>
+</li>
+<li><p>Object[] args：表示当前被调用方法的参数，当然 queryProxy.request() 这个调用是没有参数的，所以 args 是一个零长数组。</p>
+</li>
+</ul>
+<p>最后要说的是 invoke() 方法的返回值为 Object 类型，它表示当前被调用的方法的返回值，当然 queryProxy.request() 方法是没有返回值的，所以 invoke() 返回的就必须是 null 了。</p>
+<h2 id="CGLIB-动态代理"><a href="#CGLIB-动态代理" class="headerlink" title="CGLIB 动态代理"></a>CGLIB 动态代理</h2>
       
     </div>
     
@@ -741,7 +725,7 @@ MyInterface mi = (MyInterface)Proxy.newProxyInstance(loader, cs, h);</code></pre
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -788,7 +772,7 @@ MyInterface mi = (MyInterface)Proxy.newProxyInstance(loader, cs, h);</code></pre
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式"><span class="nav-number">1.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-动态代理"><span class="nav-number">2.</span> <span class="nav-text">JDK 动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Proxy类的newProxyInstance-方法"><span class="nav-number">2.1.</span> <span class="nav-text">Proxy类的newProxyInstance()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InvocationHandler的invoke-方法"><span class="nav-number">2.2.</span> <span class="nav-text">InvocationHandler的invoke()方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式"><span class="nav-number">1.</span> <span class="nav-text">代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InvocationHandler-的-invoke-方法"><span class="nav-number">1.1.</span> <span class="nav-text">InvocationHandler 的 invoke() 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGLIB-动态代理"><span class="nav-number">2.</span> <span class="nav-text">CGLIB 动态代理</span></a></li></ol></div>
             
 
           </div>
@@ -812,7 +796,7 @@ MyInterface mi = (MyInterface)Proxy.newProxyInstance(loader, cs, h);</code></pre
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

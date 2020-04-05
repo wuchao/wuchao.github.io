@@ -102,7 +102,7 @@
 
 
 
-  <meta name="keywords" content="Mysql,">
+  <meta name="keywords" content="MySQL,">
 
 
 
@@ -113,18 +113,18 @@
 
 
 
-<meta name="description" content="mysql 时间方法1234567891011SELECT NOW(), SYSDATE(), CURDATE(), CURTIME(), UNIX_TIMESTAMP();-- 结果：2018-02-08 10:19:22	2018-02-08 10:19:22	2018-02-08	10:19:22	1518056362 -- now() 和 sysdate() 结果一样，但是两者是有区别的">
-<meta name="keywords" content="Mysql">
+<meta name="description" content="常用命令 MySQL教程：MySQL数据库学习宝典（从入门到精通）  创建数据库 CREATE DATABASE IF NOT EXISTS &amp;lt;数据库名称&amp;gt; DEFAULT CHARACTER SET utf8;  查看已有库1&amp;gt; SHOW CREATE DATABASE &amp;lt;数据库名称&amp;gt;;  示例： 123456SHOW CREATE DATABASE webproj">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql 学习和使用">
-<meta property="og:url" content="https://wuchao.github.io/2018/02/08/db-2018-02-08-Mysql/index.html">
+<meta property="og:title" content="MySQL 学习和使用">
+<meta property="og:url" content="https://wuchao.github.io/2018/02/08/db-2018-02-08-MySQL/index.html">
 <meta property="og:site_name" content="Keep Coding">
-<meta property="og:description" content="mysql 时间方法1234567891011SELECT NOW(), SYSDATE(), CURDATE(), CURTIME(), UNIX_TIMESTAMP();-- 结果：2018-02-08 10:19:22	2018-02-08 10:19:22	2018-02-08	10:19:22	1518056362 -- now() 和 sysdate() 结果一样，但是两者是有区别的">
+<meta property="og:description" content="常用命令 MySQL教程：MySQL数据库学习宝典（从入门到精通）  创建数据库 CREATE DATABASE IF NOT EXISTS &amp;lt;数据库名称&amp;gt; DEFAULT CHARACTER SET utf8;  查看已有库1&amp;gt; SHOW CREATE DATABASE &amp;lt;数据库名称&amp;gt;;  示例： 123456SHOW CREATE DATABASE webproj">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-06T13:10:44.703Z">
+<meta property="og:updated_time" content="2020-04-05T15:48:45.467Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql 学习和使用">
-<meta name="twitter:description" content="mysql 时间方法1234567891011SELECT NOW(), SYSDATE(), CURDATE(), CURTIME(), UNIX_TIMESTAMP();-- 结果：2018-02-08 10:19:22	2018-02-08 10:19:22	2018-02-08	10:19:22	1518056362 -- now() 和 sysdate() 结果一样，但是两者是有区别的">
+<meta name="twitter:title" content="MySQL 学习和使用">
+<meta name="twitter:description" content="常用命令 MySQL教程：MySQL数据库学习宝典（从入门到精通）  创建数据库 CREATE DATABASE IF NOT EXISTS &amp;lt;数据库名称&amp;gt; DEFAULT CHARACTER SET utf8;  查看已有库1&amp;gt; SHOW CREATE DATABASE &amp;lt;数据库名称&amp;gt;;  示例： 123456SHOW CREATE DATABASE webproj">
 
 
 
@@ -179,13 +179,13 @@
 
 
 
-  <link rel="canonical" href="https://wuchao.github.io/2018/02/08/db-2018-02-08-Mysql/">
+  <link rel="canonical" href="https://wuchao.github.io/2018/02/08/db-2018-02-08-MySQL/">
 
 
 
 
 
-  <title>Mysql 学习和使用 | Keep Coding</title>
+  <title>MySQL 学习和使用 | Keep Coding</title>
   
 
 
@@ -338,8 +338,8 @@
   <div class="post-badge">
     
       <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Mysql/" itemprop="url" rel="index">
-          <span itemprop="name">Mysql</span>
+        <a href="/categories/MySQL/" itemprop="url" rel="index">
+          <span itemprop="name">MySQL</span>
         </a>
       </span>
     
@@ -347,7 +347,7 @@
   
 
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/02/08/db-2018-02-08-Mysql/">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/02/08/db-2018-02-08-MySQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wuchao">
@@ -364,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mysql 学习和使用</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL 学习和使用</h1>
         
 
         <div class="post-meta">
@@ -399,8 +399,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">Mysql</span>
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
                   </a>
                 </span>
 
@@ -436,7 +436,269 @@
       
 
       
-        <h2 id="mysql-时间方法"><a href="#mysql-时间方法" class="headerlink" title="mysql 时间方法"></a>mysql 时间方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT NOW(), SYSDATE(), CURDATE(), CURTIME(), UNIX_TIMESTAMP();</span><br><span class="line">-- 结果：2018-02-08 10:19:22	2018-02-08 10:19:22	2018-02-08	10:19:22	1518056362 </span><br><span class="line">-- now() 和 sysdate() 结果一样，但是两者是有区别的 </span><br><span class="line">  </span><br><span class="line">-- NOW() 获取语句开始执行的时间 </span><br><span class="line">SELECT NOW(), SLEEP(2), NOW();  </span><br><span class="line">-- 结果：2018-02-08 10:18:10	0	2018-02-08 10:18:10 </span><br><span class="line">  </span><br><span class="line">-- SYSDATE() 获取当时实时的时间，这有可能导致主库和从库是执行的返回值是不一样的，导致主从数据不一致</span><br><span class="line">SELECT SYSDATE(), SLEEP(2), SYSDATE();</span><br><span class="line">-- 结果：2018-02-08 10:17:24	0	2018-02-08 10:17:26</span><br></pre></td></tr></table></figure>
+        <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><blockquote>
+<p><a href="http://c.biancheng.net/mysql/" target="_blank" rel="noopener">MySQL教程：MySQL数据库学习宝典（从入门到精通）</a></p>
+</blockquote>
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><blockquote>
+<p>CREATE DATABASE IF NOT EXISTS &lt;数据库名称&gt; DEFAULT CHARACTER SET utf8;</p>
+</blockquote>
+<h3 id="查看已有库"><a href="#查看已有库" class="headerlink" title="查看已有库"></a>查看已有库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SHOW CREATE DATABASE &lt;数据库名称&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE DATABASE webproject;</span><br><span class="line"></span><br><span class="line">Name           |Value                                                              |</span><br><span class="line">---------------|-------------------------------------------------------------------|</span><br><span class="line">Database       |webproject                                                         |</span><br><span class="line">Create Database|CREATE DATABASE `webproject` /*!40100 DEFAULT CHARACTER SET utf8 */|</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看建表语句"><a href="#查看建表语句" class="headerlink" title="查看建表语句"></a>查看建表语句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SHOW CREATE TABLE &lt;表名&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE TABLE user_info;</span><br><span class="line"></span><br><span class="line">Table    |Create Table      |                                                                                                                                                                                                                               |</span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|</span><br><span class="line">user_info|CREATE TABLE `user_info` (`id` bigint(20) NOT NULL AUTO_INCREMENT, `username` varchar(20) NOT NULL, `nickname` varchar(20) NOT NULL, `password` varchar(60) DEFAULT NULL, `email` varchar(100) DEFAULT NULL, `activated` tinyint(1) NOT NULL DEFAU|</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看表结构"><a href="#查看表结构" class="headerlink" title="查看表结构"></a>查看表结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; DESC &lt;表名&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; DESC user_info;</span><br><span class="line"></span><br><span class="line">Field             |Type        |Null|Key|Default          |Extra         |</span><br><span class="line">------------------|------------|----|---|-----------------|--------------|</span><br><span class="line">id                |bigint(20)  |NO  |PRI|                 |auto_increment|</span><br><span class="line">username          |varchar(20) |NO  |UNI|                 |              |</span><br><span class="line">nickname          |varchar(20) |NO  |   |                 |              |</span><br><span class="line">password          |varchar(60) |YES |   |                 |              |</span><br><span class="line">email             |varchar(100)|YES |UNI|                 |              |</span><br><span class="line">activated         |tinyint(1)  |NO  |   |0                |              |</span><br><span class="line">created_by        |bigint(20)  |NO  |   |                 |              |</span><br><span class="line">created_date      |datetime    |NO  |   |CURRENT_TIMESTAMP|              |</span><br><span class="line">last_modified_by  |bigint(20)  |YES |   |                 |              |</span><br><span class="line">last_modified_date|datetime    |YES |   |                 |              |</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h3><p>常用的语法格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; ALTER TABLE &lt;表名&gt; [修改选项];</span><br></pre></td></tr></table></figure>
+
+<p>修改选项的语法格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RENAME TO &lt;新表名&gt;</span><br><span class="line">ADD COLUMN &lt;列名&gt; &lt;类型&gt;</span><br><span class="line">CHANGE COLUMN &lt;旧列名&gt; &lt;新列名&gt; &lt;新列类型&gt;</span><br><span class="line">ALTER COLUMN &lt;列名&gt; &#123; SET DEFAULT &lt;默认值&gt; | DROP DEFAULT &#125;</span><br><span class="line">MODIFY COLUMN &lt;列名&gt; &lt;类型&gt;</span><br><span class="line">DROP COLUMN &lt;列名&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><blockquote>
+<p><a href="https://blog.csdn.net/qq_37547408/article/details/88529335" target="_blank" rel="noopener">MySQL 规范</a></p>
+</blockquote>
+<h3 id="数据库设计规范"><a href="#数据库设计规范" class="headerlink" title="数据库设计规范"></a>数据库设计规范</h3><ul>
+<li><p>所有数据库对象名称必须使用小写字母并用下划线分割。</p>
+</li>
+<li><p>所有数据库对象名称禁止使用 MySQL 保留关键字（如果表名中包含关键字查询时，需要将其用单引号括起来）。</p>
+</li>
+<li><p>临时库表必须以 <code>tmp_</code> 为前缀并以日期为后缀，备份表必须以 <code>bak_</code> 为前缀并以日期为后缀。</p>
+</li>
+<li><p>所有存储相同数据的列名和列类型必须一致（一般作为关联列，如果查询时关联列类型不一致会自动进行数据类型隐式转换，会造成列上的索 引失效，导致查询效率降低）。</p>
+</li>
+<li><p>数据库表名和列表的最大字符数都控制在 64 个字符以内。</p>
+<blockquote>
+<p>oracle 数据库表名和列表的最大字符数都控制在 30 个字符以内。</p>
+<p>mssql 数据库表名和列表的最大字符数都控制在 128 个字符以内。</p>
+</blockquote>
+</li>
+<li><p>尽量控制单表数据量的大小，建议控制在 500 万以内。</p>
+<p>  500 万并不是 MySQL 数据库的限制，过大会造成修改表结构，备份，恢复都会有很大的问题。</p>
+<p>  可以用历史数据归档（应用于日志数据），分库分表（应用于业务数据）等手段来控制数据量大小。</p>
+</li>
+<li><p>谨慎使用 MySQL 分区表。</p>
+<p>  分区表在物理上表现为多个文件，在逻辑上表现为一个表。 谨慎选择分区键，跨分区查询效率可能更低，建议采用物理分表的方式管理大数据。</p>
+</li>
+<li><p>对于非负型的数据（如自增 ID、整型 IP）来说，要优先使用无符号整型来存储。</p>
+<p>  因为无符号相对于有符号可以多出一倍的存储空间。</p>
+</li>
+<li><p>VARCHAR(N) 中的 N 代表的是字符数，而不是字节数。使用 UTF8 存储 255 个汉字 VARCHAR(255) = 765 个字节。过大的长度会消耗更多的内存。</p>
+</li>
+<li><p>使用 TIMESTAMP（4 个字节）或 DATETIME 类型（8 个字节）存储时间。 </p>
+<p>  TIMESTAMP 存储的时间范围 1970-01-01 00:00:01 ~ 2038-01-19 03:14:07。</p>
+<p>  TIMESTAMP 占用 4 字节和 INT 相同，但比 INT 可读性高。</p>
+<p>  超出 TIMESTAMP 取值范围的使用 DATETIME 类型存储。</p>
+</li>
+<li><p>需要精确计算的数据必须使用 decimal 类型。</p>
+<p>  。非精准浮点：float, double</p>
+<p>  。精准浮点：decimal</p>
+</li>
+<li><p>尽量避免使用外键约束。</p>
+<p>  。不建议使用外键约束（foreign key），但一定要在表与表之间的关联键上建立索引。</p>
+<p>  。外键可用于保证数据的参照完整性，但建议在业务端实现。</p>
+<p>  。外键会影响父表和子表的写操作从而降低性能。</p>
+</li>
+<li><p>对于表中类似 is_deleted、is_activated 这类只有几种结果的属性，尽量在添加列时申明默认值。</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="索引设计规范"><a href="#索引设计规范" class="headerlink" title="索引设计规范"></a>索引设计规范</h3><ul>
+<li><p>限制每张表上的索引数量，建议单张表索引不超过 5 个。</p>
+<p>  MySQL 优化器在选择如何优化查询时，会根据统一信息对每一个可以用到的索引来进行评估，以生成出一个最好的执行计划，如果同时有很多个索引都可以用于查询，就会增加 MySQL 优化器生成执行计划的时间，可能会降低查询性能。</p>
+</li>
+<li><p>常见索引列建议：</p>
+<ul>
+<li><p>出现在 SELECT、UPDATE、DELETE 语句的 WHERE 从句中的列。</p>
+</li>
+<li><p>包含在 ORDER BY、GROUP BY、DISTINCT 中的字段。</p>
+</li>
+<li><p>并不要将符合 1 和 2 中的字段的列都建立一个索引，通常将 1、2 中的字段建立联合索引效果更好。5.6 版本之前，一个 sql 只能使用到一个表中的一个索引，5.6 以后，虽然有了合并索引的优化方式，但是还是远远没有使用一个联合索引的查询方式好。</p>
+</li>
+<li><p>多表 join 的关联列。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据库使用"><a href="#数据库使用" class="headerlink" title="数据库使用"></a>数据库使用</h2><h3 id="MySQL-时间方法"><a href="#MySQL-时间方法" class="headerlink" title="MySQL 时间方法"></a>MySQL 时间方法</h3><ul>
+<li><p>NOW()：DATETIME</p>
+</li>
+<li><p>SYSDATE()：DATETIME</p>
+</li>
+<li><p>CURDATE()：DATE</p>
+</li>
+<li><p>CURTIME()：TIME</p>
+</li>
+<li><p>UNIX_TIMESTAMP()：BIGINT</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT NOW(), SYSDATE(), CURDATE(), CURTIME(), UNIX_TIMESTAMP();</span><br><span class="line"> </span><br><span class="line">NOW()              |SYSDATE()          |CURDATE() |CURTIME()|UNIX_TIMESTAMP()|</span><br><span class="line">-------------------|-------------------|----------|---------|----------------|</span><br><span class="line">2019-10-27 20:44:47|2019-10-27 20:44:47|2019-10-27| 20:44:47|      1572180287|</span><br></pre></td></tr></table></figure>
+
+<p>NOW() 获取语句开始执行的时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NOW()              |SLEEP(2)|NOW()              |</span><br><span class="line">-------------------|--------|-------------------|</span><br><span class="line">2019-10-27 20:46:04|       0|2019-10-27 20:46:04|</span><br></pre></td></tr></table></figure>
+
+<p>SYSDATE() 获取当时实时的时间，这有可能导致主库和从库是执行的返回值是不一样的，导致主从数据不一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYSDATE()          |SLEEP(2)|SYSDATE()          |</span><br><span class="line">-------------------|--------|-------------------|</span><br><span class="line">2019-10-27 20:47:12|       0|2019-10-27 20:47:14|</span><br></pre></td></tr></table></figure>
+
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="聚集（clustered）索引（或聚簇索引）"><a href="#聚集（clustered）索引（或聚簇索引）" class="headerlink" title="聚集（clustered）索引（或聚簇索引）"></a>聚集（clustered）索引（或聚簇索引）</h3><blockquote>
+<p>定义：数据行的物理顺序与列值（一般是主键的那一列）的逻辑顺序相同，一个表中只能拥有一个聚集索引。</p>
+</blockquote>
+<h3 id="非聚集（unclustered）索引（或非聚簇索引）"><a href="#非聚集（unclustered）索引（或非聚簇索引）" class="headerlink" title="非聚集（unclustered）索引（或非聚簇索引）"></a>非聚集（unclustered）索引（或非聚簇索引）</h3><blockquote>
+<p>定义：该索引中索引的逻辑顺序与磁盘上行的物理存储顺序不同，一个表中可以拥有多个非聚集索引。</p>
+</blockquote>
+<h3 id="索引的选择性（Selectivity）"><a href="#索引的选择性（Selectivity）" class="headerlink" title="索引的选择性（Selectivity）"></a>索引的选择性（Selectivity）</h3><p>索引的选择性（Selectivity），是指不重复的索引值（也叫基数，Cardinality）与表记录数（#T）的比值。范围从 1/#T 到 1 之间。索引的选择性越高则查询效率越高，因为选择性高的索引可以让 MySQL 在查找时过滤掉更多的行。唯一索引的选择性是 1，这是最好的索引选择性，性能也是最好的。</p>
+<p>一般情况下某个列前缀的选择性也是足够高的，足以满足查询性能对于 <code>BLOB</code>、<code>TEXT</code>或者很长的 <code>VARCHAR</code> 类型的列，必须使用前缀索引，因为 MySQL 不允许索引这些列的完整长度。</p>
+<p>如查看 <code>user_info</code> 表以 <code>id</code> 属性和以 <code>user_name</code> 前三个属性为前缀的索引选择性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(distinct id)/count(*) as id_slectivity, count(distinct left(username, 3))/count(*) as username_slectivity from user_info</span><br></pre></td></tr></table></figure>
+
+<h3 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h3><p>创建联合索引时列的选择原则：</p>
+<ul>
+<li>经常用的列优先（最左匹配原则）</li>
+<li>离散度高的列优先（离散度高原则）</li>
+<li>宽度小的列优先（最少空间原则）</li>
+</ul>
+<h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3><p>如果一个索引包含（或者说覆盖）所有需要查询的字段的值，就称之为“覆盖索引”。</p>
+<p>不是所有的索引都可以成为覆盖索引。覆盖索引必须要存储索引列，而哈希索引、空间索引和全文索引等都不存储索引列的值，所以 MySQL 只能使用 B-Tree 来做覆盖索引，另外不同的存储引擎实现覆盖索引的方式也不同，而且不是所有的引擎都支持覆盖索引。</p>
+<h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 创建索引方式一：</span><br><span class="line">CREATE INDEX ix_userInfo_id_nickname ON user_info(id, nickname);</span><br><span class="line"># 创建索引方式二：</span><br><span class="line">ALTER TABLE user_info ADD INDEX ix_userInfo_id_nickname(id, nickname);</span><br><span class="line"></span><br><span class="line"># 创建唯一索引方式一：</span><br><span class="line">CREATE UNIQUE INDEX ux_userInfo_id_nickname ON user_info(id, nickname);</span><br><span class="line"># 创建唯一索引方式二：</span><br><span class="line">ALTER TABLE user_info ADD UNIQUE ux_userInfo_id_nickname(id, nickname);</span><br></pre></td></tr></table></figure>
+
+<h4 id="索引名称规则"><a href="#索引名称规则" class="headerlink" title="索引名称规则"></a>索引名称规则</h4><p>PK_ for primary keys</p>
+<p>UK_ for unique keys</p>
+<p>IX_ for non clustered non unique indexes</p>
+<p>UX_ for unique indexes</p>
+<p>All of my index name take the form of:</p>
+<p><code>&lt;index or key type&gt;_&lt;table name&gt;_&lt;column 1&gt;_&lt;column 2&gt;_&lt;column n&gt;</code></p>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/2783495/sql-server-index-naming-conventions" target="_blank" rel="noopener">sql server index naming conventions</a></p>
+</blockquote>
+<h2 id="索引数据结构-B-树"><a href="#索引数据结构-B-树" class="headerlink" title="索引数据结构 B* 树"></a>索引数据结构 B* 树</h2><blockquote>
+<p>M 阶是指一个节点最多能拥有的孩子数，M &gt; 2</p>
+</blockquote>
+<blockquote>
+<p><a href="https://mp.weixin.qq.com/s/jRZMMONW3QP43dsDKIV9VQ" target="_blank" rel="noopener">程序员小灰 - 蛮会：什么是B+树？</a></p>
+</blockquote>
+<h3 id="B-Tree（Balance-Tree）"><a href="#B-Tree（Balance-Tree）" class="headerlink" title="B-Tree（Balance Tree）"></a>B-Tree（Balance Tree）</h3><p>一个 m 阶的 B 树具有如下几个特征：</p>
+<ul>
+<li><p>根结点至少有两个子女。</p>
+</li>
+<li><p>每个中间节点都包含 k-1 个元素和 k 个孩子，其中 m/2 &lt;= k &lt;= m</p>
+</li>
+<li><p>每一个叶子节点都包含 k-1 个元素，其中 m/2 &lt;= k &lt;= m</p>
+</li>
+<li><p>所有的叶子结点都位于同一层。</p>
+</li>
+<li><p>每个节点中的元素从小到大排列，节点当中 k-1 个元素正好是 k 个孩子包含的元素的值域分划。</p>
+</li>
+</ul>
+<h3 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B+Tree"></a>B+Tree</h3><ul>
+<li><p>有 k 个子树的中间节点包含有 k 个元素（B 树中是 k-1 个元素），每个元素不保存数据，只用来索引，所有数据都保存在叶子节点。</p>
+</li>
+<li><p>所有的叶子结点中包含了全部元素的信息，及指向含这些元素记录的指针，且叶子结点本身依关键字的大小自小而大顺序链接。</p>
+</li>
+<li><p>所有的中间节点元素都同时存在于子节点，在子节点元素中是最大（或最小）元素，因此所有叶子节点包含了全量元素信息。</p>
+</li>
+<li><p>所有的非叶子节点包含了索引列和一个指向下级节点的指针（下一级节点可以是非叶子结点，也可以是叶子节点）。</p>
+</li>
+</ul>
+<p>B+ 树的优势：</p>
+<ul>
+<li>单一节点存储更多的元素，使得查询的IO次数更少。<blockquote>
+<p>B+ 树的卫星数据（指的是索引元素所指向的数据记录，比如数据库中的某一行。在数据库的聚集索引（Clustered Index）中，叶子节点直接包含卫星数据。在非聚集索引（NonClustered Index）中，叶子节点带有指向卫星数据的指针。）只在叶子节点中，其余节点仅仅是索引，没有任务数据关联。</p>
+</blockquote>
+</li>
+<li>由于父节点的元素都出现在子节点，因此所有叶子节点包含了全量元素信息，并且每一个叶子节点都带有指向下一个节点的指针，形成了一个有序链表，因此对整棵树的便利只需要一次线性遍历叶子结点即可。而且由于数据顺序排列并且相连，所以便于区间查找和搜索。</li>
+<li>所有查询都要查找到叶子节点，查询性能稳定。<blockquote>
+<p>B+ 树的查询必须最终查找叶子节点，它的每一次查找都是稳定的，而 B-                                树的卫星数据位于树中，它要中序遍历整个树去查找，无论匹配元素处于中间节点还是叶子节点，因此，B- 树的查找性能并不稳定（最好情况是只查根节点，最坏情况是查到叶子节点）。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://my.oschina.net/u/4116286/blog/3107389" target="_blank" rel="noopener">面试官问你B树和B+树，就把这篇文章丢给他</a></p>
+<p><a href="https://blog.csdn.net/yanshuanche3765/article/details/79945254" target="_blank" rel="noopener">图解B树和B+树的插入和删除操作</a></p>
+</blockquote>
+<h3 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h3><p>MyISAM 存储引擎表结构文件：</p>
+<ul>
+<li>.frm：记录表结构</li>
+<li>.myd：记录表数据 </li>
+<li>.myi：记录表索引</li>
+</ul>
+<h3 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h3><p>从 Mysql5.5 版本开始，InnoDB 是默认的表存储引擎。其特点是行锁设计、支持 MVCC、支持外键、提供一致性非锁定读、同时被设计用来最有效的利用以及使用内存和 CPU。</p>
+<p>页是 InnoDB 磁盘管理的最小单位，默认大小为 16KB。</p>
+<p>InnoDB 存储引擎是面向列的，也就是说是按行存放数据的。每个页最多允许存放 <code>16KB / 2 - 200</code> 行的记录，即 7992 行记录。</p>
+<p>InnoDB 存储引擎表结构文件：</p>
+<ul>
+<li>.frm：记录表结</li>
+<li>.ibd：InnoDB 引擎开启了独立表空间（my.ini 中配置 innodb_file_per_table = 1）产生的存放该表的数据和索引的文件。</li>
+</ul>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/11e0361e9989" target="_blank" rel="noopener">InnoDB介绍</a></p>
+</blockquote>
+<h2 id="Explain-的使用"><a href="#Explain-的使用" class="headerlink" title="Explain 的使用"></a>Explain 的使用</h2><h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>这一列总是包含一个编号，标识 select 所属的行。如果在语句中没有子查询或联合，那么只会有唯一的 select，于是每一行在这个列中都将显示一个 1。否则，内层的 select 语句一般会顺序编号，对应于其在原始语句中的位置。</p>
+<h3 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h3><p>这一列显示了对应行是简单还是复杂 select。simple 意味着查询不包含子查询和 union。如果查询有任何复杂的子不分，则最外层部分标记为 primary，其它部分标记如下。</p>
+<ul>
+<li><p>derived：包含在 from 子句的子查询的 select。</p>
+</li>
+<li><p>subquery：包含在 select 列表中的子查询中的 select（不在 from 子句中）标记为 subquery。</p>
+</li>
+<li><p>union：</p>
+</li>
+</ul>
+<h3 id="table"><a href="#table" class="headerlink" title="table"></a>table</h3><p>显示这一步所访问的表的名称。</p>
+<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><ul>
+<li><p>ALL：全表扫描。</p>
+</li>
+<li><p>index：索引全扫描。</p>
+</li>
+<li><p>range：索引范围扫描（部分索引扫描），常用语 &lt;, &lt;=, &gt;=, between and 等操作。</p>
+</li>
+<li><p>ref：使用非唯一索引或唯一索引的非唯一性前缀进行的多表关联查询。</p>
+</li>
+<li><p>eq_ref：类似 ref，区别在于使用的是主键或者唯一索引进行的多表关联查询。对每一个记录的关联查询都只从表中读取一个记录。</p>
+</li>
+<li><p>const/system：该表最多有一个匹配行，用于将主键或唯一索引的所有部分与常量值进行比较（如 id = 5）。system 是 const 的一种特例。</p>
+</li>
+<li><p>null：MySQL 不访问任何表或索引，直接返回结果。</p>
+</li>
+</ul>
+<blockquote>
+<p>由上至下，执行效率越来越高。</p>
+</blockquote>
+<h3 id="possible-keys"><a href="#possible-keys" class="headerlink" title="possible_keys"></a>possible_keys</h3><p>指出 MySQL 能使用哪个索引在该表中找到行。查询涉及到的字段上若存在索引，则该索引将被列出，但不一定被查询使用。如果是空的，则没有相关的索引。</p>
+<h3 id="key"><a href="#key" class="headerlink" title="key"></a>key</h3><p>显示 MySQL 实际决定使用的键。如果没有索引被选择，键是 NULL。</p>
+<h3 id="key-len"><a href="#key-len" class="headerlink" title="key_len"></a>key_len</h3><p>这个数表示 MySQL 要遍历多少行数据才能找到。表示 MySQL 根据表统计信息及索引选用情况估算的找到所需的记录所需要读取的行数，在 innodb 上可能是不准确的。</p>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p>这一列显示了之前的表在 key 列记录的索引中查找值所用的列或常量。</p>
+<h3 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h3><p>MySQL 估计为了找到所需的行而要读取的行数。</p>
+<h3 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h3><ul>
+<li><p>Only index：只用索引树中的信息就能查到所需要的数据。</p>
+</li>
+<li><p>Using where：表示优化器需要通过索引回表查询数据。</p>
+</li>
+<li><p>Using index：表示直接访问索引就足够获取到所需要的数据，不需要通过索引回表。</p>
+</li>
+<li><p>Using index condition：在 5.6 版本后加入的新特性（Index Condition Pushdown），Using index condition 会先条件过滤索引，过滤完索引后找到所有符合索引条件的数据行，随后用 WHERE 子句中的其他条件去过滤这些数据行。</p>
+</li>
+<li><p>Using temporary：表示 MySQL 在对查询结果排序时会使用一个临时表。</p>
+</li>
+</ul>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="延迟关联（deferred-join）"><a href="#延迟关联（deferred-join）" class="headerlink" title="延迟关联（deferred join）"></a>延迟关联（deferred join）</h3><p>延迟关联就是通过使用覆盖索引查询返回需要的主键，再根据主键关联原表获得需要的数据。<br>延迟关联是用来优化查询需要分组、排序等操作的 sql。</p>
+<p>不使用延迟关联前，需要先根据 where 条件查询出数据结果集，然后在内存中将结果集分组、排序等操作，但是在分组、排序过程中，MySQL 需要花费大量的时间来扫描并跳过不需要用到的数据。</p>
+<p>所以通过使用覆盖索引先只查询出结果集的主键，再根据这些主键关联原表获得需要的行，这可以减少 MySQL 扫描那些需要丢弃的行。</p>
+<h3 id="索引条件下推（Index-Condition-Pushdown-ICP）"><a href="#索引条件下推（Index-Condition-Pushdown-ICP）" class="headerlink" title="索引条件下推（Index Condition Pushdown, ICP）"></a>索引条件下推（Index Condition Pushdown, ICP）</h3><blockquote>
+<p><a href="https://blog.csdn.net/seanxwq/article/details/95368944" target="_blank" rel="noopener">一起学习Mysql索引三（ICP,索引条件下推）</a></p>
+</blockquote>
+<h2 id="使用-INFORMATION-SCHEMA-表"><a href="#使用-INFORMATION-SCHEMA-表" class="headerlink" title="使用 INFORMATION_SCHEMA 表"></a>使用 INFORMATION_SCHEMA 表</h2><p>下面的 SQL 可以查询谁阻塞和谁在等待，以及等待多久的查询。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT r.trx_id AS waiting_trx_id, r.trx_mysql_thread_id AS waiting_thread, TIMESTAMPDIFF(SECOND, r.trx_wait_started, CURRENT_TIMESTAMP) AS wait_time, </span><br><span class="line">r.trx_query AS waiting_query, l.lock_table AS waiting_table_lock, </span><br><span class="line">b.trx_id AS blocking_trx_id, b.trx_mysql_thread_id AS blocking_thread, SUBSTRING(p.host,1,INSTR(p.host, &apos;:&apos;) -1 ) AS blocking_host, </span><br><span class="line">SUBSTRING(p.host, INSTR(p.host, &apos;:&apos;) +1 ) AS block_port, IF(p.command=&quot;Sleep&quot;,p.time,0) AS idle_in_trx, </span><br><span class="line">b.trx_query AS blcoking_query </span><br><span class="line">from information_schema.innodb_lock_waits AS w </span><br><span class="line">INNER JOIN information_schema.innodb_trx AS b ON b.trx_id=w.blocking_trx_id </span><br><span class="line">INNER JOIN information_schema.innodb_trx AS r ON r.trx_id = w.requesting_trx_id </span><br><span class="line">INNER JOIN information_schema.innodb_locks AS l ON w.requested_lock_id = l.lock_id LEFT JOIN information_schema.processlist AS p ON p.id = b.trx_mysql_thread_id </span><br><span class="line">ORDER BY wait_time DESC</span><br></pre></td></tr></table></figure>
+
+<p>下面的变种 SQL 可以查询有多少查询被哪些线程阻塞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT CONCAT(&apos;thread &apos;, b.trx_mysql_thread_id, &apos; from &apos;,p.host) AS who_blocks, </span><br><span class="line">IF (p.command = &quot;Sleep&quot;,p.time, 0) AS idle_in_trx, MAX(TIMESTAMPDIFF(SECOND,r.trx_wait_started,NOW())) AS max_wait_time, </span><br><span class="line">COUNT(*) AS num_waiters </span><br><span class="line">FROM information_schema.innodb_lock_waits as w inner join information_schema.innodb_trx as b on b.trx_id = w.blocking_trx_id </span><br><span class="line">inner join information_schema.innodb_trx as r on r.trx_id = w.requesting_trx_id </span><br><span class="line">left join information_schema.processlist as p on p.id = b.trx_mysql_thread_id  </span><br><span class="line">group by who_blocks order by num_waiters desc</span><br></pre></td></tr></table></figure>
 
 
       
@@ -488,7 +750,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
         </div>
       
@@ -561,27 +823,27 @@
       <script type="text/javascript">
         if (disqus_config) {
           var disqus_config = function () {
-            this.page.url = 'https://wuchao.github.io/2018/02/08/db-2018-02-08-Mysql/';
-            this.page.identifier = '2018/02/08/db-2018-02-08-Mysql/';
-            this.page.title = 'Mysql 学习和使用';
+            this.page.url = 'https://wuchao.github.io/2018/02/08/db-2018-02-08-MySQL/';
+            this.page.identifier = '2018/02/08/db-2018-02-08-MySQL/';
+            this.page.title = 'MySQL 学习和使用';
           };
           if (window.DISQUS) {
             $('.disqus-loading').remove();
             window.DISQUS.reset({
               reload: true,
               config: function () {
-                this.page.url = 'https://wuchao.github.io/2018/02/08/db-2018-02-08-Mysql/';
-                this.page.identifier = '2018/02/08/db-2018-02-08-Mysql/';
-                this.page.title = 'Mysql 学习和使用';
+                this.page.url = 'https://wuchao.github.io/2018/02/08/db-2018-02-08-MySQL/';
+                this.page.identifier = '2018/02/08/db-2018-02-08-MySQL/';
+                this.page.title = 'MySQL 学习和使用';
               }
             });
           }
         }
         else {
           var disqus_config = function () {
-            this.page.url = 'https://wuchao.github.io/2018/02/08/db-2018-02-08-Mysql/';
-            this.page.identifier = '2018/02/08/db-2018-02-08-Mysql/';
-            this.page.title = 'Mysql 学习和使用';
+            this.page.url = 'https://wuchao.github.io/2018/02/08/db-2018-02-08-MySQL/';
+            this.page.identifier = '2018/02/08/db-2018-02-08-MySQL/';
+            this.page.title = 'MySQL 学习和使用';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://diygod-me.disqus.com/embed.js';
@@ -684,7 +946,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -731,7 +993,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-时间方法"><span class="nav-number">1.</span> <span class="nav-text">mysql 时间方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库"><span class="nav-number">1.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看已有库"><span class="nav-number">1.2.</span> <span class="nav-text">查看已有库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看建表语句"><span class="nav-number">1.3.</span> <span class="nav-text">查看建表语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看表结构"><span class="nav-number">1.4.</span> <span class="nav-text">查看表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改表"><span class="nav-number">1.5.</span> <span class="nav-text">修改表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库设计"><span class="nav-number">2.</span> <span class="nav-text">数据库设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库设计规范"><span class="nav-number">2.1.</span> <span class="nav-text">数据库设计规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引设计规范"><span class="nav-number">2.2.</span> <span class="nav-text">索引设计规范</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库使用"><span class="nav-number">3.</span> <span class="nav-text">数据库使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-时间方法"><span class="nav-number">3.1.</span> <span class="nav-text">MySQL 时间方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">4.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#聚集（clustered）索引（或聚簇索引）"><span class="nav-number">4.1.</span> <span class="nav-text">聚集（clustered）索引（或聚簇索引）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非聚集（unclustered）索引（或非聚簇索引）"><span class="nav-number">4.2.</span> <span class="nav-text">非聚集（unclustered）索引（或非聚簇索引）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的选择性（Selectivity）"><span class="nav-number">4.3.</span> <span class="nav-text">索引的选择性（Selectivity）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联合索引"><span class="nav-number">4.4.</span> <span class="nav-text">联合索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖索引"><span class="nav-number">4.5.</span> <span class="nav-text">覆盖索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建索引"><span class="nav-number">4.6.</span> <span class="nav-text">创建索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引名称规则"><span class="nav-number">4.6.1.</span> <span class="nav-text">索引名称规则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引数据结构-B-树"><span class="nav-number">5.</span> <span class="nav-text">索引数据结构 B* 树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Tree（Balance-Tree）"><span class="nav-number">5.1.</span> <span class="nav-text">B-Tree（Balance Tree）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Tree"><span class="nav-number">5.2.</span> <span class="nav-text">B+Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM"><span class="nav-number">5.3.</span> <span class="nav-text">MyISAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB"><span class="nav-number">5.4.</span> <span class="nav-text">InnoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explain-的使用"><span class="nav-number">6.</span> <span class="nav-text">Explain 的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#id"><span class="nav-number">6.1.</span> <span class="nav-text">id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-type"><span class="nav-number">6.2.</span> <span class="nav-text">select_type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#table"><span class="nav-number">6.3.</span> <span class="nav-text">table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type"><span class="nav-number">6.4.</span> <span class="nav-text">type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#possible-keys"><span class="nav-number">6.5.</span> <span class="nav-text">possible_keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key"><span class="nav-number">6.6.</span> <span class="nav-text">key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-len"><span class="nav-number">6.7.</span> <span class="nav-text">key_len</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">6.8.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rows"><span class="nav-number">6.9.</span> <span class="nav-text">rows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extra"><span class="nav-number">6.10.</span> <span class="nav-text">Extra</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">7.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#延迟关联（deferred-join）"><span class="nav-number">7.1.</span> <span class="nav-text">延迟关联（deferred join）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引条件下推（Index-Condition-Pushdown-ICP）"><span class="nav-number">7.2.</span> <span class="nav-text">索引条件下推（Index Condition Pushdown, ICP）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-INFORMATION-SCHEMA-表"><span class="nav-number">8.</span> <span class="nav-text">使用 INFORMATION_SCHEMA 表</span></a></li></ol></div>
             
 
           </div>
@@ -755,7 +1017,7 @@
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

@@ -102,7 +102,7 @@
 
 
 
-  <meta name="keywords" content="ps,">
+  <meta name="keywords" content="ps,netstat,">
 
 
 
@@ -113,18 +113,18 @@
 
 
 
-<meta name="description" content="1234567891011121314-A ：列出所有的进程（等价于 -e）-w ：显示加宽可以显示较多的资讯-au：显示较详细的资讯-aux：显示所有包含其他使用者的行程-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。-c：显示 CLS 和 PRI 栏位。-d：显示所有程序，但不包括阶段作业领导者的程序。-e：显示所有程序。-f：显示 UID,PPIP,C 与 STIME 栏位。-H：">
-<meta name="keywords" content="ps">
+<meta name="description" content="根据端口或者服务名称查询进程号一、ps -ef | grep 端口号/服务名称1234567891011121314-A ：列出所有的进程（等价于 -e）-w ：显示加宽可以显示较多的资讯-au：显示较详细的资讯-aux：显示所有包含其他使用者的行程-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。-c：显示 CLS 和 PRI 栏位。-d：显示所有程序，但不包括阶段作业领导者的程序。-e">
+<meta name="keywords" content="ps,netstat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux ps 命令">
+<meta property="og:title" content="Linux ps 与 netstat 命令">
 <meta property="og:url" content="https://wuchao.github.io/2019/06/30/linux-shell-2019-06-30-linux-ps/index.html">
 <meta property="og:site_name" content="Keep Coding">
-<meta property="og:description" content="1234567891011121314-A ：列出所有的进程（等价于 -e）-w ：显示加宽可以显示较多的资讯-au：显示较详细的资讯-aux：显示所有包含其他使用者的行程-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。-c：显示 CLS 和 PRI 栏位。-d：显示所有程序，但不包括阶段作业领导者的程序。-e：显示所有程序。-f：显示 UID,PPIP,C 与 STIME 栏位。-H：">
+<meta property="og:description" content="根据端口或者服务名称查询进程号一、ps -ef | grep 端口号/服务名称1234567891011121314-A ：列出所有的进程（等价于 -e）-w ：显示加宽可以显示较多的资讯-au：显示较详细的资讯-aux：显示所有包含其他使用者的行程-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。-c：显示 CLS 和 PRI 栏位。-d：显示所有程序，但不包括阶段作业领导者的程序。-e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-06T13:10:44.737Z">
+<meta property="og:updated_time" content="2020-02-14T05:07:33.899Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux ps 命令">
-<meta name="twitter:description" content="1234567891011121314-A ：列出所有的进程（等价于 -e）-w ：显示加宽可以显示较多的资讯-au：显示较详细的资讯-aux：显示所有包含其他使用者的行程-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。-c：显示 CLS 和 PRI 栏位。-d：显示所有程序，但不包括阶段作业领导者的程序。-e：显示所有程序。-f：显示 UID,PPIP,C 与 STIME 栏位。-H：">
+<meta name="twitter:title" content="Linux ps 与 netstat 命令">
+<meta name="twitter:description" content="根据端口或者服务名称查询进程号一、ps -ef | grep 端口号/服务名称1234567891011121314-A ：列出所有的进程（等价于 -e）-w ：显示加宽可以显示较多的资讯-au：显示较详细的资讯-aux：显示所有包含其他使用者的行程-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。-c：显示 CLS 和 PRI 栏位。-d：显示所有程序，但不包括阶段作业领导者的程序。-e">
 
 
 
@@ -185,7 +185,7 @@
 
 
 
-  <title>Linux ps 命令 | Keep Coding</title>
+  <title>Linux ps 与 netstat 命令 | Keep Coding</title>
   
 
 
@@ -364,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux ps 命令</h1>
+          <h1 class="post-title" itemprop="name headline">Linux ps 与 netstat 命令</h1>
         
 
         <div class="post-meta">
@@ -436,9 +436,10 @@
       
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-A ：列出所有的进程（等价于 -e）</span><br><span class="line">-w ：显示加宽可以显示较多的资讯</span><br><span class="line">-au：显示较详细的资讯</span><br><span class="line">-aux：显示所有包含其他使用者的行程</span><br><span class="line">-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。</span><br><span class="line">-c：显示 CLS 和 PRI 栏位。</span><br><span class="line">-d：显示所有程序，但不包括阶段作业领导者的程序。</span><br><span class="line">-e：显示所有程序。</span><br><span class="line">-f：显示 UID,PPIP,C 与 STIME 栏位。</span><br><span class="line">-H：显示树状结构，表示程序间的相互关系。</span><br><span class="line">-u：&lt;用户识别码&gt;：列出属于该用户的程序的状况，也可使用用户名称来指定。</span><br><span class="line">-j：采用工作控制的格式显示程序状况</span><br><span class="line">-l 或 l：采用详细的格式来显示程序状况。</span><br><span class="line">-N：显示所有的程序，除了执行 ps 指令终端机下的程序之外。</span><br></pre></td></tr></table></figure>
+        <h2 id="根据端口或者服务名称查询进程号"><a href="#根据端口或者服务名称查询进程号" class="headerlink" title="根据端口或者服务名称查询进程号"></a>根据端口或者服务名称查询进程号</h2><h3 id="一、ps-ef-grep-端口号-服务名称"><a href="#一、ps-ef-grep-端口号-服务名称" class="headerlink" title="一、ps -ef | grep 端口号/服务名称"></a>一、ps -ef | grep 端口号/服务名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-A ：列出所有的进程（等价于 -e）</span><br><span class="line">-w ：显示加宽可以显示较多的资讯</span><br><span class="line">-au：显示较详细的资讯</span><br><span class="line">-aux：显示所有包含其他使用者的行程</span><br><span class="line">-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。</span><br><span class="line">-c：显示 CLS 和 PRI 栏位。</span><br><span class="line">-d：显示所有程序，但不包括阶段作业领导者的程序。</span><br><span class="line">-e：显示所有程序。</span><br><span class="line">-f：显示 UID，PPIP，C 与 STIME 栏位。</span><br><span class="line">-H：显示树状结构，表示程序间的相互关系。</span><br><span class="line">-u：&lt;用户识别码&gt;：列出属于该用户的程序的状况，也可使用用户名称来指定。</span><br><span class="line">-j：采用工作控制的格式显示程序状况</span><br><span class="line">-l 或 l：采用详细的格式来显示程序状况。</span><br><span class="line">-N：显示所有的程序，除了执行 ps 指令终端机下的程序之外。</span><br></pre></td></tr></table></figure>
 
-<h3 id="查看服务与进程常用方法"><a href="#查看服务与进程常用方法" class="headerlink" title="查看服务与进程常用方法"></a>查看服务与进程常用方法</h3><h4 id="ps-ef-grep-端口号-服务名称"><a href="#ps-ef-grep-端口号-服务名称" class="headerlink" title="ps -ef | grep 端口号/服务名称"></a>ps -ef | grep 端口号/服务名称</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-e：显示所有程序。</span><br><span class="line">-f：显示 UID，PPIP，C 与 STIME 栏位。</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>命令输出结果属性的意义：</p>
 <table>
@@ -465,12 +466,15 @@
 <td>所执行的指令</td>
 </tr>
 </tbody></table>
-<p>如：</p>
+<p>可以直接使用 <code>ps -ef</code> 来查看栏位名称：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ps -ef</span><br><span class="line">UID         PID   PPID  C STIME TTY          TIME CMD</span><br><span class="line">root          1      0  0 6月06 ?       00:02:23 /usr/lib/systemd/systemd --switched-root --system --deserialize 22</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<h4 id="ps-aux-au-grep-端口号-服务名称"><a href="#ps-aux-au-grep-端口号-服务名称" class="headerlink" title="ps -aux/-au | grep 端口号/服务名称"></a>ps -aux/-au | grep 端口号/服务名称</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-aux：显示用户所有进程和其状态。</span><br></pre></td></tr></table></figure>
+<h3 id="二、ps-aux-au-grep-端口号-服务名称"><a href="#二、ps-aux-au-grep-端口号-服务名称" class="headerlink" title="二、ps -aux/-au | grep 端口号/服务名称"></a>二、ps -aux/-au | grep 端口号/服务名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-aux：显示用户所有进程和其状态。</span><br></pre></td></tr></table></figure>
+
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>命令输出结果属性的意义：</p>
 <table>
@@ -508,7 +512,7 @@
 
 </li>
 </ul>
-<p>如：</p>
+<p>可以直接使用 <code>ps -aux</code> 来查看栏位名称：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ps -aux</span><br><span class="line">USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root          1  0.0  0.0 194328  4920 ?        Ss   6月06   2:23 /usr/lib/systemd/systemd --switched-root --system --deserialize</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -517,7 +521,13 @@
 <blockquote>
 <p>转自：<a href="https://blog.csdn.net/chenmozhe22/article/details/84797600" target="_blank" rel="noopener">Linux查看服务与进程 ——-ps-aux &amp; ps-ef</a></p>
 </blockquote>
+<h3 id="三、netstat-anp-grep-端口号"><a href="#三、netstat-anp-grep-端口号" class="headerlink" title="三、netstat -anp | grep 端口号"></a>三、netstat -anp | grep 端口号</h3><blockquote>
+<p>参考：<a href="https://www.jianshu.com/p/cc4962505d33" target="_blank" rel="noopener">linux用netstat查看服务及监听端口</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; netstat -anp | grep  8082</span><br><span class="line">tcp6       0      0 :::8082                 :::*                    LISTEN      33232/java</span><br></pre></td></tr></table></figure>
 
+<p>输出结果后面的 <code>33232</code> 即为进程号。</p>
+<h2 id="根据进程号查询服务来源程序"><a href="#根据进程号查询服务来源程序" class="headerlink" title="根据进程号查询服务来源程序"></a>根据进程号查询服务来源程序</h2><h3 id="ps-aux-grep-pid"><a href="#ps-aux-grep-pid" class="headerlink" title="ps aux | grep pid"></a>ps aux | grep pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; ps aux | grep 124818</span><br><span class="line">  root       6970  0.0  0.0 112724   988 pts/10   S+   08:57   0:00 grep --color=auto 124818</span><br><span class="line">  root     124818  1.1  4.6 25242416 3079260 pts/5 Sl+ 9月25   7:05 java -jar xxx-0.0.1-SNAPSHOT.war</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -569,6 +579,8 @@
           
             <a href="/tags/ps/" rel="tag"># ps</a>
           
+            <a href="/tags/netstat/" rel="tag"># netstat</a>
+          
         </div>
       
 
@@ -590,8 +602,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/09/06/db-2019-07-26-if-comma-separated-string-contains-element/" rel="prev" title="SQL 判断以逗号分隔的字符串是否包含某一项">
-                SQL 判断以逗号分隔的字符串是否包含某一项 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/11/04/notes-2019-11-04-Java-Ternary-Operator-Null-Pointer-Exception/" rel="prev" title="Java 三目表达式报 NullPointerException">
+                Java 三目表达式报 NullPointerException <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -642,7 +654,7 @@
           var disqus_config = function () {
             this.page.url = 'https://wuchao.github.io/2019/06/30/linux-shell-2019-06-30-linux-ps/';
             this.page.identifier = '2019/06/30/linux-shell-2019-06-30-linux-ps/';
-            this.page.title = 'Linux ps 命令';
+            this.page.title = 'Linux ps 与 netstat 命令';
           };
           if (window.DISQUS) {
             $('.disqus-loading').remove();
@@ -651,7 +663,7 @@
               config: function () {
                 this.page.url = 'https://wuchao.github.io/2019/06/30/linux-shell-2019-06-30-linux-ps/';
                 this.page.identifier = '2019/06/30/linux-shell-2019-06-30-linux-ps/';
-                this.page.title = 'Linux ps 命令';
+                this.page.title = 'Linux ps 与 netstat 命令';
               }
             });
           }
@@ -660,7 +672,7 @@
           var disqus_config = function () {
             this.page.url = 'https://wuchao.github.io/2019/06/30/linux-shell-2019-06-30-linux-ps/';
             this.page.identifier = '2019/06/30/linux-shell-2019-06-30-linux-ps/';
-            this.page.title = 'Linux ps 命令';
+            this.page.title = 'Linux ps 与 netstat 命令';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://diygod-me.disqus.com/embed.js';
@@ -763,7 +775,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -810,7 +822,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务与进程常用方法"><span class="nav-number">1.</span> <span class="nav-text">查看服务与进程常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ps-ef-grep-端口号-服务名称"><span class="nav-number">1.1.</span> <span class="nav-text">ps -ef | grep 端口号/服务名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ps-aux-au-grep-端口号-服务名称"><span class="nav-number">1.2.</span> <span class="nav-text">ps -aux/-au | grep 端口号/服务名称</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#根据端口或者服务名称查询进程号"><span class="nav-number">1.</span> <span class="nav-text">根据端口或者服务名称查询进程号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、ps-ef-grep-端口号-服务名称"><span class="nav-number">1.1.</span> <span class="nav-text">一、ps -ef | grep 端口号/服务名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、ps-aux-au-grep-端口号-服务名称"><span class="nav-number">1.2.</span> <span class="nav-text">二、ps -aux/-au | grep 端口号/服务名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、netstat-anp-grep-端口号"><span class="nav-number">1.3.</span> <span class="nav-text">三、netstat -anp | grep 端口号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#根据进程号查询服务来源程序"><span class="nav-number">2.</span> <span class="nav-text">根据进程号查询服务来源程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-aux-grep-pid"><span class="nav-number">2.1.</span> <span class="nav-text">ps aux | grep pid</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -834,7 +846,7 @@
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     

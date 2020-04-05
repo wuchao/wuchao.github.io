@@ -327,6 +327,865 @@
   
   
   <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">14</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/问题记录/" itemprop="url" rel="index">
+          <span itemprop="name">问题记录</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2019/04/14/linux-shell-2019-04-14-CentOS-Could-not-resolve-host-mirrorlist-centos-org-Unknown-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/linux-shell-2019-04-14-CentOS-Could-not-resolve-host-mirrorlist-centos-org-Unknown-error/" itemprop="url">Could not resolve host：mirrorlist.centos.org; Unknown error</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:00:00+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/问题记录/" itemprop="url" rel="index">
+                    <span itemprop="name">问题记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>执行 yum 命令时报：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&amp;arch=x86_64&amp;repo=os&amp;infra=stock32 error was</span><br><span class="line">14: curl#6 - &quot;Could not resolve host: mirrorlist.centos.org; Unknown error&quot;</span><br><span class="line"> </span><br><span class="line">One of the configured repositories failed (Unknown),</span><br><span class="line">and yum doesn&apos;t have enough cached data to continue. At this point the only</span><br><span class="line">safe thing yum can do is fail. There are a few ways to work &quot;fix&quot; this:</span><br><span class="line"> </span><br><span class="line"> 1. Contact the upstream for the repository and get them to fix the problem.</span><br><span class="line"> </span><br><span class="line"> 2. Reconfigure the baseurl/etc. for the repository, to point to a working</span><br><span class="line">    upstream. This is most often useful if you are using a newer</span><br><span class="line">    distribution release than is supported by the repository (and the</span><br><span class="line">    packages for the previous distribution release still work).</span><br><span class="line"> </span><br><span class="line"> 3. Disable the repository, so yum won&apos;t use it by default. Yum will then</span><br><span class="line">    just ignore the repository until you permanently enable it again or use</span><br><span class="line">    --enablerepo for temporary usage:</span><br><span class="line"> </span><br><span class="line">        yum-config-manager --disable &lt;repoid&gt;</span><br><span class="line"> </span><br><span class="line"> 4. Configure the failing repository to be skipped, if it is unavailable.</span><br><span class="line">    Note that yum will try to contact the repo. when it runs most commands,</span><br><span class="line">    so will have to try and fail each time (and thus. yum will be be much</span><br><span class="line">    slower). If it is a very temporary problem though, this is often a nice</span><br><span class="line">    compromise:</span><br><span class="line"> </span><br><span class="line">        yum-config-manager --save --setopt=&lt;repoid&gt;.skip_if_unavailable=true</span><br></pre></td></tr></table></figure>
+
+<p>配置下网络即可。 </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/14/linux-shell-2019-04-14-CentOS-Could-not-resolve-host-mirrorlist-centos-org-Unknown-error/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">03</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/数据库/" itemprop="url" rel="index">
+          <span itemprop="name">数据库</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2019/04/03/db-2019-04-03-mssql-row-number-over-partition-by-order-by/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/03/db-2019-04-03-mssql-row-number-over-partition-by-order-by/" itemprop="url">SQL Server row_number()</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T00:00:00+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="row-number-over-order-by-clause"><a href="#row-number-over-order-by-clause" class="headerlink" title="row_number() over (order by clause)"></a>row_number() over (order by clause)</h3><p>在 SQL SERVER 的 row_number() over() 中使用 <code>order by</code> 对 <code>select</code> 查询的结果进行排序，并为每一行赋予一个连续的编号。</p>
+<p>对于数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">id|user_id|name   |</span><br><span class="line">--|-------|-------|</span><br><span class="line"> 1|      1|用户1的请假1|</span><br><span class="line"> 2|      2|用户2的请假1|</span><br><span class="line"> 3|      3|用户3的请假1|</span><br><span class="line"> 4|      2|用户2的请假2|</span><br><span class="line"> 5|      2|用户2的请假3|</span><br><span class="line"> 6|      1|用户1的请假2|</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select ROW_NUMBER() over(order by user_id) rowNum, id, user_id, name from leave</span><br></pre></td></tr></table></figure>
+
+<p>查询结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rowNum|id|user_id|name   |</span><br><span class="line">------|--|-------|-------|</span><br><span class="line">     1| 1|      1|用户1的请假1|</span><br><span class="line">     2| 6|      1|用户1的请假2|</span><br><span class="line">     3| 2|      2|用户2的请假1|</span><br><span class="line">     4| 4|      2|用户2的请假2|</span><br><span class="line">     5| 5|      2|用户2的请假3|</span><br><span class="line">     6| 3|      3|用户3的请假1|</span><br></pre></td></tr></table></figure>
+
+<p>这里使用 <code>rowNum</code> 是一个从 1 开始连续递增的顺序编号。所以可以用来分页。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/03/db-2019-04-03-mssql-row-number-over-partition-by-order-by/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">03</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/Spring/" itemprop="url" rel="index">
+          <span itemprop="name">Spring</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2019/04/03/spring-2019-03-35-JdbcTemplate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/03/spring-2019-03-35-JdbcTemplate/" itemprop="url">JdbcTemplate 笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T00:00:00+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Methods-dealing-with-static-SQL-java-sql-Statement"><a href="#Methods-dealing-with-static-SQL-java-sql-Statement" class="headerlink" title="Methods dealing with static SQL (java.sql.Statement)"></a>Methods dealing with static SQL (java.sql.Statement)</h1><h2 id="StatementCallback"><a href="#StatementCallback" class="headerlink" title="StatementCallback"></a>StatementCallback</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public &lt;T&gt; T execute(StatementCallback&lt;T&gt; action) throws DataAccessException &#123;</span><br><span class="line">	Assert.notNull(action, &quot;Callback object must not be null&quot;);</span><br><span class="line"></span><br><span class="line">	Connection con = DataSourceUtils.getConnection(obtainDataSource());</span><br><span class="line">	Statement stmt = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		stmt = con.createStatement();</span><br><span class="line">		applyStatementSettings(stmt);</span><br><span class="line">		// 重写 doInStatement 方法时要加上查询和处理返回值的操作</span><br><span class="line">		T result = action.doInStatement(stmt);</span><br><span class="line">		handleWarnings(stmt);</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line">	catch (SQLException ex) &#123;</span><br><span class="line">		// Release Connection early, to avoid potential connection pool deadlock</span><br><span class="line">		// in the case when the exception translator hasn&apos;t been initialized yet.</span><br><span class="line">		String sql = getSql(action);</span><br><span class="line">		JdbcUtils.closeStatement(stmt);</span><br><span class="line">		stmt = null;</span><br><span class="line">		DataSourceUtils.releaseConnection(con, getDataSource());</span><br><span class="line">		con = null;</span><br><span class="line">		throw translateException(&quot;StatementCallback&quot;, sql, ex);</span><br><span class="line">	&#125;</span><br><span class="line">	finally &#123;</span><br><span class="line">		JdbcUtils.closeStatement(stmt);</span><br><span class="line">		DataSourceUtils.releaseConnection(con, getDataSource());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法是基于 Statement 查询的基础方法，查询和修改等都是调用上面的方法。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/03/spring-2019-03-35-JdbcTemplate/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">03</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/学习记录/" itemprop="url" rel="index">
+          <span itemprop="name">学习记录</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2019/04/03/notes-2019-04-03-VSCode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/03/notes-2019-04-03-VSCode/" itemprop="url">VS Code 的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T00:00:00+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><ul>
+<li><p>显示所有命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shift + Ctrl + P</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局查找文件 / 打开最近访问的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + P</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开最近访问的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + R</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在本文件中查找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + F</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在本文件中替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + H</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>格式化代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shift + Alt + F</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/03/notes-2019-04-03-VSCode/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">03</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/学习记录/" itemprop="url" rel="index">
+          <span itemprop="name">学习记录</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2019/04/03/notes-2019-04-03-IntelliJ-IDEA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuchao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/03/notes-2019-04-03-IntelliJ-IDEA/" itemprop="url">IntelliJ IDEA 的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T00:00:00+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>下载：<a href="http://www.jetbrains.com/idea/download/previous.html" target="_blank" rel="noopener">IntelliJ IDEA Releases</a></p>
+</blockquote>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><ul>
+<li><p>全局查找文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Double Shift</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开最近访问的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + E</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开最近修改的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shift + Ctrl + E</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回到上次打开的 Tab 页</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Tab</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在本文件中查找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + F</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在本文件中替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + R</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全文查找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shift + Ctrl + F</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全文替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shift + Ctrl + R</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/03/notes-2019-04-03-IntelliJ-IDEA/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
 			<div class="post-month">03月</div>
 			<div class="post-day">26</div>
 	</div>
@@ -1180,828 +2039,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">12月</div>
-			<div class="post-day">09</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/工具使用/" itemprop="url" rel="index">
-          <span itemprop="name">工具使用</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/12/09/notes-2018-12-09-DCEVM-HotswapAgent实现热部署/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/09/notes-2018-12-09-DCEVM-HotswapAgent实现热部署/" itemprop="url">IDEA 根据 DCEVM + Hotswap Agent 实现项目热部署</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-09T00:00:00+08:00">
-                2018-12-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具使用/" itemprop="url" rel="index">
-                    <span itemprop="name">工具使用</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>具体安装参考：<a href="https://github.com/dmitry-zhuravlev/hotswap-agent-intellij-plugin" target="_blank" rel="noopener">hotswap-agent-intellij-plugin</a>。</p>
-<p>安装好 DCEVM 之后，选在去 idea 中下载 <code>HotSwapAgent</code> 插件方式安装，而不必使用下载 hotswap-agent.jar 安装的方式。</p>
-<p>安装好 <code>HotSwapAgent</code> 插件之后，按照文中的方式去配置，然后启动项目即可。</p>
-<p>当修改了代码，然后重新编译（<code>Ctrl+Shift+F9</code>/<code>Ctrl+F9</code>）项目就可以使修改生效。</p>
-
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/09/notes-2018-12-09-DCEVM-HotswapAgent实现热部署/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">12月</div>
-			<div class="post-day">09</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/工具使用/" itemprop="url" rel="index">
-          <span itemprop="name">工具使用</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/12/09/notes-2018-12-09-atom-plugins/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/09/notes-2018-12-09-atom-plugins/" itemprop="url">Atom Plugins</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-09T00:00:00+08:00">
-                2018-12-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具使用/" itemprop="url" rel="index">
-                    <span itemprop="name">工具使用</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p><a href="https://github.com/kompasim/atom-plugins" target="_blank" rel="noopener">kompasim/atom-plugins</a></p>
-</blockquote>
-<hr>
-<h2 id="some-awesome-atom-plugins"><a href="#some-awesome-atom-plugins" class="headerlink" title="some awesome atom-plugins !"></a>some awesome atom-plugins !</h2><p><img src="/images/2018-12-09-atom-plugins-01.png" alt="demo"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/09/notes-2018-12-09-atom-plugins/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">08月</div>
-			<div class="post-day">10</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Java/" itemprop="url" rel="index">
-          <span itemprop="name">Java</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/08/10/java-2018-08-10-Java8-Comparator/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/java-2018-08-10-Java8-Comparator/" itemprop="url">Java8 Comparator</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T00:00:00+08:00">
-                2018-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>一般来说，Comparable 是为了对某个类的集合进行排序，所以此时一般都是这个需要排序的类本身去实现 Comparable 接口。换句话说，如果某个类实现了 Comparable 接口，那么这个类的数组或者说 List 就可以进行排序了。很多时候我们无法对类进行修改，或者说此类修改的成本太高，但是又希望对其进行排序。那怎么办？这个时候 Comparator 接口就排上了用场。</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public final class Employee  &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line">    private int salary;</span><br><span class="line"></span><br><span class="line">    public Employee(String name, int salary) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.salary = salary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;name is: &quot; + name + &quot;, salary is: &quot; + salary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // ...此处省略 get/set</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Employee 类没有实现 Comparable 接口，并且加上了 final 关键字，但是还是需要对其排序，怎么办？</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/10/java-2018-08-10-Java8-Comparator/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">07月</div>
-			<div class="post-day">29</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/Java/" itemprop="url" rel="index">
-          <span itemprop="name">Java</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/07/29/java-2018-07-29-Java8-Optional/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/29/java-2018-07-29-Java8-Optional/" itemprop="url">Java8 Optional</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T00:00:00+08:00">
-                2018-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="创建-Optional-对象"><a href="#创建-Optional-对象" class="headerlink" title="创建 Optional 对象"></a>创建 Optional 对象</h3><h4 id="of"><a href="#of" class="headerlink" title="of()"></a>of()</h4><p>为非 null 的值创建一个 Optional。</p>
-<p>of 方法通过工厂方法创建 Optional 类。需要注意的是，创建对象时传入的参数不能为 null。如果传入参数为 null，则抛出 NullPointerException。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 调用工厂方法创建 Optional 实例</span><br><span class="line">Optional&lt;String&gt; name = Optional.of(&quot;Java8&quot;);</span><br><span class="line"></span><br><span class="line">// 传入参数为 null，抛出 NullPointerException.</span><br><span class="line">Optional&lt;String&gt; name = Optional.of(null);</span><br></pre></td></tr></table></figure>
-
-<h4 id="ofNullable"><a href="#ofNullable" class="headerlink" title="ofNullable()"></a>ofNullable()</h4><p>为指定的值创建一个 Optional，如果指定的值为 null，则返回一个空的 (empty)Optional。</p>
-<p>ofNullable 与 of 方法相似，唯一的区别是可以接受参数为 null 的情况。示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 下面创建了一个不包含任何值的 Optional 实例</span><br><span class="line">Optional empty = Optional.ofNullable(null);</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/29/java-2018-07-29-Java8-Optional/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-date">
-			<div class="post-month">07月</div>
-			<div class="post-day">24</div>
-	</div>
-  
-  <div class="post-badge">
-    
-      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/数据库/" itemprop="url" rel="index">
-          <span itemprop="name">数据库</span>
-        </a>
-      </span>
-    
-  </div>
-  
-
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wuchao.github.io/2018/07/24/db-2018-07-24-SQL-SERVER-The-variant-data-type-is-not-supported/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuchao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/DIYgod.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/24/db-2018-07-24-SQL-SERVER-The-variant-data-type-is-not-supported/" itemprop="url">SQLServerException：The "variant" data type is not supported</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-24T00:00:00+08:00">
-                2018-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">•</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>查询 SQL SERVER 中某张表的表结构，sql 语句如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">	tb.name AS tableName,</span><br><span class="line">	col.name AS columnName,</span><br><span class="line">	col.max_length AS length,</span><br><span class="line">	col.is_nullable AS isNullable,</span><br><span class="line">	t.name AS type,</span><br><span class="line">	(</span><br><span class="line">	SELECT</span><br><span class="line">		TOP 1 ind.is_primary_key</span><br><span class="line">	FROM</span><br><span class="line">		sys.index_columns ic</span><br><span class="line">		LEFT JOIN sys.indexes ind ON ic.object_id = ind.object_id AND ic.index_id= ind.index_id AND ind.name LIKE &apos;PK_%&apos;</span><br><span class="line">	WHERE</span><br><span class="line">		ic.object_id = tb.object_id AND ic.column_id= col.column_id</span><br><span class="line">	) AS isPrimaryKey,</span><br><span class="line">	com.value AS comment</span><br><span class="line">FROM</span><br><span class="line">	sys.TABLES tb</span><br><span class="line">	INNER JOIN sys.columns col ON col.object_id = tb.object_id</span><br><span class="line">	LEFT JOIN sys.types t ON t.user_type_id = col.user_type_id</span><br><span class="line">	LEFT JOIN sys.extended_properties com ON com.major_id = col.object_id</span><br><span class="line">	AND com.minor_id = col.column_id</span><br><span class="line">WHERE</span><br><span class="line">	tb.name = &apos;表名&apos;</span><br></pre></td></tr></table></figure>
-
-<p>该 sql 可以正常执行，但是当把 sql 放到 jdbcTemplate 中执行时报一下错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: The &quot;variant&quot; data type is not supported.</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/24/db-2018-07-24-SQL-SERVER-The-variant-data-type-is-not-supported/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2102,7 +2144,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2157,7 +2199,7 @@
         <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
 <p></p>
 
-<p>© <span itemprop="copyrightYear">2019</span> Keep Coding.
+<p>© <span itemprop="copyrightYear">2020</span> Keep Coding.
     由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
     Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
     
